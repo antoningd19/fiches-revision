@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feuille Blanche : Jeudi · Bloc 5</title>
+<style>
+:root{--c:#E65100;--cd:#BF360C;--cl:#FBE9E7;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f4f8;color:#1a1a2e;min-height:100vh;}
+.hdr{background:linear-gradient(135deg,var(--cd),var(--c));color:#fff;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;position:sticky;top:0;z-index:20;box-shadow:0 2px 14px rgba(0,0,0,.25);}
+.hdr-l{display:flex;align-items:center;gap:.8rem;}
+.back{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;padding:.35rem .8rem;border-radius:7px;font-size:.8rem;font-weight:600;text-decoration:none;}
+.htitle{font-size:1rem;font-weight:800;}
+.hsub{font-size:.74rem;opacity:.8;margin-top:.1rem;}
+.hdr-r{display:flex;align-items:center;gap:.8rem;}
+.schip{background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.4);border-radius:50px;padding:.3rem .9rem;font-size:.85rem;font-weight:800;display:none;}
+.timer{font-size:1.25rem;font-weight:800;font-variant-numeric:tabular-nums;}
+.tbtn{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;padding:.3rem .6rem;border-radius:6px;font-size:.8rem;cursor:pointer;}
+.tbtn:hover{background:rgba(255,255,255,.35);}
+.body{max-width:820px;margin:0 auto;padding:1.2rem 1.5rem 3rem;}
+.intro{background:#fff;border-left:4px solid var(--c);border-radius:10px;padding:.9rem 1.1rem;font-size:.85rem;line-height:1.7;margin-bottom:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.intro strong{color:var(--cd);}
+.sec{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--c);border-left:3px solid var(--c);padding-left:.6rem;margin:1.8rem 0 .9rem;}
+.qcard{background:#fff;border-radius:12px;padding:1.2rem;margin-bottom:1rem;box-shadow:0 2px 10px rgba(0,0,0,.06);border:1.5px solid #e5eaf0;transition:border .2s;}
+.qcard.verified{border-color:var(--c);}
+.qlbl{font-size:.65rem;font-weight:700;color:var(--c);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35rem;}
+.qtxt{font-size:.97rem;font-weight:600;line-height:1.5;margin-bottom:.8rem;}
+textarea{width:100%;min-height:85px;border:1.5px solid #d5dde8;border-radius:8px;padding:.65rem .85rem;font-family:inherit;font-size:.87rem;line-height:1.6;resize:vertical;outline:none;transition:border .2s;color:#1a1a2e;background:#fafdff;}
+textarea:focus{border-color:var(--c);background:#fff;}
+textarea[readonly]{background:#f5f7fa;color:#555;cursor:default;}
+.qfoot{display:flex;align-items:center;justify-content:space-between;margin-top:.6rem;gap:.5rem;flex-wrap:wrap;}
+.wc{font-size:.72rem;color:#94a3b8;}
+.foot-r{display:flex;align-items:center;gap:.6rem;}
+.badge{display:none;align-items:center;gap:.35rem;border-radius:50px;padding:.28rem .85rem;font-size:.8rem;font-weight:800;white-space:nowrap;}
+.b2{background:#E8F5E9;color:#1B5E20;border:1.5px solid #66BB6A;}
+.b1{background:#FFF8E1;color:#E65100;border:1.5px solid #FFB300;}
+.b0{background:#FFEBEE;color:#B71C1C;border:1.5px solid #EF5350;}
+.vbtn{background:var(--c);color:#fff;border:none;padding:.4rem 1.1rem;border-radius:7px;font-size:.8rem;font-weight:700;cursor:pointer;transition:.2s;white-space:nowrap;}
+.vbtn:hover{background:var(--cd);}
+.vbtn:disabled{background:#b0bec5;cursor:not-allowed;}
+.model{display:none;margin-top:.9rem;background:var(--cl);border-left:3px solid var(--c);border-radius:8px;padding:.85rem 1rem;font-size:.82rem;line-height:1.7;color:#BF360C;}
+.mlbl{font-size:.63rem;font-weight:700;text-transform:uppercase;opacity:.7;margin-bottom:.35rem;letter-spacing:.06em;}
+.cas{background:linear-gradient(135deg,#BF360C,#E65100);color:#fff;border-radius:14px;padding:1.4rem;margin:1.6rem 0 .8rem;}
+.cas h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;}
+.cas p,.cas li{font-size:.85rem;opacity:.9;line-height:1.7;}
+.cas ul{margin:.4rem 0 0 1rem;}
+.cas li{margin-bottom:.2rem;}
+.sub-btn{display:block;width:100%;padding:.95rem;background:var(--c);color:#fff;font-weight:800;font-size:1rem;border:none;border-radius:12px;cursor:pointer;transition:.2s;margin-top:1.5rem;}
+.sub-btn:hover{background:var(--cd);}
+.results{display:none;background:#fff;border-radius:16px;padding:1.8rem;margin-top:1.5rem;box-shadow:0 4px 24px rgba(0,0,0,.1);text-align:center;border:2.5px solid var(--c);}
+.fscore{font-size:3.5rem;font-weight:900;color:var(--c);line-height:1;}
+.fmax{font-size:1.1rem;color:#94a3b8;margin:.3rem 0 .5rem;}
+.flbl{font-size:1.1rem;font-weight:700;margin-bottom:1.2rem;}
+.breakdown{text-align:left;margin-top:.5rem;}
+.bdi{display:flex;justify-content:space-between;align-items:center;padding:.4rem 0;border-bottom:1px solid #f0f0f0;font-size:.83rem;}
+.bdi:last-child{border-bottom:none;}
+.bdi-q{color:#555;flex:1;padding-right:.5rem;}
+.restart{margin-top:1.2rem;padding:.7rem 2rem;background:var(--c);color:#fff;font-weight:700;border:none;border-radius:8px;cursor:pointer;font-size:.9rem;}
+.restart:hover{background:var(--cd);}
+
+/* ══ PREMIUM UPGRADE : FEUILLE BLANCHE ══ */
+.hdr{
+  backdrop-filter:blur(20px) saturate(1.8);-webkit-backdrop-filter:blur(20px) saturate(1.8);
+  box-shadow:0 2px 20px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.08)!important;
+  border-bottom:1px solid rgba(255,255,255,.1);}
+.back{transition:background .2s,transform .2s!important;}
+.back:hover{background:rgba(255,255,255,.32)!important;transform:translateX(-2px);}
+.tbtn{transition:background .15s,transform .15s!important;}
+.tbtn:hover{background:rgba(255,255,255,.32)!important;transform:scale(1.06);}
+.schip{backdrop-filter:blur(8px);box-shadow:0 2px 8px rgba(0,0,0,.15)!important;}
+.sec{border-left:none!important;padding-left:0!important;display:flex!important;align-items:center;gap:.5rem;}
+.sec::before{content:'';display:inline-block;width:3px;height:12px;background:var(--c);border-radius:2px;flex-shrink:0;}
+.intro{border-left:none!important;border:1px solid color-mix(in srgb,var(--c) 20%,transparent)!important;
+  box-shadow:0 2px 12px color-mix(in srgb,var(--c) 10%,rgba(0,0,0,.04))!important;}
+.qcard{box-shadow:0 2px 12px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04)!important;
+  transition:box-shadow .22s,transform .22s,border-color .22s,background .22s!important;}
+.qcard:hover{box-shadow:0 6px 22px color-mix(in srgb,var(--c) 15%,rgba(0,0,0,.05))!important;transform:translateY(-1px);}
+.qcard.verified{border-color:var(--c)!important;background:color-mix(in srgb,var(--c) 3%,#fff)!important;
+  box-shadow:0 4px 20px color-mix(in srgb,var(--c) 18%,rgba(0,0,0,.04))!important;}
+textarea{transition:border-color .2s,box-shadow .2s!important;}
+textarea:focus{border-color:var(--c)!important;
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 14%,transparent),0 2px 8px rgba(0,0,0,.06)!important;background:#fff!important;}
+.vbtn{transition:background .18s,transform .18s,box-shadow .18s!important;
+  box-shadow:0 2px 8px color-mix(in srgb,var(--c) 28%,transparent)!important;}
+.vbtn:hover:not(:disabled){transform:translateY(-2px)!important;
+  box-shadow:0 6px 18px color-mix(in srgb,var(--c) 36%,transparent)!important;}
+@keyframes badgePop{0%{transform:scale(.55);opacity:0}65%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
+.badge[style*="flex"]{animation:badgePop .28s cubic-bezier(.4,0,.2,1) both!important;}
+@keyframes modelIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.model[style*="block"]{animation:modelIn .24s cubic-bezier(.4,0,.2,1) both!important;}
+.model{border-left:none!important;box-shadow:0 2px 10px color-mix(in srgb,var(--c) 12%,rgba(0,0,0,.04))!important;}
+.cas{box-shadow:0 6px 24px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.1)!important;}
+.sub-btn{transition:background .18s,transform .18s,box-shadow .18s!important;
+  box-shadow:0 4px 16px color-mix(in srgb,var(--c) 35%,transparent)!important;}
+.sub-btn:hover{transform:translateY(-3px)!important;
+  box-shadow:0 10px 30px color-mix(in srgb,var(--c) 42%,transparent)!important;}
+@keyframes resultsIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+.results[style*="block"]{animation:resultsIn .35s cubic-bezier(.4,0,.2,1) both!important;
+  box-shadow:0 8px 40px rgba(0,0,0,.12),0 2px 8px rgba(0,0,0,.06)!important;}
+.fscore{text-shadow:0 4px 16px color-mix(in srgb,var(--c) 28%,transparent);}
+.restart{transition:background .18s,transform .18s,box-shadow .18s!important;
+  box-shadow:0 3px 12px color-mix(in srgb,var(--c) 28%,transparent)!important;}
+.restart:hover{transform:translateY(-2px)!important;
+  box-shadow:0 8px 22px color-mix(in srgb,var(--c) 36%,transparent)!important;}
+@media(prefers-reduced-motion:reduce){
+  .qcard,.vbtn,.sub-btn,.restart,.tbtn,.back{transition:none!important;}
+  .badge,.model,.results{animation:none!important;}
+}
+</style>
+<style>
+/* ══ MOBILE FIRST ══ */
+@media(max-width:640px){
+  /* Header : compresser pour tenir sur une ligne */
+  .hdr{padding:.65rem .9rem;gap:.4rem;}
+  .htitle{font-size:.85rem;}
+  .hsub{display:none;}           /* masquer le sous-titre sur mobile */
+  .back{padding:.26rem .55rem;font-size:.7rem;}
+  .hdr-l{gap:.5rem;}
+  .hdr-r{gap:.35rem;}
+  .timer{font-size:.95rem;}
+  .tbtn{padding:.22rem .5rem;font-size:.7rem;}
+  .schip{font-size:.72rem;padding:.22rem .65rem;}
+
+  /* Body */
+  .body{padding:.85rem .85rem 3rem;}
+
+  /* Intro */
+  .intro{font-size:.78rem;padding:.65rem .85rem;margin-bottom:1.1rem;}
+
+  /* Libellé section */
+  .sec{font-size:.6rem;margin:1.4rem 0 .7rem;}
+
+  /* Carte question */
+  .qcard{padding:.85rem .85rem .7rem;}
+  .qlbl{font-size:.58rem;}
+  .qtxt{font-size:.88rem;margin-bottom:.65rem;}
+  textarea{font-size:.82rem;min-height:70px;padding:.55rem .75rem;}
+
+  /* Footer question */
+  .qfoot{gap:.3rem;}
+  .wc{font-size:.68rem;}
+  .foot-r{gap:.35rem;}
+  .vbtn{padding:.33rem .8rem;font-size:.74rem;}
+  .badge{font-size:.7rem;padding:.2rem .6rem;}
+
+  /* Réponse modèle */
+  .model{font-size:.76rem;padding:.65rem .8rem;margin-top:.75rem;}
+  .mlbl{font-size:.58rem;}
+
+  /* Cas pratique */
+  .cas{padding:.9rem;border-radius:12px;margin:1.2rem 0 .7rem;}
+  .cas h3{font-size:.88rem;}
+  .cas p,.cas li{font-size:.77rem;}
+
+  /* Bouton soumettre */
+  .sub-btn{font-size:.9rem;padding:.8rem;border-radius:10px;}
+
+  /* Panneau résultats */
+  .results{padding:1.2rem;}
+  .fscore{font-size:2.8rem;}
+  .fmax{font-size:.88rem;}
+  .flbl{font-size:.92rem;margin-bottom:.9rem;}
+  .bdi{font-size:.76rem;padding:.35rem 0;}
+  .bdi-q{font-size:.76rem;}
+  .restart{font-size:.82rem;padding:.55rem 1.4rem;}
+}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hdr-l">
+    <a href="jeudi.html" class="back">← Fiches</a>
+    <div><div class="htitle">Feuille Blanche : Bloc 5</div><div class="hsub" id="hsub">Jeudi · Questionnaire noté · chargement…</div></div>
+  </div>
+  <div class="hdr-r">
+    <span class="schip" id="schip">0 / 0</span>
+    <span class="timer" id="timer">00:00</span>
+    <button class="tbtn" id="tbtn" onclick="toggleTimer()">▶</button>
+    <button class="tbtn" onclick="resetTimer()">↺</button>
+  </div>
+</div>
+
+<div class="body" id="examBody"></div>
+
+<script>
+const POOL=[
+  // E-COMMERCE
+  {id:'ec1',sec:'Conception E-commerce',prof:'Prof. Orlowski',q:'Quels sont les éléments clés d\'une fiche produit optimisée pour la conversion ?',kw:['titre','descriptif','photos','avis','prix','cta','add to cart','garantie','badge','confiance','délai','livraison','mobile','seo'],model:'• <strong>Titre :</strong> mot-clé principal + caractéristiques. • <strong>Descriptif :</strong> bénéfices + attributs. • <strong>Visuels :</strong> multiples, zoomables, vidéo. • <strong>Prix :</strong> visible, promotions claires. • <strong>Avis clients :</strong> note + commentaires. • <strong>CTA :</strong> "Ajouter au panier" visible. • <strong>Badges de confiance :</strong> garantie, délai livraison, paiement sécurisé.'},
+  {id:'ec2',sec:'Conception E-commerce',prof:'Prof. Orlowski',q:'Définissez le tunnel de conversion e-commerce. Citez les 5 étapes et les optimisations possibles.',kw:['tunnel','entonnoir','découverte','fiche produit','panier','checkout','confirmation','abandons','relance','friction','étapes','cta'],model:'<strong>Tunnel :</strong> Découverte → Fiche produit → Panier → Checkout → Confirmation. <strong>Optimisations :</strong> réduire les étapes checkout, guest checkout, sauvegarde du panier, relances abandons (email J+1, J+3), supprimer les frictions (frais cachés, formulaires longs).'},
+  {id:'ec3',sec:'Conception E-commerce',prof:'Prof. Orlowski',q:'Quels KPI e-commerce suivre en priorité ? Citez 7 indicateurs clés.',kw:['taux de conversion','panier moyen','roas','cac','clv','taux d\'abandon','chiffre d\'affaires','sessions','rebond','retour'],model:'• <strong>Taux de conversion</strong> (objectif 2-4%). • <strong>Panier moyen.</strong> • <strong>ROAS</strong> (Revenus / Budget pub). • <strong>CAC.</strong> • <strong>CLV.</strong> • <strong>Taux d\'abandon panier</strong> (~70%, benchmark). • <strong>Sessions & Taux de rebond.</strong>'},
+  {id:'ec4',sec:'Conception E-commerce',prof:'Prof. Orlowski',q:'Qu\'est-ce que le ROAS ? Donnez sa formule, un exemple et l\'objectif à atteindre.',kw:['roas','revenus','budget','publicité','formule','4','rentable','campagne','objectif','ratio','dépenses'],model:'<strong>ROAS (Return On Ad Spend) = Revenus générés par la publicité / Budget publicitaire.</strong> Exemple : 8 000€ revenus / 2 000€ investis = ROAS 4. <strong>Objectif :</strong> &gt;4 pour être rentable (couvre les coûts produit, logistique, marge). Un ROAS &lt;2 indique une campagne déficitaire.'},
+  {id:'ec5',sec:'Conception E-commerce',prof:'Prof. Orlowski',q:'Quels leviers activer pour réduire le taux d\'abandon de panier (benchmark ~70%) ?',kw:['relance','email','j+1','urgence','stock','promo','code','retargeting','guest checkout','frais','livraison','gratuit','friction','sauvegarde'],model:'• <strong>Email de relance</strong> J+1 (avec code promo). • <strong>Urgence :</strong> stock limité, offre temporaire. • <strong>Retargeting</strong> display/social. • <strong>Guest checkout</strong> (sans création compte). • <strong>Livraison gratuite</strong> à partir d\'un seuil. • <strong>Supprimer les frictions :</strong> frais surprises, formulaires longs. • Sauvegarde automatique du panier.'},
+  // WEB ANALYTICS
+  {id:'wa1',sec:'Web Analytics',prof:'Prof. Prieto',q:'Qu\'est-ce que Google Analytics 4 (GA4) ? En quoi diffère-t-il de Universal Analytics ?',kw:['ga4','google analytics','événements','sessions','universal','cookies','cross-plateforme','app','web','machine learning','prédictif','privacy'],model:'<strong>GA4</strong> = nouvelle génération de Google Analytics (remplace UA depuis 2023). <strong>Différences :</strong> modèle basé sur les <strong>événements</strong> (vs sessions/pages vues). Tracking cross-plateforme (web + app). Moins dépendant des cookies (privacy-first). Intégration Machine Learning et modélisation prédictive.'},
+  {id:'wa2',sec:'Web Analytics',prof:'Prof. Prieto',q:'Définissez les KPI Web Analytics principaux. Citez 8 métriques et leur interprétation.',kw:['sessions','utilisateurs','taux de rebond','pages vues','durée','conversion','ctr','source','médium','acquisition','engagement'],model:'• <strong>Sessions :</strong> visites. • <strong>Utilisateurs :</strong> visiteurs uniques. • <strong>Taux de rebond :</strong> quittent sans interaction. • <strong>Pages vues.</strong> • <strong>Durée moyenne de session.</strong> • <strong>Taux de conversion.</strong> • <strong>CTR</strong> (depuis les SERP). • <strong>Sources/Médiums :</strong> d\'où vient le trafic (organique, payant, social, email).'},
+  {id:'wa3',sec:'Web Analytics',prof:'Prof. Prieto',q:'Qu\'est-ce qu\'un entonnoir de conversion dans GA4 ? Comment l\'analyser ?',kw:['entonnoir','funnel','étapes','abandons','chute','taux de conversion','page','objectif','exploration','rapport','optimiser','friction'],model:'Un <strong>entonnoir (funnel)</strong> = séquence d\'étapes menant à une conversion. GA4 permet de créer des <strong>rapports d\'exploration</strong> pour visualiser les chutes à chaque étape. <strong>Analyse :</strong> identifier les étapes avec le plus d\'abandons → corriger les frictions (formulaire, page lente, prix, UX).'},
+  {id:'wa4',sec:'Web Analytics',prof:'Prof. Prieto',q:'Qu\'est-ce que le taux de conversion ? Donnez sa formule et le benchmark e-commerce.',kw:['taux de conversion','conversions','sessions','utilisateurs','formule','1,5','3','benchmark','e-commerce','objectif','optimiser'],model:'<strong>Taux de conversion = (Nombre de conversions / Nombre de sessions) × 100.</strong> <strong>Benchmark e-commerce :</strong> 1,5-3% en moyenne. &gt;3% = bon. &lt;1% = à optimiser en priorité. À analyser par source de trafic (SEO, SEA, email) pour identifier les canaux les plus performants.'},
+  {id:'wa5',sec:'Web Analytics',prof:'Prof. Prieto',q:'Comment utiliser les UTM pour le suivi des campagnes ? Citez les 5 paramètres.',kw:['utm','source','medium','campaign','term','content','tracking','ga4','canal','lien','attribution'],model:'Les <strong>UTM (Urchin Tracking Module)</strong> = paramètres ajoutés aux URLs pour tracker les sources de trafic dans GA4. <strong>5 paramètres :</strong> utm_source (ex: google) · utm_medium (ex: cpc) · utm_campaign (ex: soldes) · utm_term (mot-clé) · utm_content (version de l\'annonce). Permettent une <strong>attribution précise</strong> par canal.'},
+  // CMS & LOGICIELS
+  {id:'cm1',sec:'CMS & Logiciels',prof:'Prof. Orlowski',q:'Quels sont les critères de choix d\'un CMS e-commerce ? Citez 5 critères clés.',kw:['facilité','technique','coût','plugins','extensions','scalabilité','hébergement','seo','woocommerce','shopify','prestashop','magento','taille'],model:'• <strong>Facilité d\'utilisation</strong> (no-code vs technique). • <strong>Coût</strong> (licence, hébergement, plugins). • <strong>Écosystème</strong> (plugins/extensions). • <strong>Scalabilité</strong> (petite boutique vs grande). • <strong>SEO natif.</strong> • <strong>Support & communauté.</strong> Exemples : Shopify (SaaS, simple), WooCommerce (WordPress, flexible), PrestaShop (open-source).'},
+  {id:'cm2',sec:'CMS & Logiciels',prof:'Prof. Orlowski',q:'Comparez Shopify, WooCommerce et PrestaShop. Quel contexte convient à chacun ?',kw:['shopify','woocommerce','prestashop','saas','open-source','wordpress','hébergement','mensuel','plugins','technique','petite','grande','boutique'],model:'<strong>Shopify :</strong> SaaS clé en main, abonnement mensuel, idéal TPE/PME, peu technique, excellent support. <strong>WooCommerce :</strong> extension WordPress, open-source, très flexible, requiert hébergement + maintenance. <strong>PrestaShop :</strong> open-source, gratuit (hors hébergement), adapté boutiques moyennes-grandes, plus technique.'},
+  {id:'cm3',sec:'CMS & Logiciels',prof:'Prof. Orlowski',q:'Qu\'est-ce qu\'un ERP et un PIM ? En quoi sont-ils essentiels pour un e-commerçant ?',kw:['erp','pim','product information management','gestion','stocks','commandes','comptabilité','fiches produits','données','centralise','cohérence','omnicanale','sap','sage'],model:'<strong>ERP (Enterprise Resource Planning) :</strong> centralise la gestion opérationnelle (stocks, commandes, comptabilité, logistique). Ex : SAP, Sage. <strong>PIM (Product Information Management) :</strong> centralise et enrichit les données produits (fiches, images, attributs) pour tous les canaux. Essentiels pour la cohérence omnicanale et la scalabilité.'},
+  {id:'cm4',sec:'CMS & Logiciels',prof:'Prof. Orlowski',q:'Qu\'est-ce que le headless commerce ? Quels sont ses avantages et inconvénients ?',kw:['headless','front-end','back-end','découplé','api','performance','flexibilité','react','vue','jamstack','complexité','développeurs','coût'],model:'Le <strong>headless commerce</strong> = architecture découplant le front-end (présentation) du back-end (logique métier) via une API. <strong>Avantages :</strong> performance maximale, flexibilité totale, expériences personnalisées par canal. <strong>Inconvénients :</strong> complexité technique élevée, coût de développement important, nécessite des développeurs expérimentés.'},
+  {id:'cm5',sec:'CMS & Logiciels',prof:'Prof. Orlowski',q:'Quels outils de marketing automation et CRM s\'intègrent avec un CMS e-commerce ? Citez 4 cas d\'usage.',kw:['hubspot','klaviyo','salesforce','brevo','mailchimp','automation','relance','panier','bienvenue','segmentation','crm','intégration','email'],model:'Outils : <strong>Klaviyo, HubSpot, Brevo, Salesforce Marketing Cloud.</strong> <strong>Cas d\'usage :</strong> Relance panier abandonné (déclenché automatiquement) · Segmentation acheteurs/prospects · Emails post-achat (cross-sell, avis) · Programmes de fidélité automatisés. Intégration via API ou plugin natif (ex: Klaviyo ↔ Shopify).'}
+];
+
+const CAS={ctx:'<strong>NatureSport</strong> — PME grenobloise fondée en 1998, équipements randonnée / trail / ski de rando / escalade. CA magasin <strong>1,85 M€</strong> · 18 vendeurs · 4 200 porteurs de carte fidélité · ERP Sage 50cloud · 1 magasin unique (580 m²). Marché outdoor France : +12 % en 2023. E-commerce outdoor : 31 % des achats. Concurrents : Decathlon, Snowleader, Alltricks, Amazon.<br><br><strong>E-shop (WordPress + WooCommerce) — 6 mois post-lancement :</strong> budget initial 40 k€ · catalogue partiel (480/1 200 références) · 4 200 sessions/mois (68 % mobile) · taux de rebond <strong>72 %</strong> (bench 40-50 %) · CVR global <strong>0,8 %</strong> · CVR mobile <strong>0,4 %</strong> / desktop 1,9 % · 33 commandes/mois · panier moyen <strong>85 €</strong> (vs 124 € en magasin) · CA digital <strong>2 805 €/mois</strong> (obj. 15 k€).<br><br><strong>Tunnel :</strong> page produit → ajout panier 12 % · panier → checkout 35 % · checkout → commande 19 % · taux retour 18 %. <strong>Sources trafic :</strong> direct 45 % · organique 28 % · social 14 % · payant 8 % (Google Shopping 300 €/mois, ROAS 2,1) · referral 5 %.<br><br><strong>Problèmes techniques :</strong> chargement mobile 8,2 s (Core Web Vitals rouge) · photos JPEG 3-8 Mo · aucun filtre produit · 0 avis clients · pas de paiement fractionné · 0 tracking UTM actif.',q:'Auditez les performances digitales de NatureSport, identifiez les 5 chantiers prioritaires et recommandez une solution CMS adaptée (justification technique, TCO et intégration ERP Sage). Proposez un plan d\'actions pour atteindre 15 000 € de CA digital mensuel à 12 mois.',kw:['audit','core web vitals','performance mobile','images','webp','conversion','fiche produit','avis clients','paiement fractionné','checkout','abandon panier','utm','ga4','entonnoir','google shopping','roas','performance max','cms','shopify','prestashop','erp','sage','kpi','seo','tco'],model:'<strong>5 chantiers prioritaires :</strong> (1) Performance mobile : images WebP &lt;200 ko, cache navigateur, CDN → chargement &lt;2,5 s. Impact : CVR mobile ×2. (2) Conversion : guest checkout, paiement fractionné Alma, ajouter avis clients (Judge.me), refonte fiches produit (photos multiples, guide tailles, conseil expert). KPI : CVR &gt;2%. (3) Catalogue complet : importer les 720 références manquantes + fiches détaillées. KPI : pages produit +150%. (4) Abandon panier : automation email H+1 (code -10%) + retargeting Meta/Google. KPI : récupération +15%. (5) SEA : restructurer flux Google Shopping (titres optimisés, feed enrichi), porter budget 300 → 1 500 €/mois, Performance Max. KPI : ROAS &gt;4, CA SEA 4 000 €/mois. <strong>Recommandation CMS :</strong> migrer vers Shopify (79 €/mois, connecteur Sage via SKVivo, prise en main sans dev, CVR moyen +25 % vs WooCommerce générique). TCO 12 mois ≈ 8 500 € (migration + connecteur + apps). <strong>Plan 12 mois :</strong> 20 000 sessions · CVR 2,5 % · CA digital 15 000 €/mois (10 % du CA total).'};
+
+const QUOTA={'Conception E-commerce':2,'Web Analytics':2,'CMS & Logiciels':1};
+const BADGE={2:{cls:'b2',icon:'✅',lbl:'2/2 · Très bien'},1:{cls:'b1',icon:'🟡',lbl:'1/2 · Bien'},0:{cls:'b0',icon:'❌',lbl:'0/2 · Insuffisant'}};
+
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function norm(s){return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();}
+function score(text,kw){if(!text||norm(text).length<10)return 0;const n=norm(text);let f=0;kw.forEach(k=>{if(n.includes(norm(k)))f++;});const r=f/kw.length;return r>=0.55?2:r>=0.25?1:0;}
+
+let selected=[],scores={};
+
+function pickQ(){
+  const bySec={};
+  POOL.forEach(q=>{if(!bySec[q.sec])bySec[q.sec]=[];bySec[q.sec].push(q);});
+  const out=[];
+  Object.entries(QUOTA).forEach(([s,n])=>{out.push(...shuffle(bySec[s]||[]).slice(0,n));});
+  return out;
+}
+
+function render(){
+  selected=pickQ();
+  scores={};
+  const body=document.getElementById('examBody');
+  document.getElementById('hsub').textContent=`Jeudi · ${selected.length+1} questions · Score sur ${(selected.length+1)*2} pts`;
+  let html=`<div class="intro">📝 <strong>Questionnaire noté &amp; aléatoire</strong> : Nouveau tirage à chaque ouverture. Répondez sans notes, cliquez <em>Vérifier</em> par question ou <em>Remettre la copie</em> à la fin.</div>`;
+  let lastSec='';
+  selected.forEach((q,i)=>{
+    if(q.sec!==lastSec){html+=`<div class="sec">${q.sec} · ${q.prof}</div>`;lastSec=q.sec;}
+    html+=`<div class="qcard" id="card_${q.id}"><div class="qlbl">Question ${i+1} · 2 pts</div><div class="qtxt">${q.q}</div><textarea id="ta_${q.id}" placeholder="Rédigez votre réponse ici…"></textarea><div class="qfoot"><span class="wc" id="wc_${q.id}">0 mot</span><div class="foot-r"><div class="badge" id="badge_${q.id}"></div><button class="vbtn" id="vbtn_${q.id}" onclick="verifyOne('${q.id}')">Vérifier</button></div></div><div class="model" id="model_${q.id}"><div class="mlbl">Réponse attendue</div>${q.model}</div></div>`;
+  });
+  html+=`<div class="sec">Cas Pratique : NatureSport</div><div class="cas"><h3>📋 Contexte</h3><p>${CAS.ctx}</p></div><div class="qcard" id="card_cas"><div class="qlbl">Question ${selected.length+1} : Étude de cas · 2 pts</div><div class="qtxt">${CAS.q}</div><textarea id="ta_cas" style="min-height:160px;" placeholder="Développez votre plan d'action ici…"></textarea><div class="qfoot"><span class="wc" id="wc_cas">0 mot</span><div class="foot-r"><div class="badge" id="badge_cas"></div><button class="vbtn" id="vbtn_cas" onclick="verifyOne('cas')">Vérifier</button></div></div><div class="model" id="model_cas"><div class="mlbl">Correction indicative</div>${CAS.model}</div></div>`;
+  html+=`<button class="sub-btn" onclick="submitAll()">📊 Remettre la copie · Voir mon score</button><div class="results" id="results"></div>`;
+  body.innerHTML=html;
+  [...selected.map(q=>q.id),'cas'].forEach(id=>{
+    document.getElementById('ta_'+id)?.addEventListener('input',()=>{
+      const w=(document.getElementById('ta_'+id).value.trim().split(/\s+/).filter(Boolean).length);
+      document.getElementById('wc_'+id).textContent=w+(w<=1?' mot':' mots');
+      if(!timerRunning)toggleTimer();
+    });
+  });
+}
+
+function verifyOne(id){
+  const q=id==='cas'?CAS:selected.find(x=>x.id===id);
+  const ta=document.getElementById('ta_'+id);
+  const s=score(ta.value,q.kw);
+  scores[id]=s;ta.readOnly=true;
+  const b=BADGE[s];
+  const bd=document.getElementById('badge_'+id);
+  bd.className='badge '+b.cls;bd.textContent=b.icon+' '+b.lbl;bd.style.display='flex';
+  document.getElementById('model_'+id).style.display='block';
+  const vbtn=document.getElementById('vbtn_'+id);
+  vbtn.textContent='✓ Vérifié';vbtn.disabled=true;
+  document.getElementById('card_'+id).classList.add('verified');
+  updateChip();
+}
+
+function updateChip(){
+  const tot=Object.values(scores).reduce((a,b)=>a+b,0);
+  const chip=document.getElementById('schip');chip.style.display='inline-block';
+  chip.textContent=tot+' / '+((selected.length+1)*2);
+}
+
+function submitAll(){
+  [...selected.map(q=>q.id),'cas'].forEach(id=>{if(scores[id]===undefined)verifyOne(id);});
+  const tot=Object.values(scores).reduce((a,b)=>a+b,0);
+  const max=(selected.length+1)*2;
+  const pct=Math.round(tot/max*100);
+  const grade=pct>=80?'🏆 Excellent !':pct>=60?'👍 Bien !':pct>=40?'📚 À consolider':'⚠️ À retravailler';
+  let bd='';
+  selected.forEach((q,i)=>{const s=scores[q.id]??0;const b=BADGE[s];bd+=`<div class="bdi"><span class="bdi-q">Q${i+1} · ${q.sec}</span><span class="badge ${b.cls}" style="display:inline-flex;font-size:.75rem;">${b.icon} ${s}/2</span></div>`;});
+  const cs=scores['cas']??0;const cb=BADGE[cs];bd+=`<div class="bdi"><span class="bdi-q">Cas pratique</span><span class="badge ${cb.cls}" style="display:inline-flex;font-size:.75rem;">${cb.icon} ${cs}/2</span></div>`;
+  const res=document.getElementById('results');
+  res.style.display='block';
+  res.innerHTML=`<div class="fscore">${tot}</div><div class="fmax">/ ${max} points · ${pct}%</div><div class="flbl">${grade}</div><div class="breakdown">${bd}</div><button class="restart" onclick="location.reload()">🔄 Nouveau questionnaire</button>`;
+  res.scrollIntoView({behavior:'smooth'});
+}
+
+let timerRunning=false,timerSecs=0,timerInt;
+function toggleTimer(){if(timerRunning){clearInterval(timerInt);timerRunning=false;document.getElementById('tbtn').textContent='▶';}else{timerInt=setInterval(()=>{timerSecs++;document.getElementById('timer').textContent=String(Math.floor(timerSecs/60)).padStart(2,'0')+':'+String(timerSecs%60).padStart(2,'0');},1000);timerRunning=true;document.getElementById('tbtn').textContent='⏸';}}
+function resetTimer(){clearInterval(timerInt);timerRunning=false;timerSecs=0;document.getElementById('timer').textContent='00:00';document.getElementById('tbtn').textContent='▶';}
+
+render();
+</script>
+</body>
+</html>

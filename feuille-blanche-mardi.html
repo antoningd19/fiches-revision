@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feuille Blanche : Mardi · Bloc 3</title>
+<style>
+:root{--c:#6A1B9A;--cd:#4A148C;--cl:#F3E5F5;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f4f8;color:#1a1a2e;min-height:100vh;}
+.hdr{background:linear-gradient(135deg,var(--cd),var(--c));color:#fff;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;position:sticky;top:0;z-index:20;box-shadow:0 2px 14px rgba(0,0,0,.25);}
+.hdr-l{display:flex;align-items:center;gap:.8rem;}
+.back{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;padding:.35rem .8rem;border-radius:7px;font-size:.8rem;font-weight:600;text-decoration:none;}
+.htitle{font-size:1rem;font-weight:800;}
+.hsub{font-size:.74rem;opacity:.8;margin-top:.1rem;}
+.hdr-r{display:flex;align-items:center;gap:.8rem;}
+.schip{background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.4);border-radius:50px;padding:.3rem .9rem;font-size:.85rem;font-weight:800;display:none;}
+.timer{font-size:1.25rem;font-weight:800;font-variant-numeric:tabular-nums;}
+.tbtn{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;padding:.3rem .6rem;border-radius:6px;font-size:.8rem;cursor:pointer;}
+.tbtn:hover{background:rgba(255,255,255,.35);}
+.body{max-width:820px;margin:0 auto;padding:1.2rem 1.5rem 3rem;}
+.intro{background:#fff;border-left:4px solid var(--c);border-radius:10px;padding:.9rem 1.1rem;font-size:.85rem;line-height:1.7;margin-bottom:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.intro strong{color:var(--cd);}
+.sec{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--c);border-left:3px solid var(--c);padding-left:.6rem;margin:1.8rem 0 .9rem;}
+.qcard{background:#fff;border-radius:12px;padding:1.2rem;margin-bottom:1rem;box-shadow:0 2px 10px rgba(0,0,0,.06);border:1.5px solid #e5eaf0;transition:border .2s;}
+.qcard.verified{border-color:var(--c);}
+.qlbl{font-size:.65rem;font-weight:700;color:var(--c);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35rem;}
+.qtxt{font-size:.97rem;font-weight:600;line-height:1.5;margin-bottom:.8rem;}
+textarea{width:100%;min-height:85px;border:1.5px solid #d5dde8;border-radius:8px;padding:.65rem .85rem;font-family:inherit;font-size:.87rem;line-height:1.6;resize:vertical;outline:none;transition:border .2s;color:#1a1a2e;background:#fafdff;}
+textarea:focus{border-color:var(--c);background:#fff;}
+textarea[readonly]{background:#f5f7fa;color:#555;cursor:default;}
+.qfoot{display:flex;align-items:center;justify-content:space-between;margin-top:.6rem;gap:.5rem;flex-wrap:wrap;}
+.wc{font-size:.72rem;color:#94a3b8;}
+.foot-r{display:flex;align-items:center;gap:.6rem;}
+.badge{display:none;align-items:center;gap:.35rem;border-radius:50px;padding:.28rem .85rem;font-size:.8rem;font-weight:800;white-space:nowrap;}
+.b2{background:#E8F5E9;color:#1B5E20;border:1.5px solid #66BB6A;}
+.b1{background:#FFF8E1;color:#E65100;border:1.5px solid #FFB300;}
+.b0{background:#FFEBEE;color:#B71C1C;border:1.5px solid #EF5350;}
+.vbtn{background:var(--c);color:#fff;border:none;padding:.4rem 1.1rem;border-radius:7px;font-size:.8rem;font-weight:700;cursor:pointer;transition:.2s;white-space:nowrap;}
+.vbtn:hover{background:var(--cd);}
+.vbtn:disabled{background:#b0bec5;cursor:not-allowed;}
+.model{display:none;margin-top:.9rem;background:var(--cl);border-left:3px solid var(--c);border-radius:8px;padding:.85rem 1rem;font-size:.82rem;line-height:1.7;color:#4A148C;}
+.mlbl{font-size:.63rem;font-weight:700;text-transform:uppercase;opacity:.7;margin-bottom:.35rem;letter-spacing:.06em;}
+.cas{background:linear-gradient(135deg,#4A148C,#6A1B9A);color:#fff;border-radius:14px;padding:1.4rem;margin:1.6rem 0 .8rem;}
+.cas h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;}
+.cas p,.cas li{font-size:.85rem;opacity:.9;line-height:1.7;}
+.cas ul{margin:.4rem 0 0 1rem;}
+.cas li{margin-bottom:.2rem;}
+.sub-btn{display:block;width:100%;padding:.95rem;background:var(--c);color:#fff;font-weight:800;font-size:1rem;border:none;border-radius:12px;cursor:pointer;transition:.2s;margin-top:1.5rem;}
+.sub-btn:hover{background:var(--cd);}
+.results{display:none;background:#fff;border-radius:16px;padding:1.8rem;margin-top:1.5rem;box-shadow:0 4px 24px rgba(0,0,0,.1);text-align:center;border:2.5px solid var(--c);}
+.fscore{font-size:3.5rem;font-weight:900;color:var(--c);line-height:1;}
+.fmax{font-size:1.1rem;color:#94a3b8;margin:.3rem 0 .5rem;}
+.flbl{font-size:1.1rem;font-weight:700;margin-bottom:1.2rem;}
+.breakdown{text-align:left;margin-top:.5rem;}
+.bdi{display:flex;justify-content:space-between;align-items:center;padding:.4rem 0;border-bottom:1px solid #f0f0f0;font-size:.83rem;}
+.bdi:last-child{border-bottom:none;}
+.bdi-q{color:#555;flex:1;padding-right:.5rem;}
+.restart{margin-top:1.2rem;padding:.7rem 2rem;background:var(--c);color:#fff;font-weight:700;border:none;border-radius:8px;cursor:pointer;font-size:.9rem;}
+.restart:hover{background:var(--cd);}
+
+/* ══ PREMIUM UPGRADE : FEUILLE BLANCHE ══ */
+.hdr{
+  backdrop-filter:blur(20px) saturate(1.8);-webkit-backdrop-filter:blur(20px) saturate(1.8);
+  box-shadow:0 2px 20px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.08)!important;
+  border-bottom:1px solid rgba(255,255,255,.1);}
+.back{transition:background .2s,transform .2s!important;}
+.back:hover{background:rgba(255,255,255,.32)!important;transform:translateX(-2px);}
+.tbtn{transition:background .15s,transform .15s!important;}
+.tbtn:hover{background:rgba(255,255,255,.32)!important;transform:scale(1.06);}
+.schip{backdrop-filter:blur(8px);box-shadow:0 2px 8px rgba(0,0,0,.15)!important;}
+.sec{border-left:none!important;padding-left:0!important;display:flex!important;align-items:center;gap:.5rem;}
+.sec::before{content:'';display:inline-block;width:3px;height:12px;background:var(--c);border-radius:2px;flex-shrink:0;}
+.intro{border-left:none!important;border:1px solid color-mix(in srgb,var(--c) 20%,transparent)!important;
+  box-shadow:0 2px 12px color-mix(in srgb,var(--c) 10%,rgba(0,0,0,.04))!important;}
+.qcard{box-shadow:0 2px 12px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04)!important;
+  transition:box-shadow .22s,transform .22s,border-color .22s,background .22s!important;}
+.qcard:hover{box-shadow:0 6px 22px color-mix(in srgb,var(--c) 15%,rgba(0,0,0,.05))!important;transform:translateY(-1px);}
+.qcard.verified{border-color:var(--c)!important;background:color-mix(in srgb,var(--c) 3%,#fff)!important;
+  box-shadow:0 4px 20px color-mix(in srgb,var(--c) 18%,rgba(0,0,0,.04))!important;}
+textarea{transition:border-color .2s,box-shadow .2s!important;}
+textarea:focus{border-color:var(--c)!important;
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 14%,transparent),0 2px 8px rgba(0,0,0,.06)!important;background:#fff!important;}
+.vbtn{transition:background .18s,transform .18s,box-shadow .18s!important;
+  box-shadow:0 2px 8px color-mix(in srgb,var(--c) 28%,transparent)!important;}
+.vbtn:hover:not(:disabled){transform:translateY(-2px)!important;
+  box-shadow:0 6px 18px color-mix(in srgb,var(--c) 36%,transparent)!important;}
+@keyframes badgePop{0%{transform:scale(.55);opacity:0}65%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
+.badge[style*="flex"]{animation:badgePop .28s cubic-bezier(.4,0,.2,1) both!important;}
+@keyframes modelIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.model[style*="block"]{animation:modelIn .24s cubic-bezier(.4,0,.2,1) both!important;}
+.model{border-left:none!important;box-shadow:0 2px 10px color-mix(in srgb,var(--c) 12%,rgba(0,0,0,.04))!important;}
+.cas{box-shadow:0 6px 24px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.1)!important;}
+.sub-btn{transition:background .18s,transform .18s,box-shadow .18s!important;
+  box-shadow:0 4px 16px color-mix(in srgb,var(--c) 35%,transparent)!important;}
+.sub-btn:hover{transform:translateY(-3px)!important;
+  box-shadow:0 10px 30px color-mix(in srgb,var(--c) 42%,transparent)!important;}
+@keyframes resultsIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+.results[style*="block"]{animation:resultsIn .35s cubic-bezier(.4,0,.2,1) both!important;
+  box-shadow:0 8px 40px rgba(0,0,0,.12),0 2px 8px rgba(0,0,0,.06)!important;}
+.fscore{text-shadow:0 4px 16px color-mix(in srgb,var(--c) 28%,transparent);}
+.restart{transition:background .18s,transform .18s,box-shadow .18s!important;
+  box-shadow:0 3px 12px color-mix(in srgb,var(--c) 28%,transparent)!important;}
+.restart:hover{transform:translateY(-2px)!important;
+  box-shadow:0 8px 22px color-mix(in srgb,var(--c) 36%,transparent)!important;}
+@media(prefers-reduced-motion:reduce){
+  .qcard,.vbtn,.sub-btn,.restart,.tbtn,.back{transition:none!important;}
+  .badge,.model,.results{animation:none!important;}
+}
+</style>
+<style>
+/* ══ MOBILE FIRST ══ */
+@media(max-width:640px){
+  /* Header : compresser pour tenir sur une ligne */
+  .hdr{padding:.65rem .9rem;gap:.4rem;}
+  .htitle{font-size:.85rem;}
+  .hsub{display:none;}           /* masquer le sous-titre sur mobile */
+  .back{padding:.26rem .55rem;font-size:.7rem;}
+  .hdr-l{gap:.5rem;}
+  .hdr-r{gap:.35rem;}
+  .timer{font-size:.95rem;}
+  .tbtn{padding:.22rem .5rem;font-size:.7rem;}
+  .schip{font-size:.72rem;padding:.22rem .65rem;}
+
+  /* Body */
+  .body{padding:.85rem .85rem 3rem;}
+
+  /* Intro */
+  .intro{font-size:.78rem;padding:.65rem .85rem;margin-bottom:1.1rem;}
+
+  /* Libellé section */
+  .sec{font-size:.6rem;margin:1.4rem 0 .7rem;}
+
+  /* Carte question */
+  .qcard{padding:.85rem .85rem .7rem;}
+  .qlbl{font-size:.58rem;}
+  .qtxt{font-size:.88rem;margin-bottom:.65rem;}
+  textarea{font-size:.82rem;min-height:70px;padding:.55rem .75rem;}
+
+  /* Footer question */
+  .qfoot{gap:.3rem;}
+  .wc{font-size:.68rem;}
+  .foot-r{gap:.35rem;}
+  .vbtn{padding:.33rem .8rem;font-size:.74rem;}
+  .badge{font-size:.7rem;padding:.2rem .6rem;}
+
+  /* Réponse modèle */
+  .model{font-size:.76rem;padding:.65rem .8rem;margin-top:.75rem;}
+  .mlbl{font-size:.58rem;}
+
+  /* Cas pratique */
+  .cas{padding:.9rem;border-radius:12px;margin:1.2rem 0 .7rem;}
+  .cas h3{font-size:.88rem;}
+  .cas p,.cas li{font-size:.77rem;}
+
+  /* Bouton soumettre */
+  .sub-btn{font-size:.9rem;padding:.8rem;border-radius:10px;}
+
+  /* Panneau résultats */
+  .results{padding:1.2rem;}
+  .fscore{font-size:2.8rem;}
+  .fmax{font-size:.88rem;}
+  .flbl{font-size:.92rem;margin-bottom:.9rem;}
+  .bdi{font-size:.76rem;padding:.35rem 0;}
+  .bdi-q{font-size:.76rem;}
+  .restart{font-size:.82rem;padding:.55rem 1.4rem;}
+}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hdr-l">
+    <a href="mardi.html" class="back">← Fiches</a>
+    <div><div class="htitle">Feuille Blanche : Bloc 3</div><div class="hsub" id="hsub">Mardi · Questionnaire noté · chargement…</div></div>
+  </div>
+  <div class="hdr-r">
+    <span class="schip" id="schip">0 / 0</span>
+    <span class="timer" id="timer">00:00</span>
+    <button class="tbtn" id="tbtn" onclick="toggleTimer()">▶</button>
+    <button class="tbtn" onclick="resetTimer()">↺</button>
+  </div>
+</div>
+
+<div class="body" id="examBody"></div>
+
+<script>
+const POOL=[
+  {id:'bc1',sec:'Brand Content',prof:'Prof. Hacquin Téo',q:'Définissez le Brand Content. En quoi se distingue-t-il de la publicité traditionnelle ?',kw:['brand content','marque','valeurs','image','audience','histoire','connexion','émotionnelle','publicité','interruption','attire','engage','volontaire'],model:'Le <strong>Brand Content</strong> regroupe tous les contenus créés par une marque pour construire son univers, ses valeurs et créer une connexion émotionnelle avec son audience. Il se distingue de la publicité classique qui <strong>interrompt</strong> le consommateur : le brand content l\'<strong>attire volontairement</strong> en lui apportant de la valeur (entertainment, information, émotion).'},
+  {id:'bc2',sec:'Brand Content',prof:'Prof. Hacquin Téo',q:'Qu\'est-ce que le storytelling ? Quelle est sa structure narrative et son impact sur la mémorisation ?',kw:['storytelling','histoire','protagoniste','enjeu','conflit','résolution','transformation','émotion','22','mémorisation','narrative'],model:'Le <strong>storytelling</strong> = art de raconter une histoire pour transmettre des valeurs ou un message. Structure : Protagonist · Enjeu · Conflit · Résolution · Transformation. <strong>Impact :</strong> les histoires sont mémorisées <strong>22× mieux</strong> que des faits isolés car elles activent les émotions et l\'empathie du lecteur.'},
+  {id:'bc3',sec:'Brand Content',prof:'Prof. Hacquin Téo',q:'Pourquoi les consommateurs sont-ils plus réceptifs aux récits de marque qu\'aux messages publicitaires ?',kw:['oxytocine','empathie','identification','valeurs','communauté','durable','émotions','humanise','intrusive','mémorisation','relation','engagement'],model:'• Les récits activent des <strong>émotions</strong> et la libération d\'<strong>oxytocine</strong> (hormone de confiance). • Le consommateur s\'<strong>identifie</strong> aux personnages. • La marque s\'<strong>humanise</strong> et crée une relation durable. • Moins <strong>intrusive</strong> que la pub classique. • Renforce le sentiment d\'appartenance à une <strong>communauté</strong>.'},
+  {id:'bc4',sec:'Brand Content',prof:'Prof. Hacquin Téo',q:'Quels sont les grands formats de Brand Content ? Citez-en 6 avec leurs avantages.',kw:['vidéo','reels','tiktok','blog','newsletter','podcast','infographie','carrousel','ugc','live','webinaire','interactif'],model:'• <strong>Vidéo/Reels/TikTok :</strong> fort engagement, viral. • <strong>Blog/Newsletter :</strong> SEO, expertise, fidélisation. • <strong>Podcast :</strong> image d\'expert, écoute mobile. • <strong>Infographie :</strong> partage facile, vulgarisation. • <strong>UGC :</strong> authenticité, preuve sociale. • <strong>Live/Webinaire :</strong> interaction, proximité.'},
+  {id:'bc5',sec:'Brand Content',prof:'Prof. Hacquin Téo',q:'Comment mesurer la performance d\'une stratégie de contenu ? Citez 3 niveaux de KPI.',kw:['notoriété','reach','impressions','followers','engagement','likes','commentaires','partages','complétion','conversion','trafic','leads'],model:'• <strong>Notoriété :</strong> Reach, Impressions, nouveaux Followers. • <strong>Engagement :</strong> taux d\'engagement (likes, commentaires, partages, sauvegardes). • <strong>Conversion :</strong> trafic vers le site, leads générés, taux de complétion vidéo, temps de lecture.'},
+  {id:'cm1',sec:'Community Management',prof:'Prof. Ythier Fiona',q:'Quels sont les 6 rôles principaux d\'un Community Manager ?',kw:['animation','modération','veille','reporting','représentation','crise','bad buzz','marque','interactions','mentions','tendances'],model:'• <strong>Animation :</strong> créer du contenu engageant. • <strong>Modération :</strong> gérer les interactions. • <strong>Veille :</strong> surveiller mentions et tendances. • <strong>Reporting :</strong> analyser les KPI. • <strong>Représentation :</strong> voix de la marque. • <strong>Gestion de crise :</strong> répondre aux bad buzz rapidement.'},
+  {id:'cm2',sec:'Community Management',prof:'Prof. Ythier Fiona',q:'Définissez le taux d\'engagement. Donnez sa formule et les benchmarks.',kw:['engagement','interactions','likes','commentaires','partages','sauvegardes','clics','reach','3','6','abonnés','formule'],model:'<strong>Taux d\'engagement = (Interactions totales / Reach) × 100.</strong> Interactions : likes, commentaires, partages, sauvegardes, clics. <strong>Benchmarks :</strong> &lt;3% faible · 3-6% bon · &gt;6% excellent.'},
+  {id:'cm3',sec:'Community Management',prof:'Prof. Ythier Fiona',q:'Quelle est la différence entre portée organique et portée sponsorisée sur les réseaux sociaux ?',kw:['organique','naturellement','algorithme','gratuit','sponsorisée','payante','ciblage','budget','boost','reach','méta'],model:'<strong>Organique :</strong> visibilité obtenue naturellement via l\'algorithme, sans budget. En baisse continue (Meta : &lt;5% des abonnés). <strong>Sponsorisée (paid) :</strong> visibilité payante avec ciblage précis. <strong>Complémentarité :</strong> l\'organique construit la relation, le paid accélère la portée.'},
+  {id:'cm4',sec:'Community Management',prof:'Prof. Ythier Fiona',q:'Quelles sont les 5 étapes de gestion d\'une crise sur les réseaux sociaux ?',kw:['identifier','répondre','2h','reconnaître','empathie','corriger','actions','suivi','supprimer','commentaires','sentiment'],model:'1. <strong>Identifier</strong> la source rapidement. 2. <strong>Répondre en moins de 2h</strong> (ne jamais supprimer les commentaires). 3. <strong>Reconnaître</strong> les erreurs avec empathie. 4. <strong>Corriger</strong> en annonçant des actions concrètes. 5. <strong>Suivi</strong> : monitoring du sentiment, bilan post-crise.'},
+  {id:'cm5',sec:'Community Management',prof:'Prof. Ythier Fiona',q:'Quels KPI Social Media doit-on suivre en priorité ? Citez 6 métriques clés.',kw:['reach','impressions','engagement','croissance','communauté','sentiment','trafic','conversions','share of voice','utms','ga4'],model:'• Reach & Impressions. • Taux d\'engagement. • Croissance communauté. • <strong>Sentiment analysis.</strong> • Trafic social (UTMs → GA4). • Conversions attribuées. • <strong>Share of Voice.</strong>'},
+  {id:'in1',sec:'Influence & Affiliation',prof:'Prof. Saint Louboue Thibaut',q:'Différenciez les 4 catégories d\'influenceurs selon leur audience.',kw:['nano','micro','macro','mega','célébrité','10k','100k','1m','engagement','authenticité','niche','portée'],model:'• <strong>Nano :</strong> &lt;10K abonnés. Fort engagement, très authentique, niche. • <strong>Micro :</strong> 10K-100K. Bonne crédibilité, audience ciblée. • <strong>Macro :</strong> 100K-1M. Portée large, coût élevé. • <strong>Mega/Célébrité :</strong> &gt;1M. Portée maximale, engagement dilué.'},
+  {id:'in2',sec:'Influence & Affiliation',prof:'Prof. Saint Louboue Thibaut',q:'Définissez le marketing d\'affiliation. Citez les acteurs clés et le principe de fonctionnement.',kw:['affiliation','affilié','marque','annonceur','commission','ventes','leads','tracking','awin','effiliation','plateforme','performance'],model:'L\'<strong>affiliation</strong> = partenariat où un affilié promeut un produit contre une commission sur les ventes/leads. <strong>Acteurs :</strong> Annonceur · Affilié · Plateforme (Awin, Effiliation). <strong>Modèle :</strong> 100% à la performance (CPA, CPC).'},
+  {id:'in3',sec:'Influence & Affiliation',prof:'Prof. Saint Louboue Thibaut',q:'Quels critères utiliser pour sélectionner un influenceur ? Citez 5 éléments clés.',kw:['cible','engagement','3%','faux followers','crédibilité','légitimité','niche','valeurs','collaborations','audience','qualité'],model:'• <strong>Adéquation cible.</strong> • <strong>Taux d\'engagement &gt;3%</strong> (nano/micro). • <strong>Authenticité :</strong> détecter les faux followers. • <strong>Crédibilité</strong> sur la thématique. • <strong>Alignement valeurs</strong> avec la marque.'},
+  {id:'in4',sec:'Influence & Affiliation',prof:'Prof. Saint Louboue Thibaut',q:'Quels sont les modèles de rémunération en marketing d\'influence ?',kw:['fixe','cpa','cpc','seeding','ambassadeur','hybride','commission','produits','code promo'],model:'• <strong>Cachet fixe</strong> par publication. • <strong>CPA :</strong> commission sur vente (code promo). • <strong>CPC :</strong> commission par clic. • <strong>Seeding :</strong> envoi produits sans contrepartie financière. • <strong>Ambassadeur :</strong> collaboration longue durée. • <strong>Hybride :</strong> fixe + commission.'},
+  {id:'in5',sec:'Influence & Affiliation',prof:'Prof. Saint Louboue Thibaut',q:'Comment mesurer le ROI d\'une campagne d\'influence ?',kw:['roi','emv','earned media value','code promo','utm','reach','impressions','engagement','abonnés','revenus','coût'],model:'<strong>ROI = (Revenus - Coût) / Coût × 100.</strong> • <strong>EMV</strong> (Earned Media Value). • Tracking via <strong>codes promo uniques + UTMs.</strong> • Métriques : Reach, Impressions, Engagement, CA généré.'},
+  {id:'au1',sec:'Automation',prof:'Prof. Ythier Fiona',q:'Définissez le Marketing Automation et ses principaux cas d\'usage.',kw:['automation','automatise','logiciel','comportement','données','bienvenue','nurturing','panier','post-achat','réactivation','scoring'],model:'<strong>Marketing Automation</strong> = automatisation de séquences marketing basées sur les comportements/données. <strong>Cas d\'usage :</strong> Email bienvenue · Lead nurturing · Relance panier abandonné · Post-achat · Réactivation inactifs · Lead scoring.'},
+  {id:'au2',sec:'Automation',prof:'Prof. Ythier Fiona',q:'Qu\'est-ce qu\'une base de données marketing ? Quels types de données la composent ?',kw:['base de données','structurée','contacts','segmenter','personnaliser','identitaires','comportementales','déclaratives','transactionnelles','rfm','rgpd','consentement'],model:'Ensemble structuré de données clients pour <strong>segmenter et personnaliser</strong>. <strong>Types :</strong> Identitaires · Transactionnelles (RFM) · Comportementales · Déclaratives. RGPD : consentement obligatoire.'},
+  {id:'au3',sec:'Automation',prof:'Prof. Ythier Fiona',q:'Définissez le Lead Scoring. Comment fonctionne-t-il et à quoi sert-il ?',kw:['lead scoring','notation','prospect','profil','comportement','prioriser','chauds','mql','sql','seuil','score','points'],model:'<strong>Lead Scoring</strong> = notation des prospects selon profil + comportement. Permet de <strong>prioriser</strong> les leads les plus chauds (MQL → SQL) et de les transmettre aux commerciaux au bon moment (seuil de score défini).'}
+];
+
+const CAS={ctx:'<strong>Lumière</strong> — start-up lyonnaise fondée en 2020, bougies artisanales &amp; parfums d\'intérieur haut de gamme. Fabrication française, cire végétale, parfums de Grasse. 6 salariés. CA <strong>280 k€</strong> (60 % digital, 40 % B2B boutiques/hôtels). Gamme 25-120 €. Positionnement : "L\'art de créer une atmosphère". Cible : femmes 25-45 ans, CSP+.<br><br><strong>Situation digitale :</strong> Instagram <strong>4 200 abonnés</strong>, engagement <strong>1,2 %</strong> (bench lifestyle 3-4 %), 3 posts/sem sans ligne éditoriale · TikTok 890 abonnés (inactif) · newsletter <strong>800 abonnés</strong>, open rate 18 %, 1 envoi/mois · site 3 200 sessions/mois, CVR 1,4 %, panier moyen 67 € · budget paid : <strong>0 €</strong>.<br><br><strong>Mission :</strong> lancement collection automne-hiver — 8 nouvelles références (6 bougies + 2 coffrets cadeaux 89 €). Saisonnalité critique : 65 % du CA réalisé en Q4. CA collection N-1 : 38 000 €. Objectif N : <strong>60 000 €</strong> (+58 %). Budget : <strong>15 000 €</strong> (influenceurs 6 k€ · contenu 3,5 k€ · Meta Ads 3 k€ · email 0,8 k€ · divers 1,7 k€). Deadline : campagne active avant le 15 octobre.',q:'Construisez le plan de communication complet de Lumière pour le lancement de sa collection automne-hiver. Détaillez brand content, community management, stratégie d\'influence, programme d\'affiliation et séquences d\'automation. Justifiez la répartition du budget 15 000 €.',kw:['calendrier éditorial','pilier','coulisses','storytelling','reels','ugc','hashtag','engagement','micro-influenceur','seeding','code promo','affiliation','utm','automation','bienvenue','post-achat','panier abandonné','réactivation','kpi','reach','conversion','newsletter'],model:'<strong>Brand Content :</strong> 4 piliers éditoriaux (inspiration déco, coulisses fabrication, lifestyle bien-être, UGC clients) · 5 posts/sem Instagram + 2 Reels + 1 article blog · brief shooting photo/vidéo automne. KPI : reach +150%, engagement &gt;3,5%. <strong>CM :</strong> hashtag dédié #LumièreAutomne, concours UGC (coffret à gagner), modération &lt;2h, DM proactifs. KPI : +2 000 abonnés en 4 sem, engagement &gt;4%. <strong>Influence :</strong> 4-6 micro-influenceurs lifestyle 10K-100K · seeding coffrets + brief éditorial · codes promo trackables LUMIERE10. KPI : 2 500 nouveaux abonnés newsletter, EMV &gt;3× investissement. <strong>Affiliation :</strong> 15 créateurs lifestyle, commission 12 %, tracking UTM + Refersion, kit créateur fourni. KPI : 200 commandes via affiliés. <strong>Automation :</strong> bienvenue (J0 story marque → J3 best-sellers → J7 -10%) · post-achat (J+2 remerciements + tuto entretien bougie) · panier abandonné (H+1 + H+24 relance) · réactivation inactifs 90j. KPI : TO &gt;28%, CVR automation &gt;4%. <strong>Budget :</strong> influenceurs 6 k€ (40%) · contenu 3,5 k€ (23%) · Meta Ads 3 k€ (20%) · email 0,8 k€ · divers 1,7 k€.'};
+
+const QUOTA={'Brand Content':2,'Community Management':1,'Influence & Affiliation':2,'Automation':1};
+const BADGE={2:{cls:'b2',icon:'✅',lbl:'2/2 · Très bien'},1:{cls:'b1',icon:'🟡',lbl:'1/2 · Bien'},0:{cls:'b0',icon:'❌',lbl:'0/2 · Insuffisant'}};
+
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function norm(s){return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();}
+function score(text,kw){if(!text||norm(text).length<10)return 0;const n=norm(text);let f=0;kw.forEach(k=>{if(n.includes(norm(k)))f++;});const r=f/kw.length;return r>=0.55?2:r>=0.25?1:0;}
+
+let selected=[],scores={};
+
+function pickQ(){
+  const bySec={};
+  POOL.forEach(q=>{if(!bySec[q.sec])bySec[q.sec]=[];bySec[q.sec].push(q);});
+  const out=[];
+  Object.entries(QUOTA).forEach(([s,n])=>{out.push(...shuffle(bySec[s]||[]).slice(0,n));});
+  return out;
+}
+
+function render(){
+  selected=pickQ();
+  scores={};
+  const body=document.getElementById('examBody');
+  document.getElementById('hsub').textContent=`Mardi · ${selected.length+1} questions · Score sur ${(selected.length+1)*2} pts`;
+  let html=`<div class="intro">📝 <strong>Questionnaire noté &amp; aléatoire</strong> : Nouveau tirage à chaque ouverture. Répondez sans notes, cliquez <em>Vérifier</em> par question ou <em>Remettre la copie</em> à la fin.</div>`;
+  let lastSec='';
+  selected.forEach((q,i)=>{
+    if(q.sec!==lastSec){html+=`<div class="sec">${q.sec} · ${q.prof}</div>`;lastSec=q.sec;}
+    html+=`<div class="qcard" id="card_${q.id}"><div class="qlbl">Question ${i+1} · 2 pts</div><div class="qtxt">${q.q}</div><textarea id="ta_${q.id}" placeholder="Rédigez votre réponse ici…"></textarea><div class="qfoot"><span class="wc" id="wc_${q.id}">0 mot</span><div class="foot-r"><div class="badge" id="badge_${q.id}"></div><button class="vbtn" id="vbtn_${q.id}" onclick="verifyOne('${q.id}')">Vérifier</button></div></div><div class="model" id="model_${q.id}"><div class="mlbl">Réponse attendue</div>${q.model}</div></div>`;
+  });
+  html+=`<div class="sec">Cas Pratique : Lumière</div><div class="cas"><h3>📋 Contexte</h3><p>${CAS.ctx}</p></div><div class="qcard" id="card_cas"><div class="qlbl">Question ${selected.length+1} : Étude de cas · 2 pts</div><div class="qtxt">${CAS.q}</div><textarea id="ta_cas" style="min-height:160px;" placeholder="Développez votre stratégie ici…"></textarea><div class="qfoot"><span class="wc" id="wc_cas">0 mot</span><div class="foot-r"><div class="badge" id="badge_cas"></div><button class="vbtn" id="vbtn_cas" onclick="verifyOne('cas')">Vérifier</button></div></div><div class="model" id="model_cas"><div class="mlbl">Correction indicative</div>${CAS.model}</div></div>`;
+  html+=`<button class="sub-btn" onclick="submitAll()">📊 Remettre la copie · Voir mon score</button><div class="results" id="results"></div>`;
+  body.innerHTML=html;
+  [...selected.map(q=>q.id),'cas'].forEach(id=>{
+    document.getElementById('ta_'+id)?.addEventListener('input',()=>{
+      const w=(document.getElementById('ta_'+id).value.trim().split(/\s+/).filter(Boolean).length);
+      document.getElementById('wc_'+id).textContent=w+(w<=1?' mot':' mots');
+      if(!timerRunning)toggleTimer();
+    });
+  });
+}
+
+function verifyOne(id){
+  const q=id==='cas'?CAS:selected.find(x=>x.id===id);
+  const ta=document.getElementById('ta_'+id);
+  const s=score(ta.value,q.kw);
+  scores[id]=s;ta.readOnly=true;
+  const b=BADGE[s];
+  const bd=document.getElementById('badge_'+id);
+  bd.className='badge '+b.cls;bd.textContent=b.icon+' '+b.lbl;bd.style.display='flex';
+  document.getElementById('model_'+id).style.display='block';
+  const vbtn=document.getElementById('vbtn_'+id);
+  vbtn.textContent='✓ Vérifié';vbtn.disabled=true;
+  document.getElementById('card_'+id).classList.add('verified');
+  updateChip();
+}
+
+function updateChip(){
+  const tot=Object.values(scores).reduce((a,b)=>a+b,0);
+  const chip=document.getElementById('schip');chip.style.display='inline-block';
+  chip.textContent=tot+' / '+((selected.length+1)*2);
+}
+
+function submitAll(){
+  [...selected.map(q=>q.id),'cas'].forEach(id=>{if(scores[id]===undefined)verifyOne(id);});
+  const tot=Object.values(scores).reduce((a,b)=>a+b,0);
+  const max=(selected.length+1)*2;
+  const pct=Math.round(tot/max*100);
+  const grade=pct>=80?'🏆 Excellent !':pct>=60?'👍 Bien !':pct>=40?'📚 À consolider':'⚠️ À retravailler';
+  let bd='';
+  selected.forEach((q,i)=>{const s=scores[q.id]??0;const b=BADGE[s];bd+=`<div class="bdi"><span class="bdi-q">Q${i+1} · ${q.sec}</span><span class="badge ${b.cls}" style="display:inline-flex;font-size:.75rem;">${b.icon} ${s}/2</span></div>`;});
+  const cs=scores['cas']??0;const cb=BADGE[cs];bd+=`<div class="bdi"><span class="bdi-q">Cas pratique</span><span class="badge ${cb.cls}" style="display:inline-flex;font-size:.75rem;">${cb.icon} ${cs}/2</span></div>`;
+  const res=document.getElementById('results');
+  res.style.display='block';
+  res.innerHTML=`<div class="fscore">${tot}</div><div class="fmax">/ ${max} points · ${pct}%</div><div class="flbl">${grade}</div><div class="breakdown">${bd}</div><button class="restart" onclick="location.reload()">🔄 Nouveau questionnaire</button>`;
+  res.scrollIntoView({behavior:'smooth'});
+}
+
+let timerRunning=false,timerSecs=0,timerInt;
+function toggleTimer(){if(timerRunning){clearInterval(timerInt);timerRunning=false;document.getElementById('tbtn').textContent='▶';}else{timerInt=setInterval(()=>{timerSecs++;document.getElementById('timer').textContent=String(Math.floor(timerSecs/60)).padStart(2,'0')+':'+String(timerSecs%60).padStart(2,'0');},1000);timerRunning=true;document.getElementById('tbtn').textContent='⏸';}}
+function resetTimer(){clearInterval(timerInt);timerRunning=false;timerSecs=0;document.getElementById('timer').textContent='00:00';document.getElementById('tbtn').textContent='▶';}
+
+render();
+</script>
+</body>
+</html>

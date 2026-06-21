@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Révision Jeudi : Bloc 5 · Stratégie E-Commerce</title>
+<style>
+  :root {
+    --primary: #E65100;
+    --primary-light: #F57C00;
+    --primary-dark: #BF360C;
+    --accent: #FFB74D;
+    --bg: #fff8f0;
+    --text: #1a1a2e;
+    --muted: #64748b;
+    --success: #2e7d32;
+    --border: #e2e8f0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+  .hero { background: linear-gradient(135deg, #BF360C 0%, #E64A19 40%, #F57C00 70%, #FFB74D 100%); color:#fff; padding:2.5rem 1.5rem 3.5rem; text-align:center; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%; background:radial-gradient(circle, rgba(255,255,255,.05) 0%, transparent 60%); }
+  .hero .day-badge { display:inline-block; background:rgba(255,255,255,.2); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.3); border-radius:50px; padding:.4rem 1.2rem; font-size:.8rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; margin-bottom:1rem; }
+  .hero h1 { font-size:clamp(1.8rem,4vw,3rem); font-weight:800; margin-bottom:.5rem; }
+  .hero p { font-size:1.1rem; opacity:.85; margin-bottom:1.5rem; }
+  .hero .meta { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+  .hero .meta span { background:rgba(255,255,255,.15); border-radius:8px; padding:.3rem .8rem; font-size:.8rem; font-weight:600; }
+  .hero .back-home { position:absolute; top:.9rem; left:1rem; display:inline-flex; align-items:center; gap:.4rem; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.35); color:#fff; text-decoration:none; border-radius:8px; padding:.35rem .85rem; font-size:.78rem; font-weight:700; backdrop-filter:blur(6px); transition:.2s; }
+  .hero .back-home:hover { background:rgba(255,255,255,.3); }
+  .progress-bar-wrap { background:#FFF3E0; padding:1rem 1.5rem; display:flex; align-items:center; gap:1rem; }
+  .progress-label { font-size:.85rem; font-weight:600; color:var(--primary); white-space:nowrap; }
+  .progress-track { flex:1; height:8px; background:#FFE0B2; border-radius:4px; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,var(--primary),var(--accent)); border-radius:4px; transition:width .4s ease; }
+  .progress-pct { font-size:.85rem; font-weight:700; color:var(--primary); white-space:nowrap; }
+  .case-banner { margin:1.5rem; background:linear-gradient(135deg,#BF360C,#E65100); border-radius:16px; padding:1.5rem; color:#fff; cursor:pointer; display:flex; align-items:flex-start; gap:1rem; }
+  .case-banner .icon { font-size:2rem; flex-shrink:0; margin-top:.1rem; }
+  .case-banner h2 { font-size:1.2rem; font-weight:700; margin-bottom:.5rem; }
+  .case-banner p { font-size:.9rem; opacity:.85; line-height:1.6; }
+  .case-body { display:none; margin:0 1.5rem 1.5rem; background:#fff; border-radius:12px; border-left:4px solid var(--primary); padding:1.2rem; font-size:.9rem; line-height:1.7; }
+  .case-body.open { display:block; }
+  .tabs-wrap { padding:0 1.5rem; overflow-x:auto; display:flex; gap:.5rem; }
+  .tab-btn { flex-shrink:0; padding:.6rem 1.2rem; border:2px solid transparent; background:transparent; border-radius:10px 10px 0 0; font-size:.85rem; font-weight:600; cursor:pointer; color:var(--muted); transition:.2s; white-space:nowrap; }
+  .tab-btn.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+  .tab-btn:hover:not(.active) { background:#FFF3E0; color:var(--primary); }
+  .tab-panel { display:none; padding:1.5rem; animation:fadeIn .3s; }
+  .tab-panel.active { display:block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+  .matiere-header { display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem; padding:1rem 1.2rem; background:#fff; border-radius:12px; border-left:5px solid var(--primary); box-shadow:0 2px 8px rgba(0,0,0,.06); }
+  .matiere-header .num { width:40px; height:40px; background:var(--primary); color:#fff; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; font-weight:800; flex-shrink:0; }
+  .matiere-header h2 { font-size:1.1rem; font-weight:700; }
+  .matiere-header p { font-size:.8rem; color:var(--muted); }
+  .section-title { font-size:.75rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--primary); margin:1.2rem 0 .8rem; padding-left:.5rem; border-left:3px solid var(--accent); }
+  .cards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1rem; margin-bottom:1.5rem; }
+  .flip-card { height:220px; perspective:1000px; cursor:pointer; }
+  .flip-inner { width:100%; height:100%; position:relative; transform-style:preserve-3d; transition:transform .5s cubic-bezier(.4,.2,.2,1); }
+  .flip-card.flipped .flip-inner { transform:rotateY(180deg); }
+  .flip-front, .flip-back { position:absolute; inset:0; border-radius:14px; padding:1.2rem; backface-visibility:hidden; display:flex; flex-direction:column; box-shadow:0 3px 12px rgba(0,0,0,.08); }
+  .flip-front { background:#fff; border:1px solid var(--border); justify-content:space-between; }
+  .flip-front .q-num { font-size:.7rem; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.5rem; }
+  .flip-front .q-text { font-size:.95rem; font-weight:600; line-height:1.5; flex:1; }
+  .flip-front .flip-hint { font-size:.72rem; color:var(--muted); text-align:center; padding-top:.8rem; border-top:1px solid var(--border); }
+  .flip-back { background:linear-gradient(135deg,var(--primary),var(--primary-light)); color:#fff; transform:rotateY(180deg); overflow-y:auto; }
+  .flip-back .a-label { font-size:.7rem; font-weight:700; opacity:.7; text-transform:uppercase; margin-bottom:.5rem; }
+  .flip-back .a-text { font-size:.82rem; line-height:1.6; }
+  .flip-back .a-text ul { list-style:none; padding:0; }
+  .flip-back .a-text ul li::before { content:"• "; opacity:.7; }
+  .flip-back .a-text li { margin-bottom:.2rem; }
+  .accordion { background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,.06); overflow:hidden; margin-bottom:1rem; }
+  .acc-header { padding:1rem 1.2rem; display:flex; align-items:center; justify-content:space-between; cursor:pointer; font-weight:600; font-size:.9rem; gap:.5rem; }
+  .acc-header:hover { background:#f8fafc; }
+  .acc-icon { font-size:1.1rem; transition:transform .3s; }
+  .acc-header.open .acc-icon { transform:rotate(180deg); }
+  .acc-body { display:none; padding:0 1.2rem 1rem; border-top:1px solid var(--border); }
+  .acc-body.open { display:block; }
+  .acc-body p, .acc-body li { font-size:.875rem; line-height:1.7; color:#334155; }
+  .acc-body ul { padding-left:1.2rem; margin:.4rem 0; }
+  .acc-body ul li { margin-bottom:.3rem; }
+  .kpi-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:.8rem; margin-bottom:1rem; }
+  .kpi-box { background:#fff; border-radius:10px; padding:.9rem 1rem; border-top:3px solid var(--primary); box-shadow:0 2px 8px rgba(0,0,0,.06); text-align:center; }
+  .kpi-box .kpi-val { font-size:1.2rem; font-weight:800; color:var(--primary); }
+  .kpi-box .kpi-label { font-size:.72rem; color:var(--muted); margin-top:.3rem; font-weight:500; }
+  .done-check { display:flex; align-items:center; gap:.6rem; margin-top:.5rem; font-size:.8rem; color:var(--muted); cursor:pointer; user-select:none; }
+  .done-check input { width:16px; height:16px; cursor:pointer; accent-color:var(--success); }
+  .done-check.checked { color:var(--success); font-weight:600; }
+  .formula-box { background:#FFF8E1; border:1px solid #FFD54F; border-radius:10px; padding:.8rem 1rem; margin:.6rem 0; font-size:.87rem; color:#5D4037; }
+  .formula-box strong { color:#E65100; }
+  .tip-box { background:#FFF3E0; border-left:4px solid #F57C00; border-radius:8px; padding:.8rem 1rem; margin-bottom:1rem; font-size:.83rem; color:#BF360C; }
+  .table-responsive { overflow-x:auto; margin:.6rem 0; }
+  table { width:100%; border-collapse:collapse; font-size:.82rem; }
+  th { background:var(--primary); color:#fff; padding:.5rem .8rem; text-align:left; }
+  td { padding:.5rem .8rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  tr:nth-child(even) td { background:#fff8f0; }
+  .synth-box { background:linear-gradient(135deg,#BF360C,#E65100); color:#fff; border-radius:14px; padding:1.4rem; margin-bottom:1rem; }
+  .synth-box h3 { font-size:1rem; margin-bottom:.8rem; font-weight:700; }
+  .synth-box ul { list-style:none; padding:0; }
+  .synth-box ul li { font-size:.87rem; line-height:1.7; padding:.2rem 0; }
+  .synth-box ul li::before { content:"→ "; opacity:.7; }
+</style>
+<style>
+/* ══ PREMIUM UPGRADE : JEUDI ══ */
+:root{
+  --sh-sm:0 1px 3px rgba(230,81,0,.08),0 1px 2px rgba(0,0,0,.05);
+  --sh-md:0 4px 14px rgba(230,81,0,.13),0 2px 5px rgba(0,0,0,.06);
+  --sh-lg:0 8px 28px rgba(230,81,0,.18),0 4px 8px rgba(0,0,0,.07);
+  --sh-hv:0 16px 44px rgba(230,81,0,.25),0 6px 14px rgba(0,0,0,.09);
+}
+@keyframes heroShimmer{
+  0%{transform:translateX(-100%) skewX(-20deg);opacity:0}
+  20%{opacity:1}80%{opacity:1}
+  100%{transform:translateX(380%) skewX(-20deg);opacity:0}
+}
+.hero::after{content:'';position:absolute;top:0;left:0;width:22%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.09),transparent);
+  animation:heroShimmer 7s cubic-bezier(.4,0,.2,1) infinite;animation-delay:2s;pointer-events:none;}
+.back-home{backdrop-filter:blur(14px)!important;
+  transition:background .2s,transform .2s,box-shadow .2s!important;
+  box-shadow:0 2px 10px rgba(0,0,0,.18)!important;}
+.back-home:hover{background:rgba(255,255,255,.3)!important;transform:translateX(-3px)!important;}
+@keyframes prgShimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+.progress-bar-wrap{box-shadow:0 2px 10px rgba(230,81,0,.1);}
+.progress-fill{background:linear-gradient(90deg,#BF360C,#FFB74D,#BF360C)!important;
+  background-size:200% auto!important;animation:prgShimmer 2.8s linear infinite;}
+a[href*="feuille-blanche"]{transition:transform .25s cubic-bezier(.4,0,.2,1),box-shadow .25s!important;}
+a[href*="feuille-blanche"]:hover{transform:translateY(-4px)!important;
+  box-shadow:0 14px 36px rgba(230,81,0,.4)!important;}
+.case-banner{box-shadow:0 4px 20px rgba(191,54,12,.3)!important;
+  transition:transform .25s cubic-bezier(.4,0,.2,1),box-shadow .25s!important;}
+.case-banner:hover{transform:translateY(-3px)!important;box-shadow:0 10px 34px rgba(191,54,12,.45)!important;}
+.tab-btn{transition:background .2s,color .2s,box-shadow .2s,transform .18s!important;}
+.tab-btn.active{background:linear-gradient(135deg,#BF360C,#E65100)!important;
+  border-color:transparent!important;
+  box-shadow:0 4px 16px rgba(230,81,0,.42),0 2px 4px rgba(0,0,0,.1)!important;
+  transform:translateY(-1px);}
+.tab-btn:hover:not(.active){transform:translateY(-1px);}
+@keyframes panelIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.tab-panel.active{animation:panelIn .22s cubic-bezier(.4,0,.2,1) both!important;}
+.matiere-header{border-left:none!important;border-radius:14px!important;
+  box-shadow:var(--sh-md)!important;transition:box-shadow .22s,transform .22s!important;}
+.matiere-header:hover{box-shadow:var(--sh-lg)!important;transform:translateY(-1px);}
+.matiere-header .num{border-radius:12px!important;box-shadow:0 4px 12px rgba(230,81,0,.38)!important;}
+.section-title{border-left:none!important;padding-left:0!important;
+  display:flex!important;align-items:center;gap:.5rem;}
+.section-title::before{content:'';display:inline-block;width:3px;height:13px;
+  background:var(--accent);border-radius:2px;flex-shrink:0;}
+.flip-card{transition:transform .22s cubic-bezier(.4,0,.2,1)!important;}
+.flip-card:not(.flipped):hover{transform:translateY(-5px)!important;}
+.flip-inner{transition:transform .56s cubic-bezier(.42,.08,.08,.92)!important;}
+.flip-front{box-shadow:var(--sh-md)!important;border:1px solid rgba(0,0,0,.055)!important;}
+.flip-card:not(.flipped):hover .flip-front{box-shadow:var(--sh-hv)!important;}
+.flip-back{box-shadow:0 12px 32px rgba(230,81,0,.35)!important;}
+.acc-body{display:block!important;max-height:0;overflow:hidden;
+  padding-bottom:0!important;border-top:1px solid transparent!important;
+  transition:max-height .38s cubic-bezier(.4,0,.2,1),padding-bottom .22s,border-color .22s!important;}
+.acc-body.open{max-height:1800px;padding-bottom:1rem!important;border-top-color:var(--border)!important;}
+.acc-icon{transition:transform .35s cubic-bezier(.4,0,.2,1)!important;}
+.accordion{box-shadow:var(--sh-sm)!important;transition:box-shadow .22s!important;}
+.accordion:hover{box-shadow:var(--sh-md)!important;}
+.kpi-box{box-shadow:var(--sh-sm)!important;transition:transform .22s,box-shadow .22s!important;}
+.kpi-box:hover{transform:translateY(-3px)!important;box-shadow:var(--sh-md)!important;}
+.case-body{border-left:none!important;
+  background:linear-gradient(to right,rgba(230,81,0,.07),rgba(230,81,0,.02))!important;
+  border:1px solid rgba(230,81,0,.14)!important;border-radius:12px!important;box-shadow:var(--sh-sm)!important;}
+.tip-box{border-left:none!important;
+  background:linear-gradient(to right,rgba(76,175,80,.12),rgba(76,175,80,.03))!important;
+  border:1px solid rgba(76,175,80,.22)!important;border-radius:10px!important;}
+.formula-box{border-left:none!important;border:1px solid rgba(255,183,77,.5)!important;
+  box-shadow:0 2px 8px rgba(255,183,77,.1)!important;}
+@media(prefers-reduced-motion:reduce){
+  .hero::after,.progress-fill{animation:none!important;}
+  .flip-card,.tab-btn,.kpi-box,.accordion,.case-banner,
+  .matiere-header,.back-home,a[href*="feuille-blanche"]{transition:none!important;}
+  .flip-inner,.acc-body{transition:none!important;}
+}
+</style>
+<style>
+/* ══ MOBILE FIRST ══ */
+@media(max-width:640px){
+  /* Hero : espace pour le bouton back absolu */
+  .hero{padding:3.6rem 1rem 2rem;}
+  .hero h1{font-size:1.45rem;letter-spacing:-.015em;}
+  .hero p{font-size:.85rem;margin-bottom:.9rem;}
+  .hero .meta{gap:.3rem;}
+  .hero .meta span{font-size:.68rem;padding:.2rem .5rem;}
+
+  /* Progress bar */
+  .progress-bar-wrap{padding:.6rem 1rem;gap:.4rem;}
+  .progress-label,.progress-pct{font-size:.72rem;}
+
+  /* Case banner / body */
+  .case-banner{margin:.75rem;padding:.9rem;gap:.6rem;border-radius:12px;}
+  .case-banner .icon{font-size:1.4rem;}
+  .case-banner h2{font-size:.9rem;}
+  .case-banner p{font-size:.77rem;}
+  .case-body{margin:.75rem;padding:.85rem;font-size:.82rem;line-height:1.65;}
+
+  /* Tabs : scroll horizontal sans scrollbar visible */
+  .tabs-wrap{
+    padding:0 .5rem .5rem;gap:.2rem;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .tabs-wrap::-webkit-scrollbar{display:none;}
+  .tab-btn{padding:.45rem .6rem;font-size:.72rem;border-radius:8px 8px 0 0;}
+
+  /* Contenu onglet */
+  .tab-panel{padding:.75rem .75rem 1.5rem;}
+
+  /* En-tête matière */
+  .matiere-header{padding:.7rem .85rem;gap:.5rem;margin-bottom:.9rem;}
+  .matiere-header .num{width:30px;height:30px;font-size:.85rem;border-radius:7px;}
+  .matiere-header h2{font-size:.88rem;}
+  .matiere-header p{font-size:.72rem;}
+
+  /* Titres de section */
+  .section-title{font-size:.65rem;margin:.8rem 0 .5rem;}
+
+  /* Tip box */
+  .tip-box{font-size:.77rem;padding:.65rem .8rem;}
+
+  /* Cartes flip : 1 colonne */
+  .cards-grid{grid-template-columns:1fr!important;gap:.65rem;}
+  .flip-card{height:210px;}
+  .flip-front .q-text{font-size:.87rem;}
+  .flip-back .a-text{font-size:.77rem;}
+
+  /* KPI boxes */
+  .kpi-grid{grid-template-columns:repeat(2,1fr);gap:.45rem;}
+  .kpi-box{padding:.7rem .6rem;}
+  .kpi-box .kpi-val{font-size:1.05rem;}
+  .kpi-box .kpi-label{font-size:.66rem;}
+
+  /* Accordéons */
+  .acc-header{padding:.75rem .85rem;font-size:.82rem;}
+  .acc-body{padding:0 .85rem .85rem;}
+  .acc-body p,.acc-body li{font-size:.8rem;}
+
+  /* Done-check */
+  .done-check{font-size:.74rem;}
+
+  /* Formula box */
+  .formula-box{font-size:.79rem;padding:.65rem .8rem;}
+
+  /* Case card */
+  .case-card{padding:.9rem;}
+  .case-card p,.case-card li{font-size:.8rem;}
+
+  /* Tableaux comparatifs */
+  table{font-size:.72rem;}
+  th,td{padding:.3rem .4rem!important;}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <a href="index.html" class="back-home">← Tous les blocs</a>
+  <div class="day-badge">📅 Jeudi</div>
+  <h1>Bloc 5 : Stratégie E-Commerce</h1>
+  <p>Conception · Analytics · Logiciels CMS · MSc 2</p>
+  <div class="meta">
+    <span>🛒 E-commerce</span>
+    <span>📊 Web Analytics</span>
+    <span>💻 CMS &amp; Logiciels</span>
+    <span>🏔️ NatureSport</span>
+  </div>
+</div>
+
+<div class="progress-bar-wrap">
+  <span class="progress-label">Progression</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <span class="progress-pct" id="progressPct">0%</span>
+</div>
+
+<div style="margin:1rem 1.5rem 0;">
+  <a href="feuille-blanche-jeudi.html" style="display:flex;align-items:center;gap:1rem;background:linear-gradient(135deg,#BF360C,#E65100);color:#fff;border-radius:14px;padding:1rem 1.4rem;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.15);">
+    <span style="font-size:1.6rem;flex-shrink:0;">📝</span>
+    <div>
+      <div style="font-weight:800;font-size:.95rem;margin-bottom:.1rem;">Exercice Feuille Blanche</div>
+      <div style="font-size:.8rem;opacity:.8;">Tester vos connaissances sans notes · Chronomètre intégré</div>
+    </div>
+    <span style="margin-left:auto;font-size:1.3rem;opacity:.6;">→</span>
+  </a>
+</div>
+
+<div class="case-banner" onclick="toggleCase()">
+  <div class="icon">📋</div>
+  <div>
+    <h2>Étude de cas : NatureSport (cliquer pour afficher)</h2>
+    <p>PME française d'équipements de randonnée · Lancement boutique en ligne · Budget 40 000€</p>
+  </div>
+</div>
+<div class="case-body" id="caseBody">
+  <strong style="font-size:1rem;color:var(--primary);">NatureSport</strong> est une PME fondée en 1998 à Grenoble, spécialisée dans la vente d'équipements de randonnée, trail, ski de randonnée et escalade. Un seul point de vente physique (580 m²), <strong>18 vendeurs</strong>, CA 2023 : <strong>1 850 000 €</strong>. Clientèle : 85 % fidèles (4 200 porteurs de carte), 15 % touristes. ERP : Sage 50cloud. Saisonnalité : 38 % CA en été (randonnée), 28 % en hiver (ski). Marché outdoor France : <strong>+12 %</strong> en 2023, e-commerce outdoor = <strong>31 %</strong> des achats.
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.45rem;margin:.7rem 0;">
+    <div class="kpi-box"><div class="kpi-val">1,85 M€</div><div class="kpi-label">CA magasin (2023)</div></div>
+    <div class="kpi-box"><div class="kpi-val">1 200</div><div class="kpi-label">Références catalogue</div></div>
+    <div class="kpi-box"><div class="kpi-val">0,8 %</div><div class="kpi-label">CVR e-shop (obj. 2,5 %)</div></div>
+    <div class="kpi-box"><div class="kpi-val">72 %</div><div class="kpi-label">Taux de rebond</div></div>
+    <div class="kpi-box"><div class="kpi-val">85 €</div><div class="kpi-label">Panier moyen digital</div></div>
+    <div class="kpi-box"><div class="kpi-val">2 805 €</div><div class="kpi-label">CA digital/mois</div></div>
+  </div>
+
+  <div style="font-weight:700;color:var(--primary);margin:.7rem 0 .25rem;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;">Contexte du lancement e-shop</div>
+  Budget alloué : <strong>40 000 €</strong>. Aucune compétence technique en interne. Solution déployée : WordPress + WooCommerce (thème générique). Catalogue partiellement importé : <strong>480 références</strong> sur 1 200. Contrainte principale : intégration ERP Sage pour la synchronisation des stocks et commandes.
+
+  <div style="font-weight:700;color:var(--primary);margin:.7rem 0 .25rem;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;">Analytics 6 mois post-lancement (Google Analytics)</div>
+  <ul style="margin:.2rem 0 0 1rem;font-size:.87rem;">
+    <li><strong>Trafic :</strong> 4 200 sessions/mois · <strong>68 % mobile</strong> · CVR mobile <strong>0,4 %</strong> / desktop <strong>1,9 %</strong></li>
+    <li><strong>Sources :</strong> direct 45 % · organique 28 % · social 14 % · payant 8 % (Google Shopping, 300 €/mois) · referral 5 %</li>
+    <li><strong>Tunnel conversion :</strong> page produit → ajout panier <strong>12 %</strong> · panier → checkout <strong>35 %</strong> · checkout → commande <strong>19 %</strong></li>
+    <li><strong>Volume :</strong> 33 commandes/mois · panier moyen <strong>85 €</strong> (vs 124 € en magasin)</li>
+    <li><strong>CA digital :</strong> <strong>2 805 €/mois</strong> (objectif initial : 15 000 €/mois)</li>
+    <li><strong>Taux de retour produits :</strong> 18 % (élevé pour le secteur)</li>
+  </ul>
+
+  <div style="font-weight:700;color:var(--primary);margin:.7rem 0 .25rem;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;">Problèmes techniques identifiés</div>
+  <ul style="margin:.2rem 0 0 1rem;font-size:.87rem;">
+    <li>Temps de chargement mobile : <strong>8,2 s</strong> (Core Web Vitals rouge · benchmark : &lt;2,5 s)</li>
+    <li>Aucun système de filtrage/recherche produits · 0 avis clients sur les fiches</li>
+    <li>Photos non optimisées : format JPEG, <strong>3-8 Mo</strong> par image</li>
+    <li>Pas de paiement fractionné (3-4× attendu sur l'outdoor premium)</li>
+    <li>Catalogue partiellement importé : seulement <strong>480 références</strong> sur 1 200</li>
+  </ul>
+
+  <div style="font-weight:700;color:var(--primary);margin:.7rem 0 .25rem;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;">Objectifs année 2</div>
+  <ul style="margin:.2rem 0 0 1rem;font-size:.87rem;">
+    <li>CA digital : <strong>15 000 €/mois</strong> (×5,3 vs actuel) · Taux de conversion : <strong>2,5 %</strong></li>
+    <li>Trafic : <strong>20 000 sessions/mois</strong> · Taux de rebond : <strong>&lt;45 %</strong></li>
+    <li>Part digital dans CA total : <strong>10 %</strong></li>
+  </ul>
+
+  <div class="formula-box" style="margin-top:.8rem;"><strong>Mission examen :</strong> Auditez les performances digitales de NatureSport, identifiez les 5 chantiers prioritaires et recommandez une solution CMS (justification technique + coût + intégration ERP Sage). Proposez un plan d'actions pour atteindre 15 000 € de CA digital mensuel à 12 mois.</div>
+</div>
+
+<div class="tabs-wrap">
+  <button class="tab-btn active" onclick="switchTab(0)">🛒 Conception E-commerce</button>
+  <button class="tab-btn" onclick="switchTab(1)">📊 Web Analytics</button>
+  <button class="tab-btn" onclick="switchTab(2)">💻 CMS &amp; Logiciels</button>
+  <button class="tab-btn" onclick="switchTab(3)">🎯 Synthèse Transversale</button>
+</div>
+
+<!-- ==================== TAB 0: E-COMMERCE ==================== -->
+<div class="tab-panel active" id="tab0">
+  <div class="matiere-header">
+    <div class="num">1</div>
+    <div><h2>Conception &amp; Développement d'un Site E-commerce</h2><p>Prof. Orlowski Alexandre</p></div>
+  </div>
+  <div class="tip-box">💡 <strong>Astuce :</strong> Cliquez sur une carte pour retourner la réponse.</div>
+
+  <div class="section-title">Questions de connaissances</div>
+  <div class="cards-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q1</div>
+          <div class="q-text">Quelles sont les 9 étapes de création d'un site e-commerce ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">9 Étapes</div>
+          <div class="a-text">
+            <ul>
+              <li>1. Analyse des besoins &amp; benchmark</li>
+              <li>2. Cahier des charges</li>
+              <li>3. Choix technologique (CMS)</li>
+              <li>4. UX/UI Design (wireframes, maquettes)</li>
+              <li>5. Développement</li>
+              <li>6. Intégrations (ERP, CRM, paiement)</li>
+              <li>7. Tests (fonctionnels, mobile, performance)</li>
+              <li>8. Mise en production (SEO, tracking)</li>
+              <li>9. Suivi &amp; optimisation continue</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q2</div>
+          <div class="q-text">Critères influençant le taux de conversion e-commerce</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Facteurs de conversion</div>
+          <div class="a-text">
+            <ul>
+              <li><strong>UX &amp; Navigation :</strong> architecture claire, filtres efficaces</li>
+              <li><strong>Vitesse :</strong> chaque seconde supplémentaire → -7% de conversion</li>
+              <li><strong>Fiches produit :</strong> photos HD, descriptions, avis, vidéos</li>
+              <li><strong>Réassurance :</strong> CGV, politique retour, labels, paiement sécurisé</li>
+              <li><strong>Tunnel simplifié :</strong> max 3-4 étapes, guest checkout</li>
+              <li><strong>Multi-paiement :</strong> CB, PayPal, virement, 3x</li>
+              <li><strong>Mobile-first :</strong> &gt;60% du trafic e-commerce</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q3</div>
+          <div class="q-text">Pourquoi l'optimisation mobile est-elle essentielle ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Mobile-First</div>
+          <div class="a-text">
+            <ul>
+              <li>&gt;60% du trafic e-commerce FR vient des smartphones</li>
+              <li>Google Mobile-First Indexing : version mobile indexée en priorité</li>
+              <li>Site non optimisé → pénalise le SEO</li>
+              <li>Core Web Vitals mesurent l'expérience mobile</li>
+              <li>Conversion mobile 2-3x inférieure si expérience mauvaise</li>
+            </ul>
+            <em>Bonnes pratiques : boutons ≥44px, Apple Pay/Google Pay, formulaires simplifiés</em>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q4</div>
+          <div class="q-text">Éléments renforçant la confiance des internautes</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Éléments de réassurance</div>
+          <div class="a-text">
+            <ul>
+              <li>Avis clients vérifiés (Trustpilot, Google Reviews)</li>
+              <li>Labels : Trusted Shops, FEVAD, ecommerce europe</li>
+              <li>HTTPS + logo CB/PayPal + 3D Secure</li>
+              <li>CGV, mentions légales, politique retour, SIRET visibles</li>
+              <li>Contact accessible : tel, email, chat live</li>
+              <li>Garanties claires : délai livraison, retour 30 jours</li>
+              <li>Preuve sociale : nb clients, note moyenne</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q5</div>
+          <div class="q-text">Comment optimiser le tunnel de conversion ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Optimisation tunnel</div>
+          <div class="a-text">
+            <strong>Étapes :</strong> Fiche produit → Panier → Identification → Livraison → Paiement → Confirmation<br><br>
+            <ul>
+              <li>Max 3-4 étapes</li>
+              <li>Guest checkout disponible</li>
+              <li>Frais de livraison affichés dès la fiche produit</li>
+              <li>Sauvegarde automatique du panier</li>
+              <li>Indicateur de progression visible</li>
+              <li>Pas de menu de navigation dans le checkout</li>
+              <li>Récapitulatif commande visible à droite</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Cas pratique : NatureSport (lancement e-shop)</div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Fonctionnalités prioritaires (Must Have / Should Have)</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <p><strong>Must Have :</strong></p>
+      <ul>
+        <li>Catalogue avec filtres (catégorie, taille, prix, marque)</li>
+        <li>Moteur de recherche interne performant</li>
+        <li>Fiche produit complète (photos, vidéo, avis, tableau des tailles)</li>
+        <li>Panier et tunnel d'achat simplifié</li>
+        <li>Multi-paiement (CB, PayPal, virement)</li>
+        <li>Gestion stocks synchronisée avec <strong>ERP Sage</strong></li>
+        <li>Click &amp; Collect (retrait en magasin)</li>
+        <li>Espace compte client (historique, retours, favoris)</li>
+      </ul>
+      <p style="margin-top:.6rem;"><strong>Should Have :</strong></p>
+      <ul>
+        <li>Programme de fidélité</li>
+        <li>Recommandations produits (cross-sell, up-sell)</li>
+        <li>Avis clients vérifiés · Blog/conseils outdoor</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Risques à anticiper au lancement</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <ul>
+        <li><strong>Risque SEO :</strong> perte de positionnement → plan de redirections 301, suivi Search Console</li>
+        <li><strong>Risque synchronisation ERP :</strong> désynchronisation stocks → tests d'intégration approfondis</li>
+        <li><strong>Risque performance :</strong> chargement lent avec 1200 refs + images HD → CDN, compression, cache</li>
+        <li><strong>Risque sécurité :</strong> fraude paiement, RGPD → SSL, 3D Secure, politique cookies</li>
+        <li><strong>Risque adoption interne :</strong> équipe non technique → formation et documentation</li>
+        <li><strong>Risque budget :</strong> fonctionnalités personnalisées → MVP puis évolutions</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-title">KPI à suivre dès le lancement</div>
+  <div class="kpi-grid">
+    <div class="kpi-box" style="border-color:#c62828"><div class="kpi-val" style="color:#c62828">0,8%</div><div class="kpi-label">Conversion actuelle<br><em>Objectif : 2-3%</em></div></div>
+    <div class="kpi-box" style="border-color:#e65100"><div class="kpi-val" style="color:#e65100">72%</div><div class="kpi-label">Taux de rebond<br><em>Objectif : &lt;60%</em></div></div>
+    <div class="kpi-box" style="border-color:#1565C0"><div class="kpi-val" style="color:#1565C0">85€</div><div class="kpi-label">Panier moyen<br><em>Objectif : 100€</em></div></div>
+    <div class="kpi-box" style="border-color:#2E7D32"><div class="kpi-val" style="color:#2E7D32">&lt;65%</div><div class="kpi-label">Abandon panier<br><em>Bench : 70%</em></div></div>
+  </div>
+
+  <label class="done-check" id="done0"><input type="checkbox" onchange="updateProgress(this,'done0')"> Matière 1 : Conception E-commerce maîtrisée ✅</label>
+</div>
+
+<!-- ==================== TAB 1: WEB ANALYTICS ==================== -->
+<div class="tab-panel" id="tab1">
+  <div class="matiere-header">
+    <div class="num">2</div>
+    <div><h2>Web Analytics &amp; Mesure de la Performance</h2><p>Prof. Prieto José-Tomas</p></div>
+  </div>
+
+  <div class="section-title">Questions de connaissances</div>
+  <div class="cards-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q1</div>
+          <div class="q-text">Pourquoi mettre en place un plan de marquage ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Plan de marquage</div>
+          <div class="a-text">
+            Document recensant tous les événements et interactions à tracker sur le site.<br><br>
+            <strong>Pourquoi c'est indispensable :</strong>
+            <ul>
+              <li>Garantit la cohérence et la fiabilité des données</li>
+              <li>Évite les oublis de tracking (events, conversions)</li>
+              <li>Facilite la communication marketing ↔ développeurs</li>
+              <li>Mesure précise du ROI de chaque action</li>
+              <li>Base de travail pour les dashboards</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q2</div>
+          <div class="q-text">Différence entre métrique et dimension</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Métrique vs Dimension</div>
+          <div class="a-text">
+            <strong>Dimension (Quoi/Qui) :</strong> attribut qualitatif pour segmenter.<br>
+            Ex : canal d'acquisition, pays, appareil, page visitée<br><br>
+            <strong>Métrique (Combien) :</strong> valeur numérique quantifiant une performance.<br>
+            Ex : sessions, taux de conversion, revenus, durée de session<br><br>
+            <em>Exemple combiné : Taux de conversion (métrique) par canal (dimension) sur mobile (dimension)</em>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q3</div>
+          <div class="q-text">Définissez les métriques clés e-commerce</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Métriques clés</div>
+          <div class="a-text">
+            <strong>Taux de rebond :</strong> % de sessions quittant le site après 1 seule page sans interaction. &gt;70% = signal négatif (mauvaise acquisition ou expérience). En GA4 : indicateur "taux d'engagement" (inverse)<br><br>
+            <strong>Taux de conversion :</strong> Conversions / Sessions × 100. Benchmark e-commerce FR : 1,5 à 3%<br><br>
+            <strong>Panier moyen :</strong> CA total / Nombre de commandes. Leviers : upsell, cross-sell, seuil de livraison gratuite<br><br>
+            <strong>CAC (Coût d'Acquisition Client) :</strong> Total dépenses marketing / Nb nouveaux clients acquis. Doit être &lt; CLV. Ratio CLV/CAC idéal ≥ 3
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q4</div>
+          <div class="q-text">Quels tableaux de bord pour une direction marketing ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">3 Dashboards</div>
+          <div class="a-text">
+            <strong>Dashboard 1 · Acquisition :</strong><br>
+            Sessions par canal · CAC par canal · CTR Search Console<br><br>
+            <strong>Dashboard 2 · Conversion :</strong><br>
+            Taux de conversion global et par canal · CA et panier moyen · Funnel commande<br><br>
+            <strong>Dashboard 3 · Rétention :</strong><br>
+            Taux de réachat · CLV par cohorte · Perfs emailing · NPS
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q5</div>
+          <div class="q-text">Méthodologie pour diagnostiquer une baisse du CA digital</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Diagnostic en 5 étapes</div>
+          <div class="a-text">
+            <ul>
+              <li><strong>1.</strong> Isoler : baisse du trafic ou de la conversion ?</li>
+              <li><strong>2.</strong> Analyser par canal : quel canal a baissé ?</li>
+              <li><strong>3.</strong> Analyser par segment : mobile/desktop, nouveaux/connus ?</li>
+              <li><strong>4.</strong> Analyser le funnel : à quelle étape les abandons ?</li>
+              <li><strong>5.</strong> Croiser avec événements externes : update Google, coupure campagne ?</li>
+            </ul>
+            <em>Outils : GA4 · Search Console · Rapport d'exploration GA4 · Alertes auto</em>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Cas pratique : NatureSport (diagnostic performance)</div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Comment diagnostiquer la situation ?</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <ul>
+        <li><strong>72% de rebond</strong> → problème d'acquisition (mauvais ciblage) ou d'expérience landing page</li>
+        <li><strong>0,8% de conversion vs 2,5% secteur</strong> → friction importante dans le parcours d'achat</li>
+        <li><strong>Panier moyen 85€</strong> dans la norme outdoor → pas le problème prioritaire</li>
+      </ul>
+      <div class="formula-box">
+        <strong>Questions à investiguer :</strong> D'où vient le trafic ? Depuis quel device ? À quelle étape du funnel les utilisateurs abandonnent-ils ? Quelles pages ont le taux de rebond le plus élevé ?
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Actions recommandées</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <ul>
+        <li>Optimisation UX mobile : refonte responsive du tunnel, taille des boutons, simplification checkout</li>
+        <li>Améliorer les fiches produit : photos HD, avis, tableau des tailles, vidéos</li>
+        <li>Retravailler campagnes SEA : mots-clés trop génériques → cibler l'intention transactionnelle</li>
+        <li>Éléments de réassurance : label Trusted Shops, politique retour en header, chat live</li>
+        <li>Optimiser la vitesse : compression images, CDN, lazy loading</li>
+        <li>Récupération panier abandonné : email auto H+1 et H+24 avec code promo</li>
+      </ul>
+    </div>
+  </div>
+
+  <label class="done-check" id="done1"><input type="checkbox" onchange="updateProgress(this,'done1')"> Matière 2 : Web Analytics maîtrisée ✅</label>
+</div>
+
+<!-- ==================== TAB 2: CMS ==================== -->
+<div class="tab-panel" id="tab2">
+  <div class="matiere-header">
+    <div class="num">3</div>
+    <div><h2>Logiciels Dédiés à la Production de Site Marchand</h2><p>Prof. Orlowski Alexandre</p></div>
+  </div>
+
+  <div class="section-title">Questions de connaissances</div>
+  <div class="cards-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q1</div>
+          <div class="q-text">Avantages et limites d'un CMS e-commerce</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">CMS : Pour / Contre</div>
+          <div class="a-text">
+            <strong>Avantages :</strong>
+            <ul>
+              <li>Déploiement rapide sans dev from scratch</li>
+              <li>Écosystème plugins/extensions étendu</li>
+              <li>Mises à jour sécurité gérées (SaaS)</li>
+              <li>Interface accessible aux non-techniques</li>
+            </ul>
+            <strong>Limites :</strong>
+            <ul>
+              <li>Personnalisation limitée</li>
+              <li>Dépendance éditeur (surtout SaaS)</li>
+              <li>Coûts abonnement cumulés</li>
+              <li>Évolutivité contrainte pour grands sites</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q2</div>
+          <div class="q-text">Comparatif des solutions e-commerce (Shopify, Woo, PrestaShop, Magento)</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Comparatif CMS</div>
+          <div class="a-text">
+            <strong>Shopify :</strong> SaaS hébergé · Très facile, pas de dev requis · 29-299€/mois + commissions · Petit à moyen catalogue · Idéal : TPE/PME, lancement rapide<br><br>
+            <strong>WooCommerce :</strong> Open Source (plugin WordPress) · Facilité modérée · Faible coût (hébergement + plugins) · Idéal : blog + boutique, petits catalogues<br><br>
+            <strong>PrestaShop :</strong> Open Source · Compétences PHP requises · Faible coût (hébergement + modules) · Idéal : PME françaises, catalogues moyens à grands<br><br>
+            <strong>Magento (Adobe Commerce) :</strong> Open Source / Cloud · Dev expert requis · Coût élevé (projet sur mesure) · Idéal : grands comptes, très gros catalogues
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q3</div>
+          <div class="q-text">Critères de choix d'une solution e-commerce</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Critères de choix</div>
+          <div class="a-text">
+            <ul>
+              <li>Budget total (implémentation + abonnement + plugins + maintenance)</li>
+              <li>Taille du catalogue (références, variantes, langues)</li>
+              <li>Compétences internes (équipe technique ?)</li>
+              <li>Évolutivité sur 5 ans</li>
+              <li>Intégrations nécessaires (ERP, CRM, paiement)</li>
+              <li>Besoins de personnalisation</li>
+              <li>Sécurité et conformité (RGPD, PCI-DSS)</li>
+              <li>Support et communauté</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q4</div>
+          <div class="q-text">Importance de l'intégration CRM et ERP</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Intégrations ERP / CRM</div>
+          <div class="a-text">
+            <strong>Intégration ERP :</strong>
+            <ul>
+              <li>Synchronisation auto des stocks (évite surventes)</li>
+              <li>Commandes traitées de façon unifiée</li>
+              <li>Prix et promotions en temps réel</li>
+            </ul>
+            <strong>Intégration CRM :</strong>
+            <ul>
+              <li>Historique d'achat centralisé</li>
+              <li>Segmentation automatique pour les campagnes</li>
+              <li>Scoring et détection du churn</li>
+            </ul>
+            <em>Sans intégration : risque d'erreurs, stocks désynchronisés, vision éclatée</em>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q5</div>
+          <div class="q-text">Coût Total de Possession (TCO) d'une plateforme e-commerce</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">TCO : Formule</div>
+          <div class="a-text">
+            <strong>TCO = Coûts initiaux + Coûts récurrents + Coûts cachés</strong><br><br>
+            <strong>Initiaux :</strong> licence/intégration, développement, design, imports de données<br><br>
+            <strong>Récurrents :</strong> abonnement SaaS, modules, maintenance, formation<br><br>
+            <strong>Cachés :</strong> commissions Shopify (0,5-2%), frais transaction paiement, coût migration future
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Comparatif CMS : Tableau de référence</div>
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr><th>Critère</th><th>Shopify</th><th>WooCommerce</th><th>PrestaShop</th><th>Magento</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Type</td><td>SaaS</td><td>Open Source (WP)</td><td>Open Source</td><td>Open Source/Cloud</td></tr>
+        <tr><td>Facilité</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐</td></tr>
+        <tr><td>Budget</td><td>29-299€/mois</td><td>Faible (héberg.)</td><td>Faible (héberg.)</td><td>Élevé</td></tr>
+        <tr><td>Catalogue</td><td>Petit-moyen</td><td>Moyen</td><td>Moyen-grand</td><td>Très grand</td></tr>
+        <tr><td>Intégrations ERP</td><td>Payantes</td><td>Plugins WP</td><td>Modules</td><td>Natives</td></tr>
+        <tr><td>Adapté pour</td><td>TPE/PME quick</td><td>Blog+boutique</td><td>PME FR</td><td>Grands comptes</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-title">Cas pratique : NatureSport (recommandation de solution)</div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Recommandation (Budget 40 000€, ERP Sage, 1 200 réf.)</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <p><strong>Recommandation : PrestaShop ou Shopify selon la priorité.</strong></p>
+      <ul>
+        <li><strong>PrestaShop</strong> → priorité autonomie et budget maîtrisé : open source, forte communauté française, bons modules ERP Sage</li>
+        <li><strong>Shopify</strong> → priorité rapidité de lancement : déploiement rapide, bonne expérience mobile native. Attention aux coûts récurrents</li>
+      </ul>
+      <p style="margin-top:.6rem;">Dans les deux cas : <strong>prévoir l'intégration Sage dès la phase de conception.</strong></p>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Plan de migration recommandé (5 phases)</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <ul>
+        <li><strong>Phase 1 · Préparation (4 sem) :</strong> export des données, cahier des charges, choix solution, sélection prestataire</li>
+        <li><strong>Phase 2 · Développement (8 sem) :</strong> paramétrage, personnalisation, intégration ERP, import catalogue</li>
+        <li><strong>Phase 3 · Tests (2 sem) :</strong> recette fonctionnelle, tests performance, mobile, paiement</li>
+        <li><strong>Phase 4 · Migration (1 week-end) :</strong> bascule DNS, redirections 301, vérification données importées</li>
+        <li><strong>Phase 5 · Post-lancement (4 sem) :</strong> monitoring intensif, correction anomalies, formation équipe, premiers KPI</li>
+      </ul>
+      <div class="formula-box">
+        <strong>Risque principal :</strong> Perte SEO → plan de redirections 301 exhaustif + suivi Search Console avant/après migration
+      </div>
+    </div>
+  </div>
+
+  <label class="done-check" id="done2"><input type="checkbox" onchange="updateProgress(this,'done2')"> Matière 3 : CMS &amp; Logiciels maîtrisée ✅</label>
+</div>
+
+<!-- ==================== TAB 3: SYNTHESE ==================== -->
+<div class="tab-panel" id="tab3">
+  <div class="matiere-header">
+    <div class="num">★</div>
+    <div><h2>Synthèse Transversale : Méthode Examen</h2><p>Structure de réponse recommandée pour les études de cas</p></div>
+  </div>
+
+  <div class="tip-box">🎯 <strong>Ce cadre mobilise les 3 matières du Bloc 5 + les blocs précédents. Apprenez cette structure par cœur !</strong></div>
+
+  <div class="section-title">Structure de réponse en 5 parties</div>
+
+  <div class="synth-box">
+    <h3>1. Diagnostic SWOT</h3>
+    <ul>
+      <li>Forces (Strengths) : ce qui fonctionne déjà</li>
+      <li>Faiblesses (Weaknesses) : problèmes internes identifiés</li>
+      <li>Opportunités (Opportunities) : potentiel de croissance externe</li>
+      <li>Menaces (Threats) : risques concurrentiels ou marché</li>
+    </ul>
+  </div>
+
+  <div class="synth-box">
+    <h3>2. Plan d'action priorisé</h3>
+    <ul>
+      <li><strong>Quick wins (0-3 mois) :</strong> actions immédiates à fort impact</li>
+      <li><strong>Moyen terme (3-6 mois) :</strong> optimisations structurelles</li>
+      <li><strong>Long terme (6-12 mois) :</strong> développements stratégiques</li>
+    </ul>
+  </div>
+
+  <div class="synth-box">
+    <h3>3. KPI stratégiques</h3>
+    <ul>
+      <li>1 KPI par levier activé</li>
+      <li>Objectif chiffré et délai précis pour chaque KPI</li>
+      <li>Sourced sur des benchmarks sectoriels</li>
+    </ul>
+  </div>
+
+  <div class="synth-box">
+    <h3>4. Dashboard de pilotage</h3>
+    <ul>
+      <li>Acquisition : sessions, CAC par canal, impressions</li>
+      <li>Conversion : taux de conversion, CA, funnel commande</li>
+      <li>Fidélisation : réachat, CLV, emailing, NPS</li>
+      <li>Notoriété : reach, engagement, share of voice</li>
+    </ul>
+  </div>
+
+  <div class="synth-box">
+    <h3>5. Facteurs Clés de Succès</h3>
+    <ul>
+      <li>Cohérence des leviers activés</li>
+      <li>Approche data-driven (décisions basées sur les données)</li>
+      <li>UX au cœur de la stratégie</li>
+      <li>Contenu de qualité aligné sur l'intention utilisateur</li>
+      <li>Mesure continue et itérations rapides</li>
+    </ul>
+  </div>
+
+  <div class="section-title">Formules à retenir pour l'examen</div>
+  <div class="formula-box"><strong>Taux de conversion :</strong> Conversions / Sessions × 100</div>
+  <div class="formula-box"><strong>CAC :</strong> Dépenses marketing / Nb nouveaux clients</div>
+  <div class="formula-box"><strong>CLV :</strong> Panier moyen × Fréquence d'achat × Durée de vie client</div>
+  <div class="formula-box"><strong>ROI :</strong> (Revenus générés - Coût) / Coût × 100</div>
+  <div class="formula-box"><strong>ROAS :</strong> Revenus générés / Budget publicitaire dépensé (objectif &gt; 4)</div>
+  <div class="formula-box"><strong>Ad Rank Google :</strong> Enchère × Quality Score × Contexte</div>
+  <div class="formula-box"><strong>Taux d'engagement :</strong> (Interactions / Reach) × 100. Benchmark Instagram : bon &gt;3%, excellent &gt;6%</div>
+  <div class="formula-box"><strong>Ratio CLV/CAC idéal :</strong> ≥ 3 (si &lt;3 = modèle non rentable)</div>
+
+  <label class="done-check" id="done3"><input type="checkbox" onchange="updateProgress(this,'done3')"> Synthèse transversale maîtrisée ✅</label>
+</div>
+
+<script>
+function switchTab(idx) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+}
+function toggleAcc(header) {
+  header.classList.toggle('open');
+  header.nextElementSibling.classList.toggle('open');
+}
+function toggleCase() {
+  document.getElementById('caseBody').classList.toggle('open');
+}
+function updateProgress(cb, id) {
+  const label = document.getElementById(id);
+  label.classList.toggle('checked', cb.checked);
+  const total = document.querySelectorAll('.done-check input').length;
+  const done = document.querySelectorAll('.done-check input:checked').length;
+  const pct = Math.round(done/total*100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+</script>
+</body>
+</html>

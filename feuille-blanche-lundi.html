@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feuille Blanche : Lundi · Bloc 2</title>
+<style>
+:root{--c:#1565C0;--cd:#0D47A1;--cl:#E3F2FD;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f4f8;color:#1a1a2e;min-height:100vh;}
+.hdr{background:linear-gradient(135deg,var(--cd),var(--c));color:#fff;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;position:sticky;top:0;z-index:20;box-shadow:0 2px 14px rgba(0,0,0,.25);}
+.hdr-l{display:flex;align-items:center;gap:.8rem;}
+.back{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;padding:.35rem .8rem;border-radius:7px;font-size:.8rem;font-weight:600;text-decoration:none;}
+.htitle{font-size:1rem;font-weight:800;}
+.hsub{font-size:.74rem;opacity:.8;margin-top:.1rem;}
+.hdr-r{display:flex;align-items:center;gap:.8rem;}
+.schip{background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.4);border-radius:50px;padding:.3rem .9rem;font-size:.85rem;font-weight:800;display:none;letter-spacing:.02em;}
+.timer{font-size:1.25rem;font-weight:800;font-variant-numeric:tabular-nums;}
+.tbtn{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;padding:.3rem .6rem;border-radius:6px;font-size:.8rem;cursor:pointer;}
+.tbtn:hover{background:rgba(255,255,255,.35);}
+.body{max-width:820px;margin:0 auto;padding:1.2rem 1.5rem 3rem;}
+.intro{background:#fff;border-left:4px solid var(--c);border-radius:10px;padding:.9rem 1.1rem;font-size:.85rem;line-height:1.7;margin-bottom:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.intro strong{color:var(--cd);}
+.sec{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--c);border-left:3px solid var(--c);padding-left:.6rem;margin:1.8rem 0 .9rem;}
+.qcard{background:#fff;border-radius:12px;padding:1.2rem;margin-bottom:1rem;box-shadow:0 2px 10px rgba(0,0,0,.06);border:1.5px solid #e5eaf0;transition:border .2s;}
+.qcard.verified{border-color:var(--c);}
+.qlbl{font-size:.65rem;font-weight:700;color:var(--c);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35rem;}
+.qtxt{font-size:.97rem;font-weight:600;line-height:1.5;margin-bottom:.8rem;}
+textarea{width:100%;min-height:85px;border:1.5px solid #d5dde8;border-radius:8px;padding:.65rem .85rem;font-family:inherit;font-size:.87rem;line-height:1.6;resize:vertical;outline:none;transition:border .2s;color:#1a1a2e;background:#fafdff;}
+textarea:focus{border-color:var(--c);background:#fff;}
+textarea[readonly]{background:#f5f7fa;color:#555;cursor:default;}
+.qfoot{display:flex;align-items:center;justify-content:space-between;margin-top:.6rem;gap:.5rem;flex-wrap:wrap;}
+.wc{font-size:.72rem;color:#94a3b8;}
+.foot-r{display:flex;align-items:center;gap:.6rem;}
+.badge{display:none;align-items:center;gap:.35rem;border-radius:50px;padding:.28rem .85rem;font-size:.8rem;font-weight:800;white-space:nowrap;}
+.b2{background:#E8F5E9;color:#1B5E20;border:1.5px solid #66BB6A;}
+.b1{background:#FFF8E1;color:#E65100;border:1.5px solid #FFB300;}
+.b0{background:#FFEBEE;color:#B71C1C;border:1.5px solid #EF5350;}
+.vbtn{background:var(--c);color:#fff;border:none;padding:.4rem 1.1rem;border-radius:7px;font-size:.8rem;font-weight:700;cursor:pointer;transition:.2s;white-space:nowrap;}
+.vbtn:hover{background:var(--cd);}
+.vbtn:disabled{background:#b0bec5;cursor:not-allowed;}
+.model{display:none;margin-top:.9rem;background:var(--cl);border-left:3px solid var(--c);border-radius:8px;padding:.85rem 1rem;font-size:.82rem;line-height:1.7;color:#0D47A1;}
+.mlbl{font-size:.63rem;font-weight:700;text-transform:uppercase;opacity:.7;margin-bottom:.35rem;letter-spacing:.06em;}
+.cas{background:linear-gradient(135deg,#1a237e,#283593);color:#fff;border-radius:14px;padding:1.4rem;margin:1.6rem 0 .8rem;}
+.cas h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;}
+.cas p,.cas li{font-size:.85rem;opacity:.9;line-height:1.7;}
+.cas ul{margin:.4rem 0 0 1rem;}
+.cas li{margin-bottom:.2rem;}
+.sub-btn{display:block;width:100%;padding:.95rem;background:var(--c);color:#fff;font-weight:800;font-size:1rem;border:none;border-radius:12px;cursor:pointer;transition:.2s;margin-top:1.5rem;}
+.sub-btn:hover{background:var(--cd);}
+.results{display:none;background:#fff;border-radius:16px;padding:1.8rem;margin-top:1.5rem;box-shadow:0 4px 24px rgba(0,0,0,.1);text-align:center;border:2.5px solid var(--c);}
+.fscore{font-size:3.5rem;font-weight:900;color:var(--c);line-height:1;}
+.fmax{font-size:1.1rem;color:#94a3b8;margin:.3rem 0 .5rem;}
+.flbl{font-size:1.1rem;font-weight:700;margin-bottom:1.2rem;}
+.breakdown{text-align:left;margin-top:.5rem;}
+.bdi{display:flex;justify-content:space-between;align-items:center;padding:.4rem 0;border-bottom:1px solid #f0f0f0;font-size:.83rem;}
+.bdi:last-child{border-bottom:none;}
+.bdi-q{color:#555;flex:1;padding-right:.5rem;}
+.restart{margin-top:1.2rem;padding:.7rem 2rem;background:var(--c);color:#fff;font-weight:700;border:none;border-radius:8px;cursor:pointer;font-size:.9rem;}
+.restart:hover{background:var(--cd);}
+
+/* ══ PREMIUM UPGRADE : FEUILLE BLANCHE ══ */
+.hdr{
+  backdrop-filter:blur(20px) saturate(1.8);-webkit-backdrop-filter:blur(20px) saturate(1.8);
+  box-shadow:0 2px 20px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.08)!important;
+  border-bottom:1px solid rgba(255,255,255,.1);}
+.back{transition:background .2s,transform .2s!important;}
+.back:hover{background:rgba(255,255,255,.32)!important;transform:translateX(-2px);}
+.tbtn{transition:background .15s,transform .15s!important;}
+.tbtn:hover{background:rgba(255,255,255,.32)!important;transform:scale(1.06);}
+.schip{backdrop-filter:blur(8px);box-shadow:0 2px 8px rgba(0,0,0,.15)!important;}
+
+/* Section label : remove border-left */
+.sec{border-left:none!important;padding-left:0!important;
+  display:flex!important;align-items:center;gap:.5rem;}
+.sec::before{content:'';display:inline-block;width:3px;height:12px;
+  background:var(--c);border-radius:2px;flex-shrink:0;}
+
+/* Intro box : remove border-left */
+.intro{border-left:none!important;
+  border:1px solid color-mix(in srgb,var(--c) 20%,transparent)!important;
+  box-shadow:0 2px 12px color-mix(in srgb,var(--c) 10%,rgba(0,0,0,.04))!important;}
+
+/* Question cards */
+.qcard{
+  box-shadow:0 2px 12px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04)!important;
+  transition:box-shadow .22s,transform .22s,border-color .22s,background .22s!important;}
+.qcard:hover{
+  box-shadow:0 6px 22px color-mix(in srgb,var(--c) 15%,rgba(0,0,0,.05))!important;
+  transform:translateY(-1px);}
+.qcard.verified{
+  border-color:var(--c)!important;
+  background:color-mix(in srgb,var(--c) 3%,#fff)!important;
+  box-shadow:0 4px 20px color-mix(in srgb,var(--c) 18%,rgba(0,0,0,.04))!important;}
+
+/* Textarea */
+textarea{transition:border-color .2s,box-shadow .2s!important;}
+textarea:focus{
+  border-color:var(--c)!important;
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 14%,transparent),
+             0 2px 8px rgba(0,0,0,.06)!important;
+  background:#fff!important;}
+
+/* Verify button */
+.vbtn{
+  transition:background .18s,transform .18s,box-shadow .18s!important;
+  box-shadow:0 2px 8px color-mix(in srgb,var(--c) 28%,transparent)!important;}
+.vbtn:hover:not(:disabled){
+  transform:translateY(-2px)!important;
+  box-shadow:0 6px 18px color-mix(in srgb,var(--c) 36%,transparent)!important;}
+
+/* Badge pop */
+@keyframes badgePop{
+  0%{transform:scale(.55);opacity:0}
+  65%{transform:scale(1.12)}
+  100%{transform:scale(1);opacity:1}}
+.badge[style*="flex"]{animation:badgePop .28s cubic-bezier(.4,0,.2,1) both!important;}
+
+/* Model reveal */
+@keyframes modelIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.model[style*="block"]{animation:modelIn .24s cubic-bezier(.4,0,.2,1) both!important;}
+.model{border-left:none!important;
+  box-shadow:0 2px 10px color-mix(in srgb,var(--c) 12%,rgba(0,0,0,.04))!important;}
+
+/* Cas banner */
+.cas{box-shadow:0 6px 24px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.1)!important;}
+
+/* Submit button */
+.sub-btn{
+  transition:background .18s,transform .18s,box-shadow .18s!important;
+  box-shadow:0 4px 16px color-mix(in srgb,var(--c) 35%,transparent)!important;}
+.sub-btn:hover{
+  transform:translateY(-3px)!important;
+  box-shadow:0 10px 30px color-mix(in srgb,var(--c) 42%,transparent)!important;}
+
+/* Results panel */
+@keyframes resultsIn{
+  from{opacity:0;transform:translateY(16px) scale(.98)}
+  to{opacity:1;transform:none}}
+.results[style*="block"]{animation:resultsIn .35s cubic-bezier(.4,0,.2,1) both!important;
+  box-shadow:0 8px 40px rgba(0,0,0,.12),0 2px 8px rgba(0,0,0,.06)!important;}
+.fscore{text-shadow:0 4px 16px color-mix(in srgb,var(--c) 28%,transparent);}
+
+/* Restart */
+.restart{
+  transition:background .18s,transform .18s,box-shadow .18s!important;
+  box-shadow:0 3px 12px color-mix(in srgb,var(--c) 28%,transparent)!important;}
+.restart:hover{
+  transform:translateY(-2px)!important;
+  box-shadow:0 8px 22px color-mix(in srgb,var(--c) 36%,transparent)!important;}
+
+@media(prefers-reduced-motion:reduce){
+  .qcard,.vbtn,.sub-btn,.restart,.tbtn,.back{transition:none!important;}
+  .badge,.model,.results{animation:none!important;}
+}
+</style>
+<style>
+/* ══ MOBILE FIRST ══ */
+@media(max-width:640px){
+  /* Header : compresser pour tenir sur une ligne */
+  .hdr{padding:.65rem .9rem;gap:.4rem;}
+  .htitle{font-size:.85rem;}
+  .hsub{display:none;}           /* masquer le sous-titre sur mobile */
+  .back{padding:.26rem .55rem;font-size:.7rem;}
+  .hdr-l{gap:.5rem;}
+  .hdr-r{gap:.35rem;}
+  .timer{font-size:.95rem;}
+  .tbtn{padding:.22rem .5rem;font-size:.7rem;}
+  .schip{font-size:.72rem;padding:.22rem .65rem;}
+
+  /* Body */
+  .body{padding:.85rem .85rem 3rem;}
+
+  /* Intro */
+  .intro{font-size:.78rem;padding:.65rem .85rem;margin-bottom:1.1rem;}
+
+  /* Libellé section */
+  .sec{font-size:.6rem;margin:1.4rem 0 .7rem;}
+
+  /* Carte question */
+  .qcard{padding:.85rem .85rem .7rem;}
+  .qlbl{font-size:.58rem;}
+  .qtxt{font-size:.88rem;margin-bottom:.65rem;}
+  textarea{font-size:.82rem;min-height:70px;padding:.55rem .75rem;}
+
+  /* Footer question */
+  .qfoot{gap:.3rem;}
+  .wc{font-size:.68rem;}
+  .foot-r{gap:.35rem;}
+  .vbtn{padding:.33rem .8rem;font-size:.74rem;}
+  .badge{font-size:.7rem;padding:.2rem .6rem;}
+
+  /* Réponse modèle */
+  .model{font-size:.76rem;padding:.65rem .8rem;margin-top:.75rem;}
+  .mlbl{font-size:.58rem;}
+
+  /* Cas pratique */
+  .cas{padding:.9rem;border-radius:12px;margin:1.2rem 0 .7rem;}
+  .cas h3{font-size:.88rem;}
+  .cas p,.cas li{font-size:.77rem;}
+
+  /* Bouton soumettre */
+  .sub-btn{font-size:.9rem;padding:.8rem;border-radius:10px;}
+
+  /* Panneau résultats */
+  .results{padding:1.2rem;}
+  .fscore{font-size:2.8rem;}
+  .fmax{font-size:.88rem;}
+  .flbl{font-size:.92rem;margin-bottom:.9rem;}
+  .bdi{font-size:.76rem;padding:.35rem 0;}
+  .bdi-q{font-size:.76rem;}
+  .restart{font-size:.82rem;padding:.55rem 1.4rem;}
+}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hdr-l">
+    <a href="lundi.html" class="back">← Fiches</a>
+    <div><div class="htitle">Feuille Blanche : Bloc 2</div><div class="hsub" id="hsub">Lundi · Questionnaire noté · chargement…</div></div>
+  </div>
+  <div class="hdr-r">
+    <span class="schip" id="schip">0 / 0</span>
+    <span class="timer" id="timer">00:00</span>
+    <button class="tbtn" id="tbtn" onclick="toggleTimer()">▶</button>
+    <button class="tbtn" onclick="resetTimer()">↺</button>
+  </div>
+</div>
+
+<div class="body" id="examBody">
+  <div class="intro">📝 <strong>Questionnaire noté &amp; aléatoire</strong> : Un nouveau tirage à chaque ouverture. Répondez sans notes, puis cliquez sur <em>Vérifier</em> pour chaque question. Le chrono démarre automatiquement dès que vous écrivez.</div>
+</div>
+
+<script>
+const POOL=[
+  {id:'c1',sec:'CRM',prof:'Prof. Cadene Vincent',q:'Définissez le CRM et son rôle dans une stratégie omnicanale. Citez ses 4 objectifs principaux.',kw:['crm','customer relationship','relation client','omnicanale','omnicanal','centralise','360','fidélisation','acquisition','réactivation','clv','synchronise'],model:'Le <strong>CRM (Customer Relationship Management)</strong> = ensemble des stratégies, outils et processus pour gérer et optimiser la relation client. Dans une stratégie omnicanale : centralise la donnée client (vision 360°), synchronise les messages entre points de contact, assure la cohérence de l\'expérience. <strong>4 objectifs :</strong> Acquisition · Fidélisation · Réactivation · Augmentation CLV.'},
+  {id:'c2',sec:'CRM',prof:'Prof. Cadene Vincent',q:'Différenciez CRM opérationnel, analytique et collaboratif. Donnez un exemple pour chacun.',kw:['opérationnel','analytique','collaboratif','automatise','analyse','partage','service','hubspot','salesforce','rfm','scoring'],model:'<strong>Opérationnel :</strong> automatise les interactions clients (emails, relances, support). Ex : Salesforce, HubSpot. <strong>Analytique :</strong> analyse les données (comportements, segments, RFM). <strong>Collaboratif :</strong> partage l\'information entre services (ventes, marketing, SAV) pour harmoniser la relation client.'},
+  {id:'c3',sec:'CRM',prof:'Prof. Cadene Vincent',q:'Définissez la CLV. Donnez sa formule et expliquez son intérêt stratégique.',kw:['clv','customer lifetime value','valeur','panier moyen','fréquence','durée de vie','cac','rentable','budget','acquisition'],model:'La <strong>CLV (Customer Lifetime Value)</strong> = valeur financière totale générée par un client sur toute la durée de la relation. <strong>Formule :</strong> CLV = Panier moyen × Fréquence d\'achat × Durée de vie client. <strong>Intérêt :</strong> détermine le budget d\'acquisition acceptable (CAC &lt; CLV) et permet de prioriser les segments rentables.'},
+  {id:'c4',sec:'CRM',prof:'Prof. Cadene Vincent',q:'Citez et définissez les 5 principaux KPI de fidélisation CRM.',kw:['taux de fidélisation','réachat','clv','churn','nps','net promoter','rétention','désabonnement','période'],model:'• <strong>Taux de fidélisation :</strong> % clients retenus sur une période. • <strong>Taux de réachat :</strong> % ayant effectué un 2e achat. • <strong>CLV :</strong> valeur totale générée. • <strong>Churn Rate :</strong> taux de désabonnement. • <strong>NPS :</strong> propension à recommander (-100 à +100).'},
+  {id:'c5',sec:'CRM',prof:'Prof. Cadene Vincent',q:'Comment la personnalisation améliore-t-elle la performance commerciale ? Citez les leviers clés.',kw:['pertinence','ouverture','clic','désinscriptions','satisfaction','fidélisation','conversion','rfm','segmentation','comportementale','historique'],model:'• ↑ taux d\'ouverture et de clic (messages plus pertinents). • ↓ désinscriptions (moins de pression ressentie). • ↑ satisfaction et fidélisation. • ↑ taux de conversion grâce aux recommandations. <strong>Leviers :</strong> segmentation comportementale, RFM, historique d\'achats, données de navigation.'},
+  {id:'e1',sec:'Emailing',prof:'Prof. Burcelot Florent',q:'Quels sont les 6 objectifs d\'une campagne emailing ?',kw:['acquisition','conversion','fidélisation','réactivation','information','notoriété','prospects','clients','inactifs'],model:'• <strong>Acquisition :</strong> attirer de nouveaux prospects. • <strong>Conversion :</strong> transformer en clients. • <strong>Fidélisation :</strong> maintenir la relation. • <strong>Réactivation :</strong> réengager les inactifs. • <strong>Information :</strong> communiquer nouveautés/promos. • <strong>Notoriété :</strong> renforcer l\'image de marque.'},
+  {id:'e2',sec:'Emailing',prof:'Prof. Burcelot Florent',q:'Citez 5 facteurs qui influencent le taux d\'ouverture d\'un email.',kw:['objet','pré-header','preheader','expéditeur','heure','segmentation','délivrabilité','spam','personnalisé'],model:'• <strong>Objet :</strong> accrocheur, personnalisé, &lt;50 caractères. • <strong>Pré-header :</strong> complète l\'objet, visible en aperçu. • <strong>Expéditeur :</strong> reconnaissable et de confiance. • <strong>Heure d\'envoi :</strong> mardi-jeudi matin. • <strong>Segmentation :</strong> pertinence du message. • <strong>Délivrabilité :</strong> ne pas tomber en spam.'},
+  {id:'e3',sec:'Emailing',prof:'Prof. Burcelot Florent',q:'Quels éléments influencent le taux de clic d\'un email ? Citez 5 facteurs clés.',kw:['cta','call to action','design','hiérarchie','contenu','pertinent','proposition','mobile','bouton','principal'],model:'• <strong>CTA :</strong> visible, contrasté, wording incitatif. • <strong>Design :</strong> hiérarchie visuelle claire (mobile-first). • <strong>Contenu :</strong> pertinent et personnalisé selon le segment. • <strong>Proposition de valeur :</strong> bénéfice clairement exprimé. • <strong>1 CTA principal</strong> pour éviter la dispersion.'},
+  {id:'e4',sec:'Emailing',prof:'Prof. Burcelot Florent',q:'Pourquoi segmenter une base emailing ? Quels critères utiliser ?',kw:['pertinence','ouverture','clic','désinscriptions','conversion','réputation','délivrabilité','comportement','achat','tunnel','engagement'],model:'Segmenter = envoyer le <strong>bon message à la bonne personne au bon moment</strong>. Bénéfices : ↑ taux ouverture/clic, ↓ désinscriptions, ↑ conversion, protection de la réputation expéditeur. <strong>Critères :</strong> comportement d\'achat, stade du tunnel, données démographiques, engagement email.'},
+  {id:'e5',sec:'Emailing',prof:'Prof. Burcelot Florent',q:'Quels sont les principes d\'un email responsive (mobile-first) ? Citez 5 règles.',kw:['mobile','600px','14px','44px','alt','colonne','gmail','outlook','responsive'],model:'• Design <strong>mobile-first</strong> (&gt;60% ouvertures sur mobile). • Largeur max <strong>600px</strong>. • Police ≥ <strong>14px</strong>. • CTA ≥ <strong>44px</strong> de hauteur. • Images compressées avec alt text. • 1 colonne sur mobile. • Tests multi-clients (Gmail, Outlook, Apple Mail).'},
+  {id:'s1',sec:'SEA',prof:'Prof. Herrera Leslie',q:'Définissez le SEA et ses principaux formats sur Google Ads.',kw:['sea','référencement payant','enchères','serp','google ads','adwords','search','display','shopping','vidéo','performance max'],model:'Le <strong>SEA (Search Engine Advertising)</strong> = référencement payant sur moteurs de recherche via un système d\'enchères. Principal acteur : <strong>Google Ads</strong>. <strong>Formats :</strong> Search (annonces texte), Display, Shopping, Vidéo (YouTube), Performance Max.'},
+  {id:'s2',sec:'SEA',prof:'Prof. Herrera Leslie',q:'Expliquez le fonctionnement des enchères Google Ads et la formule du Ad Rank.',kw:['ad rank','enchère','quality score','contexte','cpc','position','0,01','suivant'],model:'<strong>Ad Rank = Enchère × Quality Score × Contexte.</strong> Chaque annonceur définit un CPC max. Google calcule les Ad Rank et attribue les positions. <strong>CPC réel = Ad Rank du suivant / Quality Score + 0,01€</strong> → un bon Quality Score permet de payer moins cher.'},
+  {id:'s3',sec:'SEA',prof:'Prof. Herrera Leslie',q:'Qu\'est-ce que le Quality Score ? Citez ses 3 composantes et l\'impact d\'un score optimal.',kw:['quality score','pertinence','ectр','taux de clic','page de destination','vitesse','ux','7','30','50'],model:'Le <strong>Quality Score</strong> (1 à 10) = indicateur de pertinence d\'une annonce. <strong>3 composantes :</strong> Pertinence de l\'annonce · Taux de clic attendu (eCTR) · Qualité de la page de destination (UX, vitesse, contenu). Score ≥7 : peut réduire le CPC de 30 à 50%.'},
+  {id:'s4',sec:'SEA',prof:'Prof. Herrera Leslie',q:'Quels sont les avantages du SEA pour un e-commerçant ? Citez-en 5.',kw:['immédiat','ciblage','précis','budget','roas','cpa','remarketing','shopping','mesurable','roi'],model:'• Visibilité <strong>immédiate</strong>. • Ciblage précis (mots-clés, localisation, appareil, heure). • Maîtrise du budget (paiement au clic). • Mesurabilité complète (ROAS, CPA). • <strong>Remarketing :</strong> recibler les visiteurs non convertis. • <strong>Shopping :</strong> annonces produits avec prix et images.'},
+  {id:'s5',sec:'SEA',prof:'Prof. Herrera Leslie',q:'Quels KPI SEA surveiller en priorité ? Citez 6 indicateurs et leur définition.',kw:['cpc','ctr','cpa','roas','quality score','taux de conversion','impression share'],model:'• <strong>CPC :</strong> coût moyen par clic. • <strong>CTR :</strong> clics/impressions. • <strong>CPA :</strong> dépense/conversions. • <strong>ROAS :</strong> revenus/budget (objectif &gt;4). • <strong>Quality Score.</strong> • <strong>Taux de conversion.</strong> • <strong>Impression Share :</strong> % d\'impressions obtenues vs disponibles.'},
+  {id:'o1',sec:'SEO & SMO',prof:'Prof. Garletti Eric',q:'Quels sont les 3 piliers du SEO ? Donnez 3 exemples pour chaque pilier.',kw:['technique','on-page','off-page','core web vitals','vitesse','indexabilité','mobile','contenu','backlinks','domain authority','sitemap','balises'],model:'1. <strong>Technique :</strong> vitesse (Core Web Vitals), indexabilité (sitemap, robots.txt), mobile-first, HTTPS. 2. <strong>On-Page :</strong> contenu de qualité, balises (title, meta, H1, alt), maillage interne. 3. <strong>Off-Page :</strong> backlinks de qualité, Domain Authority, mentions.'},
+  {id:'o2',sec:'SEO & SMO',prof:'Prof. Garletti Eric',q:'Quelle est la différence entre SEO et SMO ? En quoi sont-ils complémentaires ?',kw:['seo','search engine','moteurs','organique','serp','smo','social media','réseaux sociaux','engagement','partage','signaux'],model:'<strong>SEO :</strong> optimisation pour les moteurs de recherche → positionnement organique dans les SERP. <strong>SMO :</strong> optimisation sur les réseaux sociaux → engagement, partage, trafic social. <strong>Complémentarité :</strong> le SMO génère des signaux sociaux qui renforcent indirectement l\'autorité SEO.'},
+  {id:'o3',sec:'SEO & SMO',prof:'Prof. Garletti Eric',q:'Quelles sont les caractéristiques d\'un backlink de qualité ? Citez 5 critères.',kw:['domain authority','40','thématique','dofollow','ancre','éditorial','contenu','corps','toxique','disavow'],model:'• Domaine autoritaire (<strong>DA &gt; 40</strong>). • Thématique proche ou complémentaire. • Lien en <strong>dofollow</strong>. • Ancre variée et naturelle. • Placement éditorial (corps du contenu). Backlink toxique → outil Disavow (Google Search Console).'},
+  {id:'o4',sec:'SEO & SMO',prof:'Prof. Garletti Eric',q:'Pourquoi la recherche de mots-clés est-elle essentielle en SEO ? Quels outils utilisez-vous ?',kw:['requêtes','volume','intention','informationnelle','transactionnelle','navigationnelle','semrush','ahrefs','keyword planner','answer the public'],model:'La recherche de mots-clés permet d\'identifier les requêtes réellement tapées (volume), de comprendre l\'<strong>intention de recherche</strong> (informationnelle, navigationnelle, transactionnelle), de prioriser les contenus et d\'aligner sur l\'audience. <strong>Outils :</strong> Google Keyword Planner, SEMrush, Ahrefs, Answer The Public.'},
+  {id:'o5',sec:'SEO & SMO',prof:'Prof. Garletti Eric',q:'Quels KPI SEO devez-vous surveiller ? Citez 6 métriques clés.',kw:['position','trafic organique','ctr','indexées','domain authority','backlinks','core web vitals','lcp','cls','search console'],model:'• <strong>Position moyenne</strong> dans les SERP. • <strong>Trafic organique.</strong> • <strong>CTR</strong> (clics/impressions SERP). • <strong>Pages indexées.</strong> • <strong>Domain Authority.</strong> • <strong>Profil de backlinks.</strong> • <strong>Core Web Vitals :</strong> LCP, INP, CLS.'},
+  {id:'a1',sec:'Acquisition',prof:'Prof. Garletti Eric',q:'Définissez la stratégie d\'acquisition digitale et citez ses 6 leviers principaux.',kw:['acquisition','digitale','seo','sea','social media','email','affiliation','content','inbound','trafic','prospects'],model:'Ensemble des actions marketing pour attirer de nouveaux clients via les canaux digitaux. <strong>Leviers :</strong> SEO (long terme) · SEA (immédiat) · Social Media (organique + payant) · Email marketing · Affiliation · Content marketing / inbound.'},
+  {id:'a2',sec:'Acquisition',prof:'Prof. Garletti Eric',q:'Comment définir un mix d\'acquisition optimal ? Quelles étapes suivre ?',kw:['ga4','cac','smart','a/b','seo','sea','complémentarité','canal','budget','sources de trafic'],model:'• Analyser les sources de trafic via <strong>GA4</strong>. • Calculer le <strong>CAC par canal</strong>. • Définir des objectifs SMART par canal. • Tester et optimiser en continu (A/B tests). • Assurer la complémentarité SEO (long terme) + SEA (accélérateur).'},
+  {id:'a3',sec:'Acquisition',prof:'Prof. Garletti Eric',q:'Définissez le CAC. Donnez sa formule et expliquez le ratio CLV/CAC idéal.',kw:['cac','dépenses marketing','nouveaux clients','formule','clv','ratio','3','rentabilité','canal','viable'],model:'<strong>Formule : CAC = Total dépenses marketing / Nb nouveaux clients acquis.</strong> Indicateur de rentabilité d\'acquisition. <strong>Ratio CLV/CAC idéal ≥ 3.</strong> Calculer par canal pour identifier les plus rentables. CAC élevé + CLV faible = modèle non viable.'}
+];
+
+const CAS={ctx:'<strong>FreshBox</strong> — start-up D2C fondée en 2021 à Bordeaux. Box de produits frais &amp; bio par abonnement mensuel sans engagement (Découverte 39 € / Premium 59 € / Famille 79 €). Marge brute : 38 %. Stack : Shopify + HubSpot CRM + Klaviyo + Google Ads + Meta Ads. Équipe marketing : 5 personnes.<br><br><strong>Chiffres clés :</strong> 5 800 abonnés actifs · MRR <strong>268 k€</strong> · CAC <strong>68 €</strong> (obj. &lt;50 €) · CLV <strong>156 €</strong> · churn mensuel <strong>28 %</strong> · NPS <strong>34</strong>.<br><br><strong>Performance canaux :</strong> email open rate <strong>12 %</strong> (bench 22 %), CTR <strong>0,8 %</strong> (bench 3,5 %), désabo 4,2 %/mois · SEA CPC <strong>2,40 €</strong> (+30 % vs N-1), ROAS <strong>2,1</strong> (obj. 3,5), budget 8 000 €/mois · SEO DR 18, 1 200 sessions organiques/mois, 0 contenu depuis 4 mois · CVR landing pages <strong>1,8 %</strong> (bench 3,5-4 %).<br><br><strong>CRM — segmentation RFM :</strong> clients actifs 2 800 (48 %, génèrent 72 % du CA) · à risque 1 400 (24 %) · inactifs &gt;90j 1 600 (28 %) · top fidèles 340 clients = 38 % du CA · budget marketing mensuel : 18 000 €.',q:'Proposez un plan d\'action complet pour relancer la croissance de FreshBox sur ses 5 leviers digitaux (CRM, Emailing, SEA, SEO, Acquisition). Pour chaque levier, détaillez les actions prioritaires, les KPI cibles à 6 mois et l\'estimation du ROI attendu.',kw:['rfm','segmentation','réachat','churn','automation','a/b test','objet','pré-header','quality score','roas','landing page','cvr','audit seo','backlinks','trafic organique','remarketing','cac','clv','kpi','conversion','fidélité','programme'],model:'<strong>CRM :</strong> 3 séquences distinctes selon segment RFM : actifs → programme VIP (accès early, cadeau anniversaire) ; à risque → relance J+15 "on vous a manqué" + offre -15% J+30 ; inactifs &gt;90j → campagne réactivation "box découverte offerte". KPI : churn &lt;18%, réachat +15 pts, CLV +20%. <strong>Emailing :</strong> A/B test objet (court vs prénom vs emoji), refonte template (1 accroche → 1 bénéfice → 1 CTA), segmentation par formule, fréquence 1×/sem. KPI : TO &gt;22%, CTR &gt;3,5%, désabo &lt;1%. <strong>SEA :</strong> audit mots-clés (pauser CPA&gt;68 €), restructurer groupes d\'annonces par formule, activer RLSA sur visiteurs non convertis, tester Performance Max. KPI : ROAS &gt;3,5, CPC -20%, CAC &lt;50 €. <strong>SEO :</strong> audit technique (Core Web Vitals, vitesse), plan éditorial 4 articles/mois (recettes bio + guides saisonniers), link building partenaires bio. KPI : +30% trafic organique à 6 mois. <strong>Acquisition :</strong> refonte landing pages (USP claire, social proof, 1 CTA), test offre (essai gratuit 1ère box vs -20% 1er mois). KPI : CVR LP &gt;3,5%.'};
+
+const QUOTA={'CRM':2,'Emailing':1,'SEA':2,'SEO & SMO':2,'Acquisition':1};
+const BADGE={2:{cls:'b2',icon:'✅',lbl:'2/2 · Très bien'},1:{cls:'b1',icon:'🟡',lbl:'1/2 · Bien'},0:{cls:'b0',icon:'❌',lbl:'0/2 · Insuffisant'}};
+
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function norm(s){return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();}
+function score(text,kw){if(!text||norm(text).length<10)return 0;const n=norm(text);let f=0;kw.forEach(k=>{if(n.includes(norm(k)))f++;});const r=f/kw.length;return r>=0.55?2:r>=0.25?1:0;}
+
+let selected=[],scores={};
+
+function pickQ(){
+  const bySec={};
+  POOL.forEach(q=>{if(!bySec[q.sec])bySec[q.sec]=[];bySec[q.sec].push(q);});
+  const out=[];
+  Object.entries(QUOTA).forEach(([s,n])=>{out.push(...shuffle(bySec[s]||[]).slice(0,n));});
+  return out;
+}
+
+function render(){
+  selected=pickQ();
+  scores={};
+  const body=document.getElementById('examBody');
+  document.getElementById('hsub').textContent=`Lundi · ${selected.length+1} questions · Score sur ${(selected.length+1)*2} pts`;
+  let html=`<div class="intro">📝 <strong>Questionnaire noté &amp; aléatoire</strong> : Nouveau tirage à chaque ouverture. Répondez sans notes, cliquez <em>Vérifier</em> par question ou <em>Remettre la copie</em> à la fin.</div>`;
+  let lastSec='';
+  selected.forEach((q,i)=>{
+    if(q.sec!==lastSec){html+=`<div class="sec">${q.sec} · ${q.prof}</div>`;lastSec=q.sec;}
+    html+=`<div class="qcard" id="card_${q.id}"><div class="qlbl">Question ${i+1} · 2 pts</div><div class="qtxt">${q.q}</div><textarea id="ta_${q.id}" placeholder="Rédigez votre réponse ici…"></textarea><div class="qfoot"><span class="wc" id="wc_${q.id}">0 mot</span><div class="foot-r"><div class="badge" id="badge_${q.id}"></div><button class="vbtn" id="vbtn_${q.id}" onclick="verifyOne('${q.id}')">Vérifier</button></div></div><div class="model" id="model_${q.id}"><div class="mlbl">Réponse attendue</div>${q.model}</div></div>`;
+  });
+  // Cas pratique
+  html+=`<div class="sec">Cas Pratique : FreshBox</div><div class="cas"><h3>📋 Contexte</h3><p>${CAS.ctx}</p></div><div class="qcard" id="card_cas"><div class="qlbl">Question ${selected.length+1} : Étude de cas · 2 pts</div><div class="qtxt">${CAS.q}</div><textarea id="ta_cas" style="min-height:160px;" placeholder="Développez votre plan d'action ici…"></textarea><div class="qfoot"><span class="wc" id="wc_cas">0 mot</span><div class="foot-r"><div class="badge" id="badge_cas"></div><button class="vbtn" id="vbtn_cas" onclick="verifyOne('cas')">Vérifier</button></div></div><div class="model" id="model_cas"><div class="mlbl">Correction indicative</div>${CAS.model}</div></div>`;
+  html+=`<button class="sub-btn" onclick="submitAll()">📊 Remettre la copie · Voir mon score</button><div class="results" id="results"></div>`;
+  body.innerHTML=html;
+  // Word count
+  [...selected.map(q=>q.id),'cas'].forEach(id=>{
+    document.getElementById('ta_'+id)?.addEventListener('input',()=>{
+      const w=(document.getElementById('ta_'+id).value.trim().split(/\s+/).filter(Boolean).length);
+      document.getElementById('wc_'+id).textContent=w+(w<=1?' mot':' mots');
+      if(!timerRunning)toggleTimer();
+    });
+  });
+}
+
+function verifyOne(id){
+  const q=id==='cas'?CAS:selected.find(x=>x.id===id);
+  const ta=document.getElementById('ta_'+id);
+  const s=score(ta.value,q.kw);
+  scores[id]=s;
+  ta.readOnly=true;
+  const b=BADGE[s];
+  const bd=document.getElementById('badge_'+id);
+  bd.className='badge '+b.cls;bd.textContent=b.icon+' '+b.lbl;bd.style.display='flex';
+  document.getElementById('model_'+id).style.display='block';
+  const vbtn=document.getElementById('vbtn_'+id);
+  vbtn.textContent='✓ Vérifié';vbtn.disabled=true;
+  document.getElementById('card_'+id).classList.add('verified');
+  updateChip();
+}
+
+function updateChip(){
+  const tot=Object.values(scores).reduce((a,b)=>a+b,0);
+  const chip=document.getElementById('schip');chip.style.display='inline-block';
+  chip.textContent=tot+' / '+((selected.length+1)*2);
+}
+
+function submitAll(){
+  [...selected.map(q=>q.id),'cas'].forEach(id=>{if(scores[id]===undefined)verifyOne(id);});
+  const tot=Object.values(scores).reduce((a,b)=>a+b,0);
+  const max=(selected.length+1)*2;
+  const pct=Math.round(tot/max*100);
+  const grade=pct>=80?'🏆 Excellent !':pct>=60?'👍 Bien !':pct>=40?'📚 À consolider':' ⚠️ À retravailler';
+  let bd='';
+  selected.forEach((q,i)=>{const s=scores[q.id]??0;const b=BADGE[s];bd+=`<div class="bdi"><span class="bdi-q">Q${i+1} · ${q.sec}</span><span class="badge ${b.cls}" style="display:inline-flex;font-size:.75rem;">${b.icon} ${s}/2</span></div>`;});
+  const cs=scores['cas']??0;const cb=BADGE[cs];bd+=`<div class="bdi"><span class="bdi-q">Cas pratique</span><span class="badge ${cb.cls}" style="display:inline-flex;font-size:.75rem;">${cb.icon} ${cs}/2</span></div>`;
+  const res=document.getElementById('results');
+  res.style.display='block';
+  res.innerHTML=`<div class="fscore">${tot}</div><div class="fmax">/ ${max} points · ${pct}%</div><div class="flbl">${grade}</div><div class="breakdown">${bd}</div><button class="restart" onclick="location.reload()">🔄 Nouveau questionnaire</button>`;
+  res.scrollIntoView({behavior:'smooth'});
+}
+
+let timerRunning=false,timerSecs=0,timerInt;
+function toggleTimer(){if(timerRunning){clearInterval(timerInt);timerRunning=false;document.getElementById('tbtn').textContent='▶';}else{timerInt=setInterval(()=>{timerSecs++;document.getElementById('timer').textContent=String(Math.floor(timerSecs/60)).padStart(2,'0')+':'+String(timerSecs%60).padStart(2,'0');},1000);timerRunning=true;document.getElementById('tbtn').textContent='⏸';}}
+function resetTimer(){clearInterval(timerInt);timerRunning=false;timerSecs=0;document.getElementById('timer').textContent='00:00';document.getElementById('tbtn').textContent='▶';}
+
+render();
+</script>
+</body>
+</html>

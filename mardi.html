@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Révision Mardi : Bloc 3 · Communication Digitale</title>
+<style>
+  :root {
+    --primary: #6A1B9A;
+    --primary-light: #7B1FA2;
+    --primary-dark: #4A148C;
+    --accent: #CE93D8;
+    --bg: #f5f0f9;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --muted: #64748b;
+    --success: #2e7d32;
+    --border: #e2e8f0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+  .hero {
+    background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 40%, #7B1FA2 70%, #AB47BC 100%);
+    color:#fff; padding:2.5rem 1.5rem 3.5rem; text-align:center; position:relative; overflow:hidden;
+  }
+  .hero::before { content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%; background:radial-gradient(circle, rgba(255,255,255,.05) 0%, transparent 60%); }
+  .hero .day-badge { display:inline-block; background:rgba(255,255,255,.2); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.3); border-radius:50px; padding:.4rem 1.2rem; font-size:.8rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; margin-bottom:1rem; }
+  .hero h1 { font-size:clamp(1.8rem,4vw,3rem); font-weight:800; margin-bottom:.5rem; }
+  .hero p { font-size:1.1rem; opacity:.85; margin-bottom:1.5rem; }
+  .hero .meta { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+  .hero .meta span { background:rgba(255,255,255,.15); border-radius:8px; padding:.3rem .8rem; font-size:.8rem; font-weight:600; }
+  .hero .back-home { position:absolute; top:.9rem; left:1rem; display:inline-flex; align-items:center; gap:.4rem; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.35); color:#fff; text-decoration:none; border-radius:8px; padding:.35rem .85rem; font-size:.78rem; font-weight:700; backdrop-filter:blur(6px); transition:.2s; }
+  .hero .back-home:hover { background:rgba(255,255,255,.3); }
+  .progress-bar-wrap { background:#f3e5f5; padding:1rem 1.5rem; display:flex; align-items:center; gap:1rem; }
+  .progress-label { font-size:.85rem; font-weight:600; color:var(--primary); white-space:nowrap; }
+  .progress-track { flex:1; height:8px; background:#E1BEE7; border-radius:4px; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,var(--primary),var(--accent)); border-radius:4px; transition:width .4s ease; }
+  .progress-pct { font-size:.85rem; font-weight:700; color:var(--primary); white-space:nowrap; }
+  .case-banner { margin:1.5rem; background:linear-gradient(135deg,#4A148C,#6A1B9A); border-radius:16px; padding:1.5rem; color:#fff; cursor:pointer; display:flex; align-items:flex-start; gap:1rem; }
+  .case-banner .icon { font-size:2rem; flex-shrink:0; margin-top:.1rem; }
+  .case-banner h2 { font-size:1.2rem; font-weight:700; margin-bottom:.5rem; }
+  .case-banner p { font-size:.9rem; opacity:.85; line-height:1.6; }
+  .case-body { display:none; margin:0 1.5rem 1.5rem; background:#fff; border-radius:12px; border-left:4px solid var(--primary); padding:1.2rem; font-size:.9rem; line-height:1.7; color:var(--text); }
+  .case-body.open { display:block; }
+  .tabs-wrap { padding:0 1.5rem; overflow-x:auto; display:flex; gap:.5rem; margin-bottom:0; }
+  .tab-btn { flex-shrink:0; padding:.6rem 1.2rem; border:2px solid transparent; background:transparent; border-radius:10px 10px 0 0; font-size:.85rem; font-weight:600; cursor:pointer; color:var(--muted); transition:.2s; white-space:nowrap; }
+  .tab-btn.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+  .tab-btn:hover:not(.active) { background:#f3e5f5; color:var(--primary); }
+  .tab-panel { display:none; padding:1.5rem; animation:fadeIn .3s; }
+  .tab-panel.active { display:block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+  .matiere-header { display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem; padding:1rem 1.2rem; background:#fff; border-radius:12px; border-left:5px solid var(--primary); box-shadow:0 2px 8px rgba(0,0,0,.06); }
+  .matiere-header .num { width:40px; height:40px; background:var(--primary); color:#fff; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; font-weight:800; flex-shrink:0; }
+  .matiere-header h2 { font-size:1.1rem; font-weight:700; }
+  .matiere-header p { font-size:.8rem; color:var(--muted); }
+  .section-title { font-size:.75rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--primary); margin:1.2rem 0 .8rem; padding-left:.5rem; border-left:3px solid var(--accent); }
+  .cards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1rem; margin-bottom:1.5rem; }
+  .flip-card { height:220px; perspective:1000px; cursor:pointer; }
+  .flip-inner { width:100%; height:100%; position:relative; transform-style:preserve-3d; transition:transform .5s cubic-bezier(.4,.2,.2,1); }
+  .flip-card.flipped .flip-inner { transform:rotateY(180deg); }
+  .flip-front, .flip-back { position:absolute; inset:0; border-radius:14px; padding:1.2rem; backface-visibility:hidden; display:flex; flex-direction:column; box-shadow:0 3px 12px rgba(0,0,0,.08); }
+  .flip-front { background:#fff; border:1px solid var(--border); justify-content:space-between; }
+  .flip-front .q-num { font-size:.7rem; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.5rem; }
+  .flip-front .q-text { font-size:.95rem; font-weight:600; line-height:1.5; flex:1; }
+  .flip-front .flip-hint { font-size:.72rem; color:var(--muted); text-align:center; padding-top:.8rem; border-top:1px solid var(--border); }
+  .flip-back { background:linear-gradient(135deg,var(--primary),var(--primary-light)); color:#fff; transform:rotateY(180deg); overflow-y:auto; }
+  .flip-back .a-label { font-size:.7rem; font-weight:700; opacity:.7; text-transform:uppercase; margin-bottom:.5rem; }
+  .flip-back .a-text { font-size:.82rem; line-height:1.6; }
+  .flip-back .a-text ul { list-style:none; padding:0; }
+  .flip-back .a-text ul li::before { content:"• "; opacity:.7; }
+  .flip-back .a-text li { margin-bottom:.2rem; }
+  .accordion { background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,.06); overflow:hidden; margin-bottom:1rem; }
+  .acc-header { padding:1rem 1.2rem; display:flex; align-items:center; justify-content:space-between; cursor:pointer; font-weight:600; font-size:.9rem; gap:.5rem; }
+  .acc-header:hover { background:#f8fafc; }
+  .acc-icon { font-size:1.1rem; transition:transform .3s; }
+  .acc-header.open .acc-icon { transform:rotate(180deg); }
+  .acc-body { display:none; padding:0 1.2rem 1rem; border-top:1px solid var(--border); }
+  .acc-body.open { display:block; }
+  .acc-body p, .acc-body li { font-size:.875rem; line-height:1.7; color:#334155; }
+  .acc-body ul { padding-left:1.2rem; margin:.4rem 0; }
+  .acc-body ul li { margin-bottom:.3rem; }
+  .kpi-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:.8rem; margin-bottom:1rem; }
+  .kpi-box { background:#fff; border-radius:10px; padding:.9rem 1rem; border-top:3px solid var(--primary); box-shadow:0 2px 8px rgba(0,0,0,.06); text-align:center; }
+  .kpi-box .kpi-val { font-size:1.2rem; font-weight:800; color:var(--primary); }
+  .kpi-box .kpi-label { font-size:.72rem; color:var(--muted); margin-top:.3rem; font-weight:500; }
+  .case-card { background:linear-gradient(135deg,#f3e5f5,#e1bee7); border-radius:14px; padding:1.2rem; margin-bottom:1rem; border:1px solid #ce93d8; }
+  .case-card h3 { color:#4A148C; font-size:.95rem; margin-bottom:.6rem; font-weight:700; }
+  .case-card p, .case-card li { font-size:.87rem; line-height:1.7; color:#311b92; }
+  .case-card ul { padding-left:1.2rem; margin:.3rem 0; }
+  .done-check { display:flex; align-items:center; gap:.6rem; margin-top:.5rem; font-size:.8rem; color:var(--muted); cursor:pointer; user-select:none; }
+  .done-check input { width:16px; height:16px; cursor:pointer; accent-color:var(--success); }
+  .done-check.checked { color:var(--success); font-weight:600; }
+  .formula-box { background:#FFF8E1; border:1px solid #FFD54F; border-radius:10px; padding:.8rem 1rem; margin:.6rem 0; font-size:.87rem; color:#5D4037; }
+  .formula-box strong { color:#E65100; }
+  .tip-box { background:#EDE7F6; border-left:4px solid #7B1FA2; border-radius:8px; padding:.8rem 1rem; margin-bottom:1rem; font-size:.83rem; color:#4A148C; }
+  .table-responsive { overflow-x:auto; margin:.6rem 0; }
+  table { width:100%; border-collapse:collapse; font-size:.82rem; }
+  th { background:var(--primary); color:#fff; padding:.5rem .8rem; text-align:left; }
+  td { padding:.5rem .8rem; border-bottom:1px solid var(--border); }
+  tr:nth-child(even) td { background:#faf5ff; }
+</style>
+<style>
+/* ══ PREMIUM UPGRADE : MARDI ══ */
+:root{
+  --sh-sm:0 1px 3px rgba(106,27,154,.08),0 1px 2px rgba(0,0,0,.05);
+  --sh-md:0 4px 14px rgba(106,27,154,.13),0 2px 5px rgba(0,0,0,.06);
+  --sh-lg:0 8px 28px rgba(106,27,154,.18),0 4px 8px rgba(0,0,0,.07);
+  --sh-hv:0 16px 44px rgba(106,27,154,.25),0 6px 14px rgba(0,0,0,.09);
+}
+@keyframes heroShimmer{
+  0%{transform:translateX(-100%) skewX(-20deg);opacity:0}
+  20%{opacity:1}80%{opacity:1}
+  100%{transform:translateX(380%) skewX(-20deg);opacity:0}
+}
+.hero::after{content:'';position:absolute;top:0;left:0;width:22%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.09),transparent);
+  animation:heroShimmer 7s cubic-bezier(.4,0,.2,1) infinite;animation-delay:2s;pointer-events:none;}
+.back-home{backdrop-filter:blur(14px)!important;
+  transition:background .2s,transform .2s,box-shadow .2s!important;
+  box-shadow:0 2px 10px rgba(0,0,0,.18)!important;}
+.back-home:hover{background:rgba(255,255,255,.3)!important;transform:translateX(-3px)!important;}
+@keyframes prgShimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+.progress-bar-wrap{box-shadow:0 2px 10px rgba(106,27,154,.1);}
+.progress-fill{background:linear-gradient(90deg,#4A148C,#CE93D8,#4A148C)!important;
+  background-size:200% auto!important;animation:prgShimmer 2.8s linear infinite;}
+a[href*="feuille-blanche"]{transition:transform .25s cubic-bezier(.4,0,.2,1),box-shadow .25s!important;}
+a[href*="feuille-blanche"]:hover{transform:translateY(-4px)!important;
+  box-shadow:0 14px 36px rgba(106,27,154,.4)!important;}
+.case-banner{box-shadow:0 4px 20px rgba(74,20,140,.3)!important;
+  transition:transform .25s cubic-bezier(.4,0,.2,1),box-shadow .25s!important;}
+.case-banner:hover{transform:translateY(-3px)!important;box-shadow:0 10px 34px rgba(74,20,140,.45)!important;}
+.tab-btn{transition:background .2s,color .2s,box-shadow .2s,transform .18s!important;}
+.tab-btn.active{background:linear-gradient(135deg,#4A148C,#6A1B9A)!important;
+  border-color:transparent!important;
+  box-shadow:0 4px 16px rgba(106,27,154,.42),0 2px 4px rgba(0,0,0,.1)!important;
+  transform:translateY(-1px);}
+.tab-btn:hover:not(.active){transform:translateY(-1px);}
+@keyframes panelIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.tab-panel.active{animation:panelIn .22s cubic-bezier(.4,0,.2,1) both!important;}
+.matiere-header{border-left:none!important;border-radius:14px!important;
+  box-shadow:var(--sh-md)!important;transition:box-shadow .22s,transform .22s!important;}
+.matiere-header:hover{box-shadow:var(--sh-lg)!important;transform:translateY(-1px);}
+.matiere-header .num{border-radius:12px!important;box-shadow:0 4px 12px rgba(106,27,154,.38)!important;}
+.section-title{border-left:none!important;padding-left:0!important;
+  display:flex!important;align-items:center;gap:.5rem;}
+.section-title::before{content:'';display:inline-block;width:3px;height:13px;
+  background:var(--accent);border-radius:2px;flex-shrink:0;}
+.flip-card{transition:transform .22s cubic-bezier(.4,0,.2,1)!important;}
+.flip-card:not(.flipped):hover{transform:translateY(-5px)!important;}
+.flip-inner{transition:transform .56s cubic-bezier(.42,.08,.08,.92)!important;}
+.flip-front{box-shadow:var(--sh-md)!important;border:1px solid rgba(0,0,0,.055)!important;}
+.flip-card:not(.flipped):hover .flip-front{box-shadow:var(--sh-hv)!important;}
+.flip-back{box-shadow:0 12px 32px rgba(106,27,154,.35)!important;}
+.acc-body{display:block!important;max-height:0;overflow:hidden;
+  padding-bottom:0!important;border-top:1px solid transparent!important;
+  transition:max-height .38s cubic-bezier(.4,0,.2,1),padding-bottom .22s,border-color .22s!important;}
+.acc-body.open{max-height:1800px;padding-bottom:1rem!important;border-top-color:var(--border)!important;}
+.acc-icon{transition:transform .35s cubic-bezier(.4,0,.2,1)!important;}
+.accordion{box-shadow:var(--sh-sm)!important;transition:box-shadow .22s!important;}
+.accordion:hover{box-shadow:var(--sh-md)!important;}
+.kpi-box{box-shadow:var(--sh-sm)!important;transition:transform .22s,box-shadow .22s!important;}
+.kpi-box:hover{transform:translateY(-3px)!important;box-shadow:var(--sh-md)!important;}
+.case-body{border-left:none!important;
+  background:linear-gradient(to right,rgba(106,27,154,.07),rgba(106,27,154,.02))!important;
+  border:1px solid rgba(106,27,154,.14)!important;border-radius:12px!important;box-shadow:var(--sh-sm)!important;}
+.tip-box{border-left:none!important;
+  background:linear-gradient(to right,rgba(76,175,80,.12),rgba(76,175,80,.03))!important;
+  border:1px solid rgba(76,175,80,.22)!important;border-radius:10px!important;}
+.formula-box{border-left:none!important;border:1px solid rgba(255,213,79,.5)!important;}
+@media(prefers-reduced-motion:reduce){
+  .hero::after,.progress-fill{animation:none!important;}
+  .flip-card,.tab-btn,.kpi-box,.accordion,.case-banner,
+  .matiere-header,.back-home,a[href*="feuille-blanche"]{transition:none!important;}
+  .flip-inner,.acc-body{transition:none!important;}
+}
+</style>
+<style>
+/* ══ MOBILE FIRST ══ */
+@media(max-width:640px){
+  /* Hero : espace pour le bouton back absolu */
+  .hero{padding:3.6rem 1rem 2rem;}
+  .hero h1{font-size:1.45rem;letter-spacing:-.015em;}
+  .hero p{font-size:.85rem;margin-bottom:.9rem;}
+  .hero .meta{gap:.3rem;}
+  .hero .meta span{font-size:.68rem;padding:.2rem .5rem;}
+
+  /* Progress bar */
+  .progress-bar-wrap{padding:.6rem 1rem;gap:.4rem;}
+  .progress-label,.progress-pct{font-size:.72rem;}
+
+  /* Case banner / body */
+  .case-banner{margin:.75rem;padding:.9rem;gap:.6rem;border-radius:12px;}
+  .case-banner .icon{font-size:1.4rem;}
+  .case-banner h2{font-size:.9rem;}
+  .case-banner p{font-size:.77rem;}
+  .case-body{margin:.75rem;padding:.85rem;font-size:.82rem;line-height:1.65;}
+
+  /* Tabs : scroll horizontal sans scrollbar visible */
+  .tabs-wrap{
+    padding:0 .5rem .5rem;gap:.2rem;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .tabs-wrap::-webkit-scrollbar{display:none;}
+  .tab-btn{padding:.45rem .6rem;font-size:.72rem;border-radius:8px 8px 0 0;}
+
+  /* Contenu onglet */
+  .tab-panel{padding:.75rem .75rem 1.5rem;}
+
+  /* En-tête matière */
+  .matiere-header{padding:.7rem .85rem;gap:.5rem;margin-bottom:.9rem;}
+  .matiere-header .num{width:30px;height:30px;font-size:.85rem;border-radius:7px;}
+  .matiere-header h2{font-size:.88rem;}
+  .matiere-header p{font-size:.72rem;}
+
+  /* Titres de section */
+  .section-title{font-size:.65rem;margin:.8rem 0 .5rem;}
+
+  /* Tip box */
+  .tip-box{font-size:.77rem;padding:.65rem .8rem;}
+
+  /* Cartes flip : 1 colonne */
+  .cards-grid{grid-template-columns:1fr!important;gap:.65rem;}
+  .flip-card{height:210px;}
+  .flip-front .q-text{font-size:.87rem;}
+  .flip-back .a-text{font-size:.77rem;}
+
+  /* KPI boxes */
+  .kpi-grid{grid-template-columns:repeat(2,1fr);gap:.45rem;}
+  .kpi-box{padding:.7rem .6rem;}
+  .kpi-box .kpi-val{font-size:1.05rem;}
+  .kpi-box .kpi-label{font-size:.66rem;}
+
+  /* Accordéons */
+  .acc-header{padding:.75rem .85rem;font-size:.82rem;}
+  .acc-body{padding:0 .85rem .85rem;}
+  .acc-body p,.acc-body li{font-size:.8rem;}
+
+  /* Done-check */
+  .done-check{font-size:.74rem;}
+
+  /* Formula box */
+  .formula-box{font-size:.79rem;padding:.65rem .8rem;}
+
+  /* Case card */
+  .case-card{padding:.9rem;}
+  .case-card p,.case-card li{font-size:.8rem;}
+
+  /* Tableaux comparatifs */
+  table{font-size:.72rem;}
+  th,td{padding:.3rem .4rem!important;}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <a href="index.html" class="back-home">← Tous les blocs</a>
+  <div class="day-badge">📅 Mardi</div>
+  <h1>Bloc 3 : Communication Digitale</h1>
+  <p>Politique de Communication Digitale · MSc 2</p>
+  <div class="meta">
+    <span>✍️ Brand Content</span>
+    <span>👥 Community Mgmt</span>
+    <span>🌟 Influence & Affiliation</span>
+    <span>⚙️ Automation</span>
+  </div>
+</div>
+
+<div class="progress-bar-wrap">
+  <span class="progress-label">Progression</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <span class="progress-pct" id="progressPct">0%</span>
+</div>
+
+<div style="margin:1rem 1.5rem 0;">
+  <a href="feuille-blanche-mardi.html" style="display:flex;align-items:center;gap:1rem;background:linear-gradient(135deg,#4A148C,#6A1B9A);color:#fff;border-radius:14px;padding:1rem 1.4rem;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.15);">
+    <span style="font-size:1.6rem;flex-shrink:0;">📝</span>
+    <div>
+      <div style="font-weight:800;font-size:.95rem;margin-bottom:.1rem;">Exercice Feuille Blanche</div>
+      <div style="font-size:.8rem;opacity:.8;">Tester vos connaissances sans notes · Chronomètre intégré</div>
+    </div>
+    <span style="margin-left:auto;font-size:1.3rem;opacity:.6;">→</span>
+  </a>
+</div>
+
+<div class="case-banner" onclick="toggleCase()">
+  <div class="icon">📋</div>
+  <div>
+    <h2>Étude de cas : Lumière (cliquer pour afficher)</h2>
+    <p>Start-up bougies artisanales haut de gamme · Lancement collection automne-hiver</p>
+  </div>
+</div>
+<div class="case-body" id="caseBody">
+  <strong style="font-size:1rem;color:var(--primary);">Lumière</strong> est une start-up fondée en 2020 à Lyon, spécialisée dans les bougies artisanales et parfums d'intérieur haut de gamme. Fabrication française, cire végétale, parfums créés à Grasse. En année 3, elle réalise <strong>280 000 € de CA</strong> (60 % digital, 40 % B2B boutiques et hôtels). Positionnement : <em>"L'art de créer une atmosphère"</em>. Cible : femmes 25-45 ans, CSP+, sensibles à la déco et au slow living. 6 employés.
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.45rem;margin:.7rem 0;">
+    <div class="kpi-box"><div class="kpi-val">280 k€</div><div class="kpi-label">CA annuel (A3)</div></div>
+    <div class="kpi-box"><div class="kpi-val">4 200</div><div class="kpi-label">Abonnés Instagram</div></div>
+    <div class="kpi-box"><div class="kpi-val">1,2 %</div><div class="kpi-label">Taux d'engagement</div></div>
+    <div class="kpi-box"><div class="kpi-val">800</div><div class="kpi-label">Abonnés newsletter</div></div>
+    <div class="kpi-box"><div class="kpi-val">15 k€</div><div class="kpi-label">Budget campagne</div></div>
+    <div class="kpi-box"><div class="kpi-val">65 %</div><div class="kpi-label">CA réalisé en Q4</div></div>
+  </div>
+
+  <div style="font-weight:700;color:var(--primary);margin:.7rem 0 .25rem;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;">Situation digitale actuelle</div>
+  <ul style="margin:.2rem 0 0 1rem;font-size:.87rem;">
+    <li><strong>Instagram :</strong> 4 200 abonnés · engagement <strong>1,2 %</strong> (benchmark lifestyle : 3-4 %) · publications 3×/semaine sans ligne éditoriale</li>
+    <li><strong>TikTok :</strong> 890 abonnés, quasi-inactif · <strong>Pinterest :</strong> 2 100 abonnés, 12 000 impressions/mois</li>
+    <li><strong>Newsletter :</strong> 800 abonnés · open rate <strong>18 %</strong> · CTR <strong>2,1 %</strong> · 1 envoi par mois seulement</li>
+    <li><strong>Site e-commerce :</strong> 3 200 sessions/mois · CVR <strong>1,4 %</strong> · panier moyen <strong>67 €</strong></li>
+    <li><strong>Budget paid :</strong> <strong>0 €</strong> — aucune publicité à ce jour, 100 % acquisition organique</li>
+  </ul>
+
+  <div style="font-weight:700;color:var(--primary);margin:.7rem 0 .25rem;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;">Mission : lancement collection automne-hiver</div>
+  <strong>8 nouvelles références</strong> lancées début octobre : 6 bougies (parfums saison) + 2 coffrets cadeaux exclusifs à <strong>89 €</strong>. Saisonnalité critique : 65 % du CA annuel se fait entre octobre et décembre. L'an dernier, la collection a généré <strong>38 000 €</strong>. Objectif cette année : <strong>60 000 €</strong> (+58 %).
+  <br><br>
+  <strong>Répartition budget 15 000 € :</strong> influenceurs/affiliation <strong>6 000 €</strong> · contenu photo/vidéo <strong>3 500 €</strong> · Meta Ads <strong>3 000 €</strong> · email/CRM <strong>800 €</strong> · divers <strong>1 700 €</strong>
+
+  <div style="font-weight:700;color:var(--primary);margin:.7rem 0 .25rem;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;">Objectifs campagne (3 mois)</div>
+  <ul style="margin:.2rem 0 0 1rem;font-size:.87rem;">
+    <li>CA collection automne-hiver : <strong>60 000 €</strong> (+58 % vs N-1)</li>
+    <li>Instagram : <strong>12 000 abonnés</strong> avant Noël · taux d'engagement : <strong>&gt;3,5 %</strong></li>
+    <li>Newsletter : <strong>2 500 abonnés</strong> (+212 %)</li>
+    <li>Partenariats : <strong>4-6 micro-influenceurs</strong> (10K-100K) + <strong>15 affiliés</strong> lifestyle actifs</li>
+    <li>Séquences automation : bienvenue, post-achat, panier abandonné, réactivation</li>
+  </ul>
+
+  <div class="formula-box" style="margin-top:.8rem;"><strong>Mission examen :</strong> Construisez le plan de communication complet de Lumière pour le lancement de sa collection automne-hiver. Détaillez brand content, community management, stratégie d'influence, programme d'affiliation et automation email. Justifiez la répartition du budget 15 000 €.</div>
+</div>
+
+<div class="tabs-wrap">
+  <button class="tab-btn active" onclick="switchTab(0)">✍️ Brand Content</button>
+  <button class="tab-btn" onclick="switchTab(1)">👥 Community Mgmt</button>
+  <button class="tab-btn" onclick="switchTab(2)">🌟 Influence & Affiliation</button>
+  <button class="tab-btn" onclick="switchTab(3)">⚙️ Automation</button>
+</div>
+
+<!-- ==================== TAB 0: BRAND CONTENT ==================== -->
+<div class="tab-panel active" id="tab0">
+  <div class="matiere-header">
+    <div class="num">1</div>
+    <div><h2>Brand Content &amp; Storytelling</h2><p>Prof. Hacquin Téo</p></div>
+  </div>
+  <div class="tip-box">💡 <strong>Astuce :</strong> Cliquez sur une carte pour retourner la réponse.</div>
+
+  <div class="section-title">Questions de connaissances</div>
+  <div class="cards-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q1</div>
+          <div class="q-text">Définissez le Brand Content et ses objectifs</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Définition</div>
+          <div class="a-text">
+            Le Brand Content désigne l'ensemble des contenus créés et diffusés par une marque pour renforcer son image, exprimer ses valeurs et créer une relation durable avec son audience. À la différence de la publicité traditionnelle, le Brand Content n'a pas d'objectif de vente immédiat : il cherche à créer une connexion émotionnelle.<br><br>
+            <strong>Objectifs :</strong>
+            <ul>
+              <li>Développer la notoriété et la visibilité de la marque</li>
+              <li>Renforcer l'engagement de la communauté</li>
+              <li>Créer une préférence de marque et un attachement émotionnel</li>
+              <li>Améliorer le SEO et générer du trafic organique (inbound marketing)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q2</div>
+          <div class="q-text">Qu'est-ce que le Storytelling et sa structure narrative ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Storytelling</div>
+          <div class="a-text">
+            Le Storytelling est l'art de raconter une histoire structurée pour transmettre un message, créer une émotion et établir un lien durable avec le public.<br><br>
+            <strong>Structure narrative :</strong>
+            <ul>
+              <li><strong>Protagoniste :</strong> marque, fondateur ou client (héros de l'histoire)</li>
+              <li><strong>Enjeu :</strong> problème ou besoin à résoudre</li>
+              <li><strong>Conflit :</strong> obstacles et difficultés rencontrés</li>
+              <li><strong>Résolution :</strong> comment la marque apporte la solution</li>
+              <li><strong>Transformation :</strong> changement positif vécu par le héros</li>
+            </ul>
+            Le cerveau humain retient <strong>22× mieux</strong> une information transmise par une histoire que par des données seules.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q3</div>
+          <div class="q-text">Pourquoi les consommateurs sont-ils sensibles aux récits de marque ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Réponse</div>
+          <div class="a-text">
+            <ul>
+              <li>Les émotions favorisent la mémorisation et l'adhésion : une belle histoire libère de l'<strong>oxytocine</strong></li>
+              <li>Un récit bien construit crée de l'identification et de l'empathie avec la marque</li>
+              <li>Les histoires <strong>humanisent</strong> la marque et la rendent plus accessible et authentique</li>
+              <li>Le Brand Content se distingue de la publicité classique, perçue comme intrusive</li>
+              <li>Il crée un sentiment d'appartenance à une communauté partageant les mêmes valeurs</li>
+              <li>Une marque qui raconte une histoire cohérente construit une relation durable avec ses clients</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q4</div>
+          <div class="q-text">Quels formats de contenu peuvent être utilisés ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Formats</div>
+          <div class="a-text">
+            <ul>
+              <li><strong>Vidéo :</strong> Reels, TikTok, courts métrages</li>
+              <li><strong>Écrit :</strong> blog, newsletters, livres blancs</li>
+              <li><strong>Audio :</strong> podcasts, interviews</li>
+              <li><strong>Visuel :</strong> infographies, carrousels Instagram</li>
+              <li><strong>Interactif :</strong> quiz, sondages, expériences web</li>
+              <li><strong>UGC :</strong> contenus créés par les clients</li>
+              <li><strong>Live :</strong> webinaires, lives Instagram/TikTok</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q5</div>
+          <div class="q-text">Comment mesurer la performance d'une stratégie de contenu ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">KPI par objectif</div>
+          <div class="a-text">
+            <strong>Notoriété :</strong> Reach, impressions, croissance followers<br><br>
+            <strong>Engagement :</strong><br>
+            Taux d'engagement = (Likes + Commentaires + Partages) / Reach<br>
+            Temps de lecture, taux de complétion vidéo<br><br>
+            <strong>Conversion :</strong> Trafic vers le site, taux de conversion depuis le contenu, leads générés
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Cas pratique : Lumière (stratégie éditoriale)</div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Stratégie éditoriale proposée</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <p><strong>Positionnement :</strong> "L'art de créer une atmosphère" : valoriser le savoir-faire artisanal, l'émotion olfactive et l'instant présent.</p>
+      <br>
+      <p><strong>4 Piliers de contenu :</strong></p>
+      <ul>
+        <li><strong>Inspiration déco :</strong> ambiances, mise en scène des produits, intérieurs cosy</li>
+        <li><strong>Coulisses :</strong> fabrication artisanale, choix des matières, fondateurs</li>
+        <li><strong>Lifestyle bien-être :</strong> rituels, moments de pause, slow living</li>
+        <li><strong>UGC :</strong> reposts clients, témoignages, unboxing</li>
+      </ul>
+      <div class="formula-box">
+        <strong>Rythme :</strong> 4-5 publications/semaine Instagram · 1 article blog/semaine · 2 newsletters/mois
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Formats prioritaires pour les 25-40 ans</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <ul>
+        <li><strong>Reels Instagram :</strong> coulisses fabrication, ambiances (fort avantage algo)</li>
+        <li><strong>Carrousels :</strong> tops déco, conseils d'association, collections capsules</li>
+        <li><strong>Stories :</strong> sondages, questions, coulisses, promos éphémères</li>
+        <li><strong>Newsletter :</strong> contenu exclusif, avant-première, histoire de la collection</li>
+        <li><strong>Pinterest :</strong> contenu éditorial déco (audience 25-45 ans, fort intent achat)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Indicateurs à suivre</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <ul>
+        <li>Taux d'engagement Instagram (objectif : <strong>&gt;3%</strong> vs 1,2% actuel)</li>
+        <li>Reach par publication et croissance mensuelle</li>
+        <li>Trafic site depuis réseaux sociaux (GA4)</li>
+        <li>Taux d'ouverture newsletter (objectif : <strong>&gt;25%</strong>)</li>
+        <li>Ventes attribuées au contenu (UTM tracking)</li>
+      </ul>
+    </div>
+  </div>
+
+  <label class="done-check" id="done0"><input type="checkbox" onchange="updateProgress(this,'done0')"> Matière 1 : Brand Content maîtrisée ✅</label>
+</div>
+
+<!-- ==================== TAB 1: COMMUNITY MANAGEMENT ==================== -->
+<div class="tab-panel" id="tab1">
+  <div class="matiere-header">
+    <div class="num">2</div>
+    <div><h2>Community Management &amp; Social Media Strategy</h2><p>Prof. Ythier Fiona</p></div>
+  </div>
+
+  <div class="section-title">Questions de connaissances</div>
+  <div class="cards-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q1</div>
+          <div class="q-text">Quel est le rôle du Community Manager ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">6 Rôles clés</div>
+          <div class="a-text">
+            Le Community Manager est la voix de la marque sur les réseaux sociaux. Ses 6 missions principales :<br><br>
+            <ul>
+              <li><strong>Animation :</strong> créer, publier et promouvoir des contenus qui suscitent les interactions</li>
+              <li><strong>Modération :</strong> gérer les commentaires, messages, signalements et plaintes</li>
+              <li><strong>Veille :</strong> surveiller les mentions de la marque, les tendances et les concurrents</li>
+              <li><strong>Reporting :</strong> analyser les données et présenter les résultats aux équipes marketing</li>
+              <li><strong>Représentation :</strong> incarner la voix et les valeurs de la marque en ligne</li>
+              <li><strong>Gestion de crise :</strong> détecter rapidement les bad buzz et coordonner la réponse</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q2</div>
+          <div class="q-text">Qu'est-ce que l'engagement et comment le calculer ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Engagement</div>
+          <div class="a-text">
+            Ensemble des interactions avec un contenu : likes, commentaires, partages, sauvegardes, clics.<br><br>
+            <strong>Taux d'engagement = (Interactions / Reach) × 100</strong><br><br>
+            Benchmark Instagram :<br>
+            Bon = <strong>&gt;3%</strong> | Excellent = <strong>&gt;6%</strong><br><br>
+            <em>Plus révélateur que le nombre d'abonnés</em>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q3</div>
+          <div class="q-text">Portée organique vs portée sponsorisée</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Organique vs Payant</div>
+          <div class="a-text">
+            <strong>Portée organique :</strong> audience atteinte naturellement, sans budget. Elle dépend de l'algorithme, du taux d'engagement, du timing et du type de contenu. Sur Meta, la portée organique est en baisse constante (1-5% des abonnés environ).<br><br>
+            <strong>Portée sponsorisée :</strong> audience atteinte via une promotion payante. Permet un ciblage précis (âge, centres d'intérêt, comportements, audiences similaires), une diffusion immédiate et scalable.<br><br>
+            <strong>Stratégie recommandée :</strong> identifier les publications organiques les plus performantes et les amplifier via boost payant pour maximiser le ROI.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q4</div>
+          <div class="q-text">Comment gérer une crise sur les réseaux sociaux ? (5 étapes)</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Protocole de crise</div>
+          <div class="a-text">
+            <ul>
+              <li><strong>1. Identifier :</strong> gravité, ampleur, source</li>
+              <li><strong>2. Répondre rapidement :</strong> dans les 2h</li>
+              <li><strong>3. Reconnaître les erreurs :</strong> empathie désamorce</li>
+              <li><strong>4. Communiquer les actions :</strong> correctifs engagés</li>
+              <li><strong>5. Assurer le suivi :</strong> monitorer le sentiment</li>
+            </ul>
+            <em>Ne JAMAIS supprimer les commentaires négatifs</em>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q5</div>
+          <div class="q-text">Quels KPI pour évaluer une stratégie Social Media ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">KPI Social Media</div>
+          <div class="a-text">
+            <ul>
+              <li><strong>Reach / Impressions :</strong> visibilité globale</li>
+              <li><strong>Taux d'engagement :</strong> qualité relation communauté</li>
+              <li><strong>Croissance communauté :</strong> nouveaux abonnés / période</li>
+              <li><strong>Sentiment analysis :</strong> ratio positif/négatif</li>
+              <li><strong>Trafic généré :</strong> GA4 + UTM links</li>
+              <li><strong>Conversions attribuées</strong></li>
+              <li><strong>Share of Voice :</strong> % vs concurrents</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Cas pratique : Lumière (crise : retards de livraison Noël)</div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Comment réagir ? (commentaires négatifs)</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <ul>
+        <li>Répondre publiquement à chaque commentaire dans les <strong>2h</strong> avec empathie</li>
+        <li>Formuler une réponse apaisante, personnalisée</li>
+        <li>Inviter les clients à contacter le SAV en MP / email</li>
+        <li>Publier un post de crise transparent (reconnaître, expliquer, annoncer les correctifs)</li>
+        <li>Ne <strong>PAS</strong> supprimer les commentaires négatifs → effet contre-productif</li>
+        <li>Mobiliser l'équipe SAV pour traiter rapidement</li>
+        <li>Surveiller les hashtags et mentions pour détecter les rebonds</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Risques pour la marque + mesures correctives</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <p><strong>Risques :</strong></p>
+      <ul>
+        <li>Réputation : propagation virale, screenshots partagés</li>
+        <li>Confiance : perte de crédibilité sur la fiabilité livraison</li>
+        <li>Churn : désabonnement clients fidèles</li>
+        <li>SEO réputationnel : avis négatifs sur Google, Trustpilot</li>
+      </ul>
+      <br>
+      <p><strong>Mesures correctives :</strong></p>
+      <ul>
+        <li>Bon de réduction / geste commercial pour les impactés</li>
+        <li>Mise à jour FAQ et pages d'information livraison</li>
+        <li>Email personnalisé du fondateur aux clients fidèles</li>
+        <li>Bilan public dans les 7 jours (améliorations mises en place)</li>
+        <li>Contenus positifs pour diluer la crise dans le fil</li>
+      </ul>
+    </div>
+  </div>
+
+  <label class="done-check" id="done1"><input type="checkbox" onchange="updateProgress(this,'done1')"> Matière 2 : Community Management maîtrisée ✅</label>
+</div>
+
+<!-- ==================== TAB 2: INFLUENCE & AFFILIATION ==================== -->
+<div class="tab-panel" id="tab2">
+  <div class="matiere-header">
+    <div class="num">3</div>
+    <div><h2>Stratégie d'Affiliation &amp; d'Influence</h2><p>Prof. Saint Louboue Thibaut</p></div>
+  </div>
+
+  <div class="section-title">Questions de connaissances</div>
+  <div class="cards-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q1</div>
+          <div class="q-text">Définissez le marketing d'influence et les types d'influenceurs</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Types d'influenceurs</div>
+          <div class="a-text">
+            S'associer avec des personnes influentes pour promouvoir une marque.<br><br>
+            <ul>
+              <li><strong>Nano (1k-10k) :</strong> très fort engagement, niche, authentique</li>
+              <li><strong>Micro (10k-100k) :</strong> engagement élevé, crédibilité, coût accessible</li>
+              <li><strong>Macro (100k-1M) :</strong> large portée, coût élevé, engagement variable</li>
+              <li><strong>Mega (&gt;1M) :</strong> notoriété maximale, coût très élevé, engagement faible</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q2</div>
+          <div class="q-text">Qu'est-ce que l'affiliation et ses acteurs ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Affiliation</div>
+          <div class="a-text">
+            Modèle de partenariat : un affilié fait la promotion des produits d'une marque et reçoit une <strong>commission sur les ventes/leads</strong> via son lien de tracking unique.<br><br>
+            <strong>Acteurs :</strong>
+            <ul>
+              <li>Annonceur (la marque)</li>
+              <li>Affilié (le partenaire)</li>
+              <li>Réseau d'affiliation : Awin, Commission Junction, Effiliation</li>
+            </ul>
+            <em>Avantage clé : rémunération à la performance</em>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q3</div>
+          <div class="q-text">Critères de sélection d'un influenceur</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Critères</div>
+          <div class="a-text">
+            <ul>
+              <li>Adéquation avec la cible</li>
+              <li>Taux d'engagement &gt;3% (plus important que le nb d'abonnés)</li>
+              <li>Qualité de l'audience (éviter les faux followers)</li>
+              <li>Crédibilité et légitimité sur sa niche</li>
+              <li>Alignement des valeurs avec la marque</li>
+              <li>Historique de collaborations</li>
+              <li>Formats de contenu cohérents avec la stratégie</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q4</div>
+          <div class="q-text">Quels sont les modèles de rémunération en influence ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Modèles de rémunération</div>
+          <div class="a-text">
+            <ul>
+              <li><strong>Fixe :</strong> tarif fixé à l'avance / publication</li>
+              <li><strong>CPA :</strong> commission sur ventes (code promo / lien)</li>
+              <li><strong>CPC :</strong> paiement par clic généré</li>
+              <li><strong>Seeding :</strong> envoi produits sans contrepartie financière</li>
+              <li><strong>Ambassadeur :</strong> collaboration longue durée</li>
+              <li><strong>Hybride :</strong> fixe + commission sur performances</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q5</div>
+          <div class="q-text">Comment calculer le ROI d'une campagne d'influence ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">ROI Influence</div>
+          <div class="a-text">
+            <strong>ROI = (Revenus - Coût) / Coût × 100</strong><br><br>
+            <strong>EMV</strong> (Earned Media Value) : valorisation de la visibilité organique vs coût équivalent en publicité payante.<br><br>
+            <strong>Indicateurs à tracker :</strong>
+            <ul>
+              <li>Ventes via code promo dédié / lien UTM</li>
+              <li>Reach et impressions générées</li>
+              <li>Taux d'engagement sur publications sponsorisées</li>
+              <li>Nouveaux abonnés acquis pendant la campagne</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Cas pratique : Lumière (lancement automne-hiver, budget 15 000€)</div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Profils d'influenceurs à sélectionner</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <p><strong>Priorité : micro et nano-influenceurs</strong> pour optimiser le budget.</p>
+      <div class="kpi-grid">
+        <div class="kpi-box"><div class="kpi-val">1 800€</div><div class="kpi-label">3 × Micro lifestyle/déco<br>(20k-80k)</div></div>
+        <div class="kpi-box"><div class="kpi-val">1 500€</div><div class="kpi-label">5 × Nano bien-être<br>(3k-10k)</div></div>
+        <div class="kpi-box"><div class="kpi-val">1 600€</div><div class="kpi-label">2 × TikTok déco/ASMR<br>(50k-200k)</div></div>
+      </div>
+      <p>Budget restant → création de contenu, réseau d'affiliation, outils de suivi.</p>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Objectifs et indicateurs de la campagne</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <ul>
+        <li><strong>Notoriété :</strong> 500 000 impressions (nov-déc)</li>
+        <li><strong>Engagement :</strong> taux moyen &gt;4% sur publications sponsorisées</li>
+        <li><strong>Conversion :</strong> 200 ventes via codes promos influenceurs</li>
+        <li><strong>Communauté :</strong> +1 000 nouveaux abonnés Instagram</li>
+        <li><strong>Trafic :</strong> +30% de trafic site pendant la campagne</li>
+      </ul>
+      <div class="formula-box">
+        <strong>Règle de tracking :</strong> 1 code promo unique par influenceur · Liens UTM trackés · ROI et CPM calculés par influenceur
+      </div>
+    </div>
+  </div>
+
+  <label class="done-check" id="done2"><input type="checkbox" onchange="updateProgress(this,'done2')"> Matière 3 : Influence &amp; Affiliation maîtrisée ✅</label>
+</div>
+
+<!-- ==================== TAB 3: AUTOMATION ==================== -->
+<div class="tab-panel" id="tab3">
+  <div class="matiere-header">
+    <div class="num">4</div>
+    <div><h2>TA Automation &amp; Database</h2><p>Marketing Automation</p></div>
+  </div>
+
+  <div class="section-title">Questions de connaissances clés</div>
+  <div class="cards-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q1</div>
+          <div class="q-text">Qu'est-ce que le Marketing Automation ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Définition</div>
+          <div class="a-text">
+            Utilisation de logiciels pour automatiser des actions marketing répétitives en fonction du comportement et des données des prospects/clients.<br><br>
+            <strong>Exemples d'automatisations :</strong>
+            <ul>
+              <li>Email de bienvenue à l'inscription</li>
+              <li>Séquence de nurturing prospects</li>
+              <li>Relance panier abandonné</li>
+              <li>Email post-achat (satisfaction, cross-sell)</li>
+              <li>Réactivation des inactifs</li>
+              <li>Scoring automatique des leads</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q2</div>
+          <div class="q-text">Qu'est-ce qu'une base de données marketing ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Base de données</div>
+          <div class="a-text">
+            Ensemble structuré d'informations sur les contacts permettant de les segmenter et de personnaliser les communications.<br><br>
+            <strong>Données collectées :</strong>
+            <ul>
+              <li>Identitaires : nom, email, téléphone</li>
+              <li>Comportementales : achats, pages visitées, emails ouverts</li>
+              <li>Déclaratives : préférences (formulaires)</li>
+              <li>Transactionnelles : montant, fréquence, date dernier achat (RFM)</li>
+            </ul>
+            <em>⚠️ RGPD : consentement explicite requis</em>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q3</div>
+          <div class="q-text">Qu'est-ce que le Lead Scoring ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Lead Scoring</div>
+          <div class="a-text">
+            Système de notation automatique des prospects selon leur profil et leur comportement, pour prioriser les leads les plus chauds.<br><br>
+            <strong>Score démographique :</strong> poste, entreprise, secteur<br>
+            <strong>Score comportemental :</strong> pages visitées, emails ouverts, téléchargements<br><br>
+            <em>Exemple : page prix = +15 pts | email ouvert = +3 pts | formulaire = +25 pts</em><br>
+            → Seuil MQL : le lead est transmis aux commerciaux
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Cas pratique : Lumière (séquences d'automation)</div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Workflow 1 : Bienvenue (J0 → J7)</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <ul>
+        <li><strong>J0 :</strong> Email de bienvenue avec offre découverte 10%</li>
+        <li><strong>J+3 :</strong> Présentation de l'histoire et des valeurs Lumière</li>
+        <li><strong>J+7 :</strong> Mise en avant des best-sellers</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Workflow 2 : Post-achat (J0 → J30)</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <ul>
+        <li><strong>J+1 :</strong> Confirmation + conseils d'utilisation</li>
+        <li><strong>J+14 :</strong> Demande d'avis</li>
+        <li><strong>J+30 :</strong> Suggestion de réassort ou produit complémentaire</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Workflow 3 : Panier abandonné (H+1, H+24)</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <ul>
+        <li><strong>H+1 :</strong> Rappel du panier avec photo produit</li>
+        <li><strong>H+24 :</strong> Code promo 5% si toujours pas converti</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Workflow 4 : Réactivation (inactifs &gt;90 jours)</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <ul>
+        <li>Email "Vous nous manquez" avec offre exclusive</li>
+        <li>Si pas d'ouverture → SMS ou suppression base (RGPD)</li>
+      </ul>
+      <div class="formula-box">
+        <strong>Règle RGPD :</strong> Consentement explicite requis · Droit à la suppression · Transparence sur l'usage des données
+      </div>
+    </div>
+  </div>
+
+  <label class="done-check" id="done3"><input type="checkbox" onchange="updateProgress(this,'done3')"> Matière 4 : Automation &amp; Database maîtrisée ✅</label>
+</div>
+
+<script>
+function switchTab(idx) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+}
+function toggleAcc(header) {
+  header.classList.toggle('open');
+  header.nextElementSibling.classList.toggle('open');
+}
+function toggleCase() {
+  document.getElementById('caseBody').classList.toggle('open');
+}
+function updateProgress(cb, id) {
+  const label = document.getElementById(id);
+  label.classList.toggle('checked', cb.checked);
+  const total = document.querySelectorAll('.done-check input').length;
+  const done = document.querySelectorAll('.done-check input:checked').length;
+  const pct = Math.round(done/total*100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+</script>
+</body>
+</html>

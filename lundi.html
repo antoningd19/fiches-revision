@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Révision Lundi : Bloc 2 · Marketing Digital</title>
+<style>
+  :root {
+    --primary: #1565C0;
+    --primary-light: #1976D2;
+    --primary-dark: #0D47A1;
+    --accent: #42A5F5;
+    --bg: #f0f4f8;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --muted: #64748b;
+    --success: #2e7d32;
+    --warning: #f57f17;
+    --danger: #c62828;
+    --border: #e2e8f0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+
+  /* HEADER */
+  .hero {
+    background: linear-gradient(135deg, #0D47A1 0%, #1565C0 40%, #1976D2 70%, #42A5F5 100%);
+    color:#fff; padding:2.5rem 1.5rem 3.5rem; text-align:center; position:relative; overflow:hidden;
+  }
+  .hero::before {
+    content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%;
+    background:radial-gradient(circle, rgba(255,255,255,.05) 0%, transparent 60%);
+  }
+  .hero .day-badge {
+    display:inline-block; background:rgba(255,255,255,.2); backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,.3); border-radius:50px; padding:.4rem 1.2rem;
+    font-size:.8rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; margin-bottom:1rem;
+  }
+  .hero h1 { font-size:clamp(1.8rem,4vw,3rem); font-weight:800; margin-bottom:.5rem; }
+  .hero p { font-size:1.1rem; opacity:.85; margin-bottom:1.5rem; }
+  .hero .meta { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+  .hero .meta span {
+    background:rgba(255,255,255,.15); border-radius:8px; padding:.3rem .8rem;
+    font-size:.8rem; font-weight:600;
+  }
+  .hero .back-home {
+    position:absolute; top:.9rem; left:1rem;
+    display:inline-flex; align-items:center; gap:.4rem;
+    background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.35);
+    color:#fff; text-decoration:none; border-radius:8px;
+    padding:.35rem .85rem; font-size:.78rem; font-weight:700;
+    backdrop-filter:blur(6px); transition:.2s;
+  }
+  .hero .back-home:hover { background:rgba(255,255,255,.3); }
+
+  /* PROGRESS BAR */
+  .progress-bar-wrap { background:#e3f2fd; padding:1rem 1.5rem; display:flex; align-items:center; gap:1rem; }
+  .progress-label { font-size:.85rem; font-weight:600; color:var(--primary); white-space:nowrap; }
+  .progress-track { flex:1; height:8px; background:#BBDEFB; border-radius:4px; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,var(--primary),var(--accent)); border-radius:4px; transition:width .4s ease; }
+  .progress-pct { font-size:.85rem; font-weight:700; color:var(--primary); white-space:nowrap; }
+
+  /* CASE STUDY BANNER */
+  .case-banner {
+    margin:1.5rem; background:linear-gradient(135deg,#1a237e,#283593);
+    border-radius:16px; padding:1.5rem; color:#fff; cursor:pointer;
+    display:flex; align-items:flex-start; gap:1rem;
+  }
+  .case-banner .icon { font-size:2rem; flex-shrink:0; margin-top:.1rem; }
+  .case-banner h2 { font-size:1.2rem; font-weight:700; margin-bottom:.5rem; }
+  .case-banner p { font-size:.9rem; opacity:.85; line-height:1.6; }
+  .case-body { display:none; margin:0 1.5rem 1.5rem; background:#fff; border-radius:12px; border-left:4px solid #1565C0; padding:1.2rem; font-size:.9rem; line-height:1.7; color:var(--text); }
+  .case-body.open { display:block; }
+
+  /* TABS */
+  .tabs-wrap { padding:0 1.5rem; overflow-x:auto; display:flex; gap:.5rem; margin-bottom:0; padding-bottom:0; }
+  .tab-btn {
+    flex-shrink:0; padding:.6rem 1.2rem; border:2px solid transparent; background:transparent;
+    border-radius:10px 10px 0 0; font-size:.85rem; font-weight:600; cursor:pointer;
+    color:var(--muted); transition:.2s; white-space:nowrap;
+  }
+  .tab-btn.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+  .tab-btn:hover:not(.active) { background:#e3f2fd; color:var(--primary); }
+
+  /* TAB PANELS */
+  .tab-panel { display:none; padding:1.5rem; animation:fadeIn .3s; }
+  .tab-panel.active { display:block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+
+  .matiere-header {
+    display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem;
+    padding:1rem 1.2rem; background:#fff; border-radius:12px;
+    border-left:5px solid var(--primary); box-shadow:0 2px 8px rgba(0,0,0,.06);
+  }
+  .matiere-header .num {
+    width:40px; height:40px; background:var(--primary); color:#fff;
+    border-radius:10px; display:flex; align-items:center; justify-content:center;
+    font-size:1.1rem; font-weight:800; flex-shrink:0;
+  }
+  .matiere-header h2 { font-size:1.1rem; font-weight:700; }
+  .matiere-header p { font-size:.8rem; color:var(--muted); }
+
+  /* SECTION TITLES */
+  .section-title {
+    font-size:.75rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--primary); margin:1.2rem 0 .8rem; padding-left:.5rem;
+    border-left:3px solid var(--accent);
+  }
+
+  /* FLIP CARDS */
+  .cards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1rem; margin-bottom:1.5rem; }
+  .flip-card { height:220px; perspective:1000px; cursor:pointer; }
+  .flip-inner {
+    width:100%; height:100%; position:relative; transform-style:preserve-3d;
+    transition:transform .5s cubic-bezier(.4,.2,.2,1);
+  }
+  .flip-card.flipped .flip-inner { transform:rotateY(180deg); }
+  .flip-front, .flip-back {
+    position:absolute; inset:0; border-radius:14px; padding:1.2rem;
+    backface-visibility:hidden; display:flex; flex-direction:column;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+  }
+  .flip-front {
+    background:#fff; border:1px solid var(--border);
+    justify-content:space-between;
+  }
+  .flip-front .q-num {
+    font-size:.7rem; font-weight:700; color:var(--accent); text-transform:uppercase;
+    letter-spacing:.08em; margin-bottom:.5rem;
+  }
+  .flip-front .q-text { font-size:.95rem; font-weight:600; line-height:1.5; flex:1; }
+  .flip-front .flip-hint {
+    font-size:.72rem; color:var(--muted); text-align:center; padding-top:.8rem;
+    border-top:1px solid var(--border);
+  }
+  .flip-back {
+    background:linear-gradient(135deg,var(--primary),var(--primary-light));
+    color:#fff; transform:rotateY(180deg); overflow-y:auto;
+  }
+  .flip-back .a-label { font-size:.7rem; font-weight:700; opacity:.7; text-transform:uppercase; margin-bottom:.5rem; }
+  .flip-back .a-text { font-size:.82rem; line-height:1.6; }
+  .flip-back .a-text ul { list-style:none; padding:0; }
+  .flip-back .a-text ul li::before { content:"• "; opacity:.7; }
+  .flip-back .a-text li { margin-bottom:.2rem; }
+
+  /* ACCORDION */
+  .accordion { background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,.06); overflow:hidden; margin-bottom:1rem; }
+  .acc-header {
+    padding:1rem 1.2rem; display:flex; align-items:center; justify-content:space-between;
+    cursor:pointer; font-weight:600; font-size:.9rem; gap:.5rem;
+  }
+  .acc-header:hover { background:#f8fafc; }
+  .acc-icon { font-size:1.1rem; transition:transform .3s; }
+  .acc-header.open .acc-icon { transform:rotate(180deg); }
+  .acc-body { display:none; padding:0 1.2rem 1rem; border-top:1px solid var(--border); }
+  .acc-body.open { display:block; }
+  .acc-body p, .acc-body li { font-size:.875rem; line-height:1.7; color:#334155; }
+  .acc-body ul { padding-left:1.2rem; margin:.4rem 0; }
+  .acc-body ul li { margin-bottom:.3rem; }
+
+  /* KPI BOX */
+  .kpi-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:.8rem; margin-bottom:1rem; }
+  .kpi-box {
+    background:#fff; border-radius:10px; padding:.9rem 1rem;
+    border-top:3px solid var(--primary); box-shadow:0 2px 8px rgba(0,0,0,.06);
+    text-align:center;
+  }
+  .kpi-box .kpi-val { font-size:1.2rem; font-weight:800; color:var(--primary); }
+  .kpi-box .kpi-label { font-size:.72rem; color:var(--muted); margin-top:.3rem; font-weight:500; }
+
+  /* CASE STUDY CARD */
+  .case-card {
+    background:linear-gradient(135deg,#e3f2fd,#bbdefb); border-radius:14px;
+    padding:1.2rem; margin-bottom:1rem; border:1px solid #90caf9;
+  }
+  .case-card h3 { color:#0D47A1; font-size:.95rem; margin-bottom:.6rem; font-weight:700; }
+  .case-card p, .case-card li { font-size:.87rem; line-height:1.7; color:#1a237e; }
+  .case-card ul { padding-left:1.2rem; margin:.3rem 0; }
+
+  /* DONE CHECK */
+  .done-check {
+    display:flex; align-items:center; gap:.6rem; margin-top:.5rem;
+    font-size:.8rem; color:var(--muted); cursor:pointer; user-select:none;
+  }
+  .done-check input { width:16px; height:16px; cursor:pointer; accent-color:var(--success); }
+  .done-check.checked { color:var(--success); font-weight:600; }
+
+  /* FORMULA BOX */
+  .formula-box {
+    background:#FFF8E1; border:1px solid #FFD54F; border-radius:10px;
+    padding:.8rem 1rem; margin:.6rem 0; font-size:.87rem; color:#5D4037;
+  }
+  .formula-box strong { color:#E65100; }
+
+  /* RESPONSIVE */
+  @media(max-width:600px) {
+    .hero { padding:1.5rem 1rem 2.5rem; }
+    .tab-panel { padding:1rem; }
+    .case-banner, .case-body { margin:1rem; }
+    .tabs-wrap { padding:0 1rem; }
+  }
+
+  /* STUDY TIP */
+  .tip-box {
+    background:#E8F5E9; border-left:4px solid #4CAF50; border-radius:8px;
+    padding:.8rem 1rem; margin-bottom:1rem; font-size:.83rem; color:#1B5E20;
+  }
+</style>
+<style>
+/* ══ PREMIUM UPGRADE : LUNDI ══ */
+:root{
+  --sh-sm:0 1px 3px rgba(21,101,192,.08),0 1px 2px rgba(0,0,0,.05);
+  --sh-md:0 4px 14px rgba(21,101,192,.13),0 2px 5px rgba(0,0,0,.06);
+  --sh-lg:0 8px 28px rgba(21,101,192,.18),0 4px 8px rgba(0,0,0,.07);
+  --sh-hv:0 16px 44px rgba(21,101,192,.25),0 6px 14px rgba(0,0,0,.09);
+}
+
+/* Hero shimmer */
+@keyframes heroShimmer{
+  0%{transform:translateX(-100%) skewX(-20deg);opacity:0}
+  20%{opacity:1}80%{opacity:1}
+  100%{transform:translateX(380%) skewX(-20deg);opacity:0}
+}
+.hero::after{content:'';position:absolute;top:0;left:0;width:22%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.09),transparent);
+  animation:heroShimmer 7s cubic-bezier(.4,0,.2,1) infinite;animation-delay:2s;pointer-events:none;}
+
+/* Back button */
+.back-home{backdrop-filter:blur(14px)!important;
+  transition:background .2s,transform .2s,box-shadow .2s!important;
+  box-shadow:0 2px 10px rgba(0,0,0,.18)!important;}
+.back-home:hover{background:rgba(255,255,255,.3)!important;transform:translateX(-3px)!important;}
+
+/* Progress shimmer */
+@keyframes prgShimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+.progress-bar-wrap{box-shadow:0 2px 10px rgba(21,101,192,.1);}
+.progress-fill{background:linear-gradient(90deg,#0D47A1,#42A5F5,#0D47A1)!important;
+  background-size:200% auto!important;animation:prgShimmer 2.8s linear infinite;}
+
+/* Feuille blanche CTA */
+a[href*="feuille-blanche"]{transition:transform .25s cubic-bezier(.4,0,.2,1),box-shadow .25s!important;}
+a[href*="feuille-blanche"]:hover{transform:translateY(-4px)!important;
+  box-shadow:0 14px 36px rgba(21,101,192,.4)!important;}
+
+/* Case banner */
+.case-banner{box-shadow:0 4px 20px rgba(13,71,161,.3)!important;
+  transition:transform .25s cubic-bezier(.4,0,.2,1),box-shadow .25s!important;}
+.case-banner:hover{transform:translateY(-3px)!important;box-shadow:0 10px 34px rgba(13,71,161,.45)!important;}
+
+/* Tabs */
+.tab-btn{transition:background .2s,color .2s,box-shadow .2s,transform .18s!important;}
+.tab-btn.active{background:linear-gradient(135deg,#0D47A1,#1565C0)!important;
+  border-color:transparent!important;
+  box-shadow:0 4px 16px rgba(21,101,192,.42),0 2px 4px rgba(0,0,0,.1)!important;
+  transform:translateY(-1px);}
+.tab-btn:hover:not(.active){transform:translateY(-1px);}
+@keyframes panelIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.tab-panel.active{animation:panelIn .22s cubic-bezier(.4,0,.2,1) both!important;}
+
+/* Matiere header : remove border-left */
+.matiere-header{border-left:none!important;border-radius:14px!important;
+  box-shadow:var(--sh-md)!important;transition:box-shadow .22s,transform .22s!important;}
+.matiere-header:hover{box-shadow:var(--sh-lg)!important;transform:translateY(-1px);}
+.matiere-header .num{border-radius:12px!important;box-shadow:0 4px 12px rgba(21,101,192,.38)!important;}
+
+/* Section title : remove border-left */
+.section-title{border-left:none!important;padding-left:0!important;
+  display:flex!important;align-items:center;gap:.5rem;}
+.section-title::before{content:'';display:inline-block;width:3px;height:13px;
+  background:var(--accent);border-radius:2px;flex-shrink:0;}
+
+/* Flip cards */
+.flip-card{transition:transform .22s cubic-bezier(.4,0,.2,1)!important;}
+.flip-card:not(.flipped):hover{transform:translateY(-5px)!important;}
+.flip-inner{transition:transform .56s cubic-bezier(.42,.08,.08,.92)!important;}
+.flip-front{box-shadow:var(--sh-md)!important;border:1px solid rgba(0,0,0,.055)!important;}
+.flip-card:not(.flipped):hover .flip-front{box-shadow:var(--sh-hv)!important;}
+.flip-back{box-shadow:0 12px 32px rgba(21,101,192,.35)!important;}
+
+/* Accordion smooth height */
+.acc-body{display:block!important;max-height:0;overflow:hidden;
+  padding-bottom:0!important;border-top:1px solid transparent!important;
+  transition:max-height .38s cubic-bezier(.4,0,.2,1),padding-bottom .22s,border-color .22s!important;}
+.acc-body.open{max-height:1800px;padding-bottom:1rem!important;border-top-color:var(--border)!important;}
+.acc-icon{transition:transform .35s cubic-bezier(.4,0,.2,1)!important;}
+.accordion{box-shadow:var(--sh-sm)!important;transition:box-shadow .22s!important;}
+.accordion:hover{box-shadow:var(--sh-md)!important;}
+
+/* KPI boxes */
+.kpi-box{box-shadow:var(--sh-sm)!important;transition:transform .22s,box-shadow .22s!important;}
+.kpi-box:hover{transform:translateY(-3px)!important;box-shadow:var(--sh-md)!important;}
+
+/* Case body : remove border-left */
+.case-body{border-left:none!important;
+  background:linear-gradient(to right,rgba(21,101,192,.07),rgba(21,101,192,.02))!important;
+  border:1px solid rgba(21,101,192,.14)!important;border-radius:12px!important;
+  box-shadow:var(--sh-sm)!important;}
+
+/* Tip / formula boxes : remove border-left */
+.tip-box{border-left:none!important;
+  background:linear-gradient(to right,rgba(76,175,80,.12),rgba(76,175,80,.03))!important;
+  border:1px solid rgba(76,175,80,.22)!important;border-radius:10px!important;}
+.formula-box{border-left:none!important;border:1px solid rgba(255,213,79,.5)!important;
+  box-shadow:0 2px 8px rgba(255,193,7,.08)!important;}
+
+@media(prefers-reduced-motion:reduce){
+  .hero::after,.progress-fill{animation:none!important;}
+  .flip-card,.tab-btn,.kpi-box,.accordion,.case-banner,
+  .matiere-header,.back-home,a[href*="feuille-blanche"]{transition:none!important;}
+  .flip-inner,.acc-body{transition:none!important;}
+}
+</style>
+<style>
+/* ══ MOBILE FIRST ══ */
+@media(max-width:640px){
+  /* Hero : espace pour le bouton back absolu */
+  .hero{padding:3.6rem 1rem 2rem;}
+  .hero h1{font-size:1.45rem;letter-spacing:-.015em;}
+  .hero p{font-size:.85rem;margin-bottom:.9rem;}
+  .hero .meta{gap:.3rem;}
+  .hero .meta span{font-size:.68rem;padding:.2rem .5rem;}
+
+  /* Progress bar */
+  .progress-bar-wrap{padding:.6rem 1rem;gap:.4rem;}
+  .progress-label,.progress-pct{font-size:.72rem;}
+
+  /* Case banner / body */
+  .case-banner{margin:.75rem;padding:.9rem;gap:.6rem;border-radius:12px;}
+  .case-banner .icon{font-size:1.4rem;}
+  .case-banner h2{font-size:.9rem;}
+  .case-banner p{font-size:.77rem;}
+  .case-body{margin:.75rem;padding:.85rem;font-size:.82rem;line-height:1.65;}
+
+  /* Tabs : scroll horizontal sans scrollbar visible */
+  .tabs-wrap{
+    padding:0 .5rem .5rem;gap:.2rem;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .tabs-wrap::-webkit-scrollbar{display:none;}
+  .tab-btn{padding:.45rem .6rem;font-size:.72rem;border-radius:8px 8px 0 0;}
+
+  /* Contenu onglet */
+  .tab-panel{padding:.75rem .75rem 1.5rem;}
+
+  /* En-tête matière */
+  .matiere-header{padding:.7rem .85rem;gap:.5rem;margin-bottom:.9rem;}
+  .matiere-header .num{width:30px;height:30px;font-size:.85rem;border-radius:7px;}
+  .matiere-header h2{font-size:.88rem;}
+  .matiere-header p{font-size:.72rem;}
+
+  /* Titres de section */
+  .section-title{font-size:.65rem;margin:.8rem 0 .5rem;}
+
+  /* Tip box */
+  .tip-box{font-size:.77rem;padding:.65rem .8rem;}
+
+  /* Cartes flip : 1 colonne */
+  .cards-grid{grid-template-columns:1fr!important;gap:.65rem;}
+  .flip-card{height:210px;}
+  .flip-front .q-text{font-size:.87rem;}
+  .flip-back .a-text{font-size:.77rem;}
+
+  /* KPI boxes */
+  .kpi-grid{grid-template-columns:repeat(2,1fr);gap:.45rem;}
+  .kpi-box{padding:.7rem .6rem;}
+  .kpi-box .kpi-val{font-size:1.05rem;}
+  .kpi-box .kpi-label{font-size:.66rem;}
+
+  /* Accordéons */
+  .acc-header{padding:.75rem .85rem;font-size:.82rem;}
+  .acc-body{padding:0 .85rem .85rem;}
+  .acc-body p,.acc-body li{font-size:.8rem;}
+
+  /* Done-check */
+  .done-check{font-size:.74rem;}
+
+  /* Formula box */
+  .formula-box{font-size:.79rem;padding:.65rem .8rem;}
+
+  /* Case card */
+  .case-card{padding:.9rem;}
+  .case-card p,.case-card li{font-size:.8rem;}
+
+  /* Tableaux comparatifs */
+  table{font-size:.72rem;}
+  th,td{padding:.3rem .4rem!important;}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <a href="index.html" class="back-home">← Tous les blocs</a>
+  <div class="day-badge">📅 Lundi</div>
+  <h1>Bloc 2 : Marketing Digital</h1>
+  <p>Pilotage des Campagnes de Marketing Digital · MSc 2</p>
+  <div class="meta">
+    <span>📧 Emailing</span>
+    <span>🤝 CRM</span>
+    <span>🔍 SEA</span>
+    <span>🌐 SEO &amp; SMO</span>
+    <span>🎯 Acquisition</span>
+  </div>
+</div>
+
+<div class="progress-bar-wrap">
+  <span class="progress-label">Progression</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <span class="progress-pct" id="progressPct">0%</span>
+</div>
+
+<div style="margin:1rem 1.5rem 0;">
+  <a href="feuille-blanche-lundi.html" style="display:flex;align-items:center;gap:1rem;background:linear-gradient(135deg,#1a237e,#283593);color:#fff;border-radius:14px;padding:1rem 1.4rem;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.15);">
+    <span style="font-size:1.6rem;flex-shrink:0;">📝</span>
+    <div>
+      <div style="font-weight:800;font-size:.95rem;margin-bottom:.1rem;">Exercice Feuille Blanche</div>
+      <div style="font-size:.8rem;opacity:.8;">Tester vos connaissances sans notes · Chronomètre intégré</div>
+    </div>
+    <span style="margin-left:auto;font-size:1.3rem;opacity:.6;">→</span>
+  </a>
+</div>
+
+<!-- CAS FreshBox -->
+<div class="case-banner" onclick="toggleCase()">
+  <div class="icon">📋</div>
+  <div>
+    <h2>Étude de cas : FreshBox (cliquer pour afficher)</h2>
+    <p>Box de produits frais et bio par abonnement · Tous les exercices pratiques s'appuient sur ce cas</p>
+  </div>
+</div>
+<div class="case-body" id="caseBody">
+  <strong style="font-size:1rem;color:var(--primary);">FreshBox</strong> est une start-up D2C fondée en 2021 à Bordeaux. Elle commercialise des box de produits frais et bio livrés à domicile par abonnement mensuel sans engagement. Après 2 ans d'activité, elle compte <strong>5 800 abonnés actifs</strong> et réalise un MRR de <strong>268 000 €</strong> (3 formules : Découverte 39 € · Premium 59 € · Famille 79 €). Marge brute : 38 %. Stack : Shopify + HubSpot CRM + Klaviyo + Google Ads + Meta Ads. Équipe marketing : 5 personnes.
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.45rem;margin:.7rem 0;">
+    <div class="kpi-box"><div class="kpi-val">5 800</div><div class="kpi-label">Abonnés actifs</div></div>
+    <div class="kpi-box"><div class="kpi-val">268 k€</div><div class="kpi-label">MRR</div></div>
+    <div class="kpi-box"><div class="kpi-val">68 €</div><div class="kpi-label">CAC (obj. &lt;50 €)</div></div>
+    <div class="kpi-box"><div class="kpi-val">156 €</div><div class="kpi-label">CLV moyenne</div></div>
+    <div class="kpi-box"><div class="kpi-val">28 %</div><div class="kpi-label">Churn mensuel</div></div>
+    <div class="kpi-box"><div class="kpi-val">34</div><div class="kpi-label">NPS (obj. &gt;50)</div></div>
+  </div>
+
+  <div style="font-weight:700;color:var(--primary);margin:.7rem 0 .25rem;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;">Performance par canal</div>
+  <ul style="margin:.2rem 0 0 1rem;font-size:.87rem;">
+    <li><strong>Email (Klaviyo) :</strong> open rate <strong>12 %</strong> (benchmark : 22 %), CTR <strong>0,8 %</strong> (benchmark : 3,5 %), désabonnements <strong>4,2 %/mois</strong></li>
+    <li><strong>SEA Google Ads :</strong> CPC moyen <strong>2,40 €</strong> (+30 % vs N-1), ROAS <strong>2,1</strong> (obj. : 3,5), budget mensuel <strong>8 000 €</strong></li>
+    <li><strong>SEO :</strong> DR 18 · <strong>1 200 sessions organiques/mois</strong> (stagnation depuis janvier) · 0 contenu publié depuis 4 mois</li>
+    <li><strong>Social :</strong> Instagram <strong>8 400 abonnés</strong> · engagement <strong>1,8 %</strong> · Facebook <strong>2 100</strong></li>
+    <li><strong>Landing pages :</strong> taux de conversion <strong>1,8 %</strong> (benchmark secteur : 3,5-4 %)</li>
+    <li><strong>Retargeting :</strong> représente <strong>18 %</strong> des acquisitions totales</li>
+  </ul>
+
+  <div style="font-weight:700;color:var(--primary);margin:.7rem 0 .25rem;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;">Segmentation CRM (analyse RFM)</div>
+  <ul style="margin:.2rem 0 0 1rem;font-size:.87rem;">
+    <li>Clients <strong>actifs</strong> (RFM élevé) : <strong>2 800</strong> — 48 % de la base, génèrent 72 % du CA</li>
+    <li>Clients <strong>à risque</strong> (récence faible) : <strong>1 400</strong> — 24 % de la base</li>
+    <li>Clients <strong>inactifs</strong> (&gt;90 jours) : <strong>1 600</strong> — 28 % de la base</li>
+    <li>Top segment fidèles (340 clients) : génère à lui seul <strong>38 % du CA</strong></li>
+  </ul>
+
+  <div style="font-weight:700;color:var(--primary);margin:.7rem 0 .25rem;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;">Budget marketing mensuel : 18 000 €</div>
+  <span style="font-size:.87rem;">SEA 8 000 € (44 %) · Social Ads 3 500 € (19 %) · Email/CRM 1 200 € (7 %) · SEO/Contenu 3 500 € (19 %) · Divers 1 800 € (10 %)</span>
+
+  <div style="font-weight:700;color:var(--primary);margin:.7rem 0 .25rem;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;">Objectifs à 6 mois</div>
+  <ul style="margin:.2rem 0 0 1rem;font-size:.87rem;">
+    <li>Churn mensuel : <strong>&lt;18 %</strong> (vs 28 % actuel)</li>
+    <li>Taux de réachat (clients à risque) : <strong>+15 points</strong></li>
+    <li>Email open rate : <strong>&gt;22 %</strong> · CTR : <strong>&gt;3,5 %</strong></li>
+    <li>SEA ROAS : <strong>&gt;3,5</strong> · CAC : <strong>&lt;50 €</strong></li>
+    <li>CVR landing pages : <strong>&gt;3,5 %</strong></li>
+    <li>Trafic organique : <strong>+30 %</strong> à 6 mois</li>
+  </ul>
+
+  <div class="formula-box" style="margin-top:.8rem;"><strong>Mission examen :</strong> Proposez un plan d'action complet pour relancer la croissance de FreshBox sur ses 5 leviers digitaux (CRM, Emailing, SEA, SEO, Acquisition). Priorisez vos recommandations, définissez des KPI cibles et estimez le ROI attendu sur 6 mois.</div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-wrap">
+  <button class="tab-btn active" onclick="switchTab(0)">🤝 CRM</button>
+  <button class="tab-btn" onclick="switchTab(1)">📧 Emailing</button>
+  <button class="tab-btn" onclick="switchTab(2)">🔍 SEA</button>
+  <button class="tab-btn" onclick="switchTab(3)">🌐 SEO &amp; SMO</button>
+  <button class="tab-btn" onclick="switchTab(4)">🎯 Acquisition</button>
+</div>
+
+<!-- ==================== TAB 0: CRM ==================== -->
+<div class="tab-panel active" id="tab0">
+  <div class="matiere-header">
+    <div class="num">1</div>
+    <div><h2>Customer Relationship Management (CRM)</h2><p>Prof. Cadene Vincent</p></div>
+  </div>
+
+  <div class="tip-box">💡 <strong>Astuce :</strong> Cliquez sur une carte pour retourner la réponse. Cochez la case ✅ quand vous maîtrisez la notion.</div>
+
+  <div class="section-title">Questions de connaissances : Cliquez pour révéler la réponse</div>
+  <div class="cards-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q1</div>
+          <div class="q-text">Définissez le CRM et son rôle dans une stratégie omnicanale</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Réponse</div>
+          <div class="a-text">
+            Le CRM (Customer Relationship Management) désigne l'ensemble des stratégies, outils et processus permettant de gérer et d'optimiser la relation client tout au long de son cycle de vie.<br><br>
+            Dans une stratégie omnicanale, le CRM :<br>
+            <ul>
+              <li>Centralise la donnée client provenant de tous les canaux (site, email, réseaux sociaux, boutique physique)</li>
+              <li>Permet une vision à 360° du client pour personnaliser les interactions</li>
+              <li>Synchronise les messages entre les différents points de contact</li>
+              <li>Améliore la cohérence de l'expérience client quel que soit le canal utilisé</li>
+            </ul>
+            <br><strong>Objectifs principaux :</strong> Acquisition, Fidélisation, Réactivation, Augmentation de la valeur client (CLV)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q2</div>
+          <div class="q-text">Différences entre CRM opérationnel, analytique et collaboratif</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Réponse</div>
+          <div class="a-text">
+            <strong>CRM opérationnel :</strong> automatise les interactions clients (envoi d'emails, relances, support). Exemples : Salesforce, HubSpot<br><br>
+            <strong>CRM analytique :</strong> analyse les données clients pour identifier les comportements, segments et tendances. Exemples : tableaux de bord, scoring RFM<br><br>
+            <strong>CRM collaboratif :</strong> partage l'information entre services (ventes, marketing, SAV) pour harmoniser la relation client
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q3</div>
+          <div class="q-text">Qu'est-ce que la Customer Lifetime Value (CLV) ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Réponse</div>
+          <div class="a-text">
+            La CLV (Customer Lifetime Value) représente la valeur financière totale qu'un client génère pour l'entreprise sur toute la durée de la relation commerciale.<br><br>
+            <strong>Formule simplifiée :</strong> CLV = Panier moyen × Fréquence d'achat × Durée de vie client<br><br>
+            <strong>Intérêt stratégique :</strong> permet de déterminer le budget d'acquisition acceptable (CAC &lt; CLV) et de prioriser les segments les plus rentables.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q4</div>
+          <div class="q-text">Quels sont les principaux indicateurs de fidélisation (KPI CRM) ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">KPI CRM Essentiels</div>
+          <div class="a-text">
+            <ul>
+              <li><strong>Taux de fidélisation :</strong> % de clients retenus sur une période</li>
+              <li><strong>Taux de réachat :</strong> % de clients ayant effectué un 2e achat</li>
+              <li><strong>Customer Lifetime Value (CLV) :</strong> valeur totale générée par client</li>
+              <li><strong>Churn Rate :</strong> taux de désabonnement/perte clients</li>
+              <li><strong>Net Promoter Score (NPS) :</strong> mesure la propension à recommander la marque (-100 à +100)</li>
+              <li><strong>Taux de rétention :</strong> inverse du churn</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q5</div>
+          <div class="q-text">Comment la personnalisation contribue-t-elle à la performance commerciale ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Réponse</div>
+          <div class="a-text">
+            <ul>
+              <li>Augmente la pertinence des messages → meilleur taux d'ouverture et de clic</li>
+              <li>Réduit la pression commerciale ressentie → moins de désinscriptions</li>
+              <li>Améliore l'expérience client → hausse de la satisfaction et de la fidélisation</li>
+              <li>Augmente le taux de conversion grâce aux recommandations personnalisées</li>
+              <li><strong>Levier :</strong> segmentation comportementale, RFM, historique d'achats, données de navigation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Segmentation RFM : Méthode clé</div>
+  <div class="kpi-grid">
+    <div class="kpi-box"><div class="kpi-val">R</div><div class="kpi-label">Récence<br>Date du dernier achat</div></div>
+    <div class="kpi-box"><div class="kpi-val">F</div><div class="kpi-label">Fréquence<br>Nb d'achats sur la période</div></div>
+    <div class="kpi-box"><div class="kpi-val">M</div><div class="kpi-label">Montant<br>Valeur cumulée des achats</div></div>
+  </div>
+
+  <div class="section-title">Cas pratique : FreshBox (baisse réachat -15%)</div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Quels indicateurs CRM analyser ?</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <ul>
+        <li>Taux de réachat et évolution sur 6 mois</li>
+        <li>Churn Rate par segment client</li>
+        <li>CLV moyenne et par segment</li>
+        <li>NPS et scores de satisfaction post-achat</li>
+        <li>Délai entre 1er et 2e achat</li>
+        <li>Taux d'ouverture des emails de fidélisation</li>
+        <li>Taux d'utilisation du programme de fidélité</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Comment segmenter la clientèle RFM ?</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <ul>
+        <li><strong>Clients fidèles (RFM élevé)</strong> → à valoriser (programme VIP)</li>
+        <li><strong>Clients à risque</strong> (fréquence passée, récence faible) → à réactiver</li>
+        <li><strong>Nouveaux clients</strong> → à convertir en fidèles</li>
+        <li><strong>Clients inactifs (&gt;6 mois)</strong> → campagnes de réactivation</li>
+        <li><strong>Gros acheteurs</strong> → programme VIP</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Actions de fidélisation recommandées</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <ul>
+        <li>Programme de fidélité par points/niveaux</li>
+        <li>Séquences d'emails post-achat personnalisées (automation)</li>
+        <li>Offres exclusives pour abonnés fidèles (early access, remise anniversaire)</li>
+        <li>Relances automatiques à J+30 sans 2e achat</li>
+        <li>Enquêtes de satisfaction + rescue program pour insatisfaits</li>
+        <li>Recommandations produits basées sur historique</li>
+      </ul>
+      <div class="formula-box">
+        <strong>KPI cibles :</strong> Taux de réachat +10% à 3 mois · Churn -5% · CLV +15% à 6 mois · NPS &gt;40
+      </div>
+    </div>
+  </div>
+
+  <label class="done-check" id="done0"><input type="checkbox" onchange="updateProgress(this,'done0')"> Matière 1 : CRM maîtrisée ✅</label>
+</div>
+
+<!-- ==================== TAB 1: EMAILING ==================== -->
+<div class="tab-panel" id="tab1">
+  <div class="matiere-header">
+    <div class="num">2</div>
+    <div><h2>Emailing, Performance &amp; Design</h2><p>Prof. Burcelot Florent</p></div>
+  </div>
+
+  <div class="section-title">Questions de connaissances</div>
+  <div class="cards-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q1</div>
+          <div class="q-text">Quels sont les objectifs d'une campagne emailing ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">6 Objectifs</div>
+          <div class="a-text">
+            <ul>
+              <li><strong>Acquisition :</strong> attirer de nouveaux prospects</li>
+              <li><strong>Conversion :</strong> transformer les prospects en clients</li>
+              <li><strong>Fidélisation :</strong> maintenir la relation avec les clients existants</li>
+              <li><strong>Réactivation :</strong> réengager les clients inactifs</li>
+              <li><strong>Information :</strong> communiquer sur les nouveautés, promotions, événements</li>
+              <li><strong>Notoriété :</strong> renforcer l'image et la préférence de marque</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q2</div>
+          <div class="q-text">Quels éléments influencent le taux d'ouverture ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Facteurs clés</div>
+          <div class="a-text">
+            <ul>
+              <li><strong>Objet de l'email :</strong> accrocheur, personnalisé, &lt;50 caractères</li>
+              <li><strong>Pré-header :</strong> complète l'objet, visible dans la boîte de réception</li>
+              <li><strong>Nom de l'expéditeur :</strong> reconnaissable, de confiance</li>
+              <li><strong>Heure d'envoi :</strong> mardi-jeudi matin généralement plus efficaces</li>
+              <li><strong>Segmentation :</strong> pertinence du message pour le destinataire</li>
+              <li><strong>Délivrabilité :</strong> ne pas être classé en spam</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q3</div>
+          <div class="q-text">Quels éléments influencent le taux de clic ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Facteurs clés</div>
+          <div class="a-text">
+            <ul>
+              <li><strong>Call-to-Action (CTA) :</strong> visible, contrasté, wording incitatif</li>
+              <li><strong>Design :</strong> hiérarchie visuelle claire, mobile-first</li>
+              <li><strong>Contenu :</strong> pertinent et personnalisé selon le segment</li>
+              <li><strong>Proposition de valeur :</strong> bénéfice clairement exprimé</li>
+              <li><strong>Nombre de liens :</strong> 1 CTA principal pour éviter la dispersion</li>
+              <li><strong>Temps de chargement :</strong> images légères, code propre</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q4</div>
+          <div class="q-text">Pourquoi segmenter une base emailing ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Réponse</div>
+          <div class="a-text">
+            La segmentation permet d'envoyer le bon message, à la bonne personne, au bon moment.<br><br>
+            <ul>
+              <li>Améliore la pertinence → meilleurs taux d'ouverture et de clic</li>
+              <li>Réduit les désinscriptions (moins de messages non pertinents)</li>
+              <li>Augmente le taux de conversion</li>
+              <li>Protège la réputation de l'expéditeur (score de délivrabilité)</li>
+              <li><strong>Critères :</strong> comportement d'achat, stade du tunnel, données démographiques, engagement email</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q5</div>
+          <div class="q-text">Quels sont les principes d'un email responsive ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Règles Mobile-First</div>
+          <div class="a-text">
+            <ul>
+              <li>Design mobile-first (&gt;60% des ouvertures sur mobile)</li>
+              <li>Largeur maximale de <strong>600px</strong></li>
+              <li>Police lisible ≥<strong>14px</strong> sur mobile</li>
+              <li>CTA de taille suffisante pour le touch (≥<strong>44px</strong> de hauteur)</li>
+              <li>Images compressées avec texte alternatif (alt text)</li>
+              <li>1 colonne sur mobile, 2 colonnes possibles sur desktop</li>
+              <li>Test sur différents clients mail (Gmail, Outlook, Apple Mail)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Métriques FreshBox : Analyse de l'entonnoir</div>
+  <div class="kpi-grid">
+    <div class="kpi-box" style="border-color:#c62828"><div class="kpi-val" style="color:#c62828">12%</div><div class="kpi-label">Taux d'ouverture<br><em>Bench: 20-25%</em></div></div>
+    <div class="kpi-box" style="border-color:#e65100"><div class="kpi-val" style="color:#e65100">1,2%</div><div class="kpi-label">Taux de clic<br><em>Bench: 2-4%</em></div></div>
+    <div class="kpi-box" style="border-color:#b71c1c"><div class="kpi-val" style="color:#b71c1c">0,3%</div><div class="kpi-label">Taux de conversion<br><em>Bench: 1-2%</em></div></div>
+  </div>
+
+  <div class="section-title">Cas pratique : FreshBox (emailing)</div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Analyse et diagnostic</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <ul>
+        <li><strong>Taux d'ouverture 12%</strong> → problème d'objet, délivrabilité ou segmentation</li>
+        <li><strong>Taux de clic 1,2%</strong> → design peu engageant, CTA peu visible, contenu non pertinent</li>
+        <li><strong>Conversion 0,3%</strong> → landing page décorrélée, parcours d'achat trop long</li>
+        <li>Seuls <strong>10%</strong> de ceux qui ouvrent cliquent</li>
+        <li>Seuls <strong>25%</strong> de ceux qui cliquent convertissent</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ A/B Tests recommandés</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <ul>
+        <li><strong>Test 1 · Objet :</strong> court vs long / emoji vs sans / prénom vs sans</li>
+        <li><strong>Test 2 · Heure :</strong> 9h vs 12h vs 18h</li>
+        <li><strong>Test 3 · CTA :</strong> bouton coloré vs lien / "Découvrir" vs "Commander maintenant"</li>
+        <li><strong>Test 4 · Visuel :</strong> photo produit vs ambiance</li>
+        <li><strong>Test 5 · Fréquence :</strong> 1/semaine vs 2/semaine</li>
+      </ul>
+      <div class="formula-box">
+        <strong>Règle d'or :</strong> 1 variable à la fois · Min. 1000 contacts/variante · Durée : 48h minimum
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Optimisations design recommandées</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <ul>
+        <li>Retravailler la hiérarchie : Accroche → Bénéfice → CTA</li>
+        <li>Réduire le texte, augmenter les espaces blancs</li>
+        <li>CTA plus grand, couleur contrastée, <strong>above the fold</strong></li>
+        <li>Ajouter un pré-header informatif</li>
+        <li>Optimiser le responsive mobile</li>
+        <li>Réduire le poids des images (&lt;100ko)</li>
+      </ul>
+    </div>
+  </div>
+
+  <label class="done-check" id="done1"><input type="checkbox" onchange="updateProgress(this,'done1')"> Matière 2 : Emailing maîtrisée ✅</label>
+</div>
+
+<!-- ==================== TAB 2: SEA ==================== -->
+<div class="tab-panel" id="tab2">
+  <div class="matiere-header">
+    <div class="num">3</div>
+    <div><h2>SEA : Search Engine Advertising</h2><p>Prof. Herrera Leslie</p></div>
+  </div>
+
+  <div class="section-title">Questions de connaissances</div>
+  <div class="cards-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q1</div>
+          <div class="q-text">Définissez le SEA et ses principaux formats</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Définition</div>
+          <div class="a-text">
+            Le SEA (Search Engine Advertising) désigne l'ensemble des techniques de référencement payant sur les moteurs de recherche. Il s'agit d'acheter des espaces publicitaires (annonces) sur des pages de résultats de recherche (SERP) via un système d'enchères.<br><br>
+            <strong>Principal acteur :</strong> Google Ads (anciennement AdWords)<br><br>
+            <strong>Formats principaux :</strong> Search, Display, Shopping, Vidéo, Performance Max.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q2</div>
+          <div class="q-text">Comment fonctionne le système d'enchères Google Ads ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Formule clé</div>
+          <div class="a-text">
+            <strong>Formule : Ad Rank = Enchère × Quality Score × Contexte</strong><br><br>
+            <ul>
+              <li>L'annonceur définit une enchère maximale (CPC max) pour chaque mot-clé</li>
+              <li>Google calcule le Ad Rank de chaque annonceur en compétition</li>
+              <li>L'annonceur avec le meilleur Ad Rank obtient la meilleure position</li>
+              <li>Le CPC réel est inférieur à l'enchère max : <strong>CPC réel = Ad Rank du suivant / Quality Score + 0,01€</strong></li>
+              <li>Un Quality Score élevé permet d'obtenir une meilleure position pour un CPC moins élevé</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q3</div>
+          <div class="q-text">Qu'est-ce que le Quality Score et ses 3 composantes ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Quality Score (1-10)</div>
+          <div class="a-text">
+            Le Quality Score (noté de 1 à 10) est l'indicateur de pertinence d'une annonce Google Ads. Il influence le positionnement et le coût des annonces.<br><br>
+            <strong>3 composantes :</strong>
+            <ul>
+              <li><strong>Pertinence de l'annonce :</strong> cohérence entre le mot-clé, l'annonce et la landing page</li>
+              <li><strong>Taux de clic attendu (eCTR) :</strong> probabilité que l'annonce soit cliquée</li>
+              <li><strong>Qualité de la page de destination :</strong> UX, vitesse, pertinence du contenu</li>
+            </ul>
+            Score idéal : ≥7/10. Un score de 10 peut réduire le CPC de 30 à 50%.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q4</div>
+          <div class="q-text">Avantages du SEA pour un e-commerçant</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Avantages</div>
+          <div class="a-text">
+            <ul>
+              <li>Visibilité immédiate dès le lancement de la campagne</li>
+              <li>Ciblage précis : mots-clés, intention d'achat, localisation, appareil, heure</li>
+              <li>Maîtrise du budget (pas de dépense si pas de clic)</li>
+              <li>Mesurabilité complète du ROI (ROAS, CPA, conversions)</li>
+              <li>Remarketing : recibler les visiteurs non convertis</li>
+              <li>Campagnes Shopping : mise en avant des produits avec prix et images</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q5</div>
+          <div class="q-text">Quels KPI SEA suivre en priorité ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">KPI Essentiels</div>
+          <div class="a-text">
+            <ul>
+              <li><strong>CPC (Coût par Clic) :</strong> coût moyen par clic</li>
+              <li><strong>CTR (Click Through Rate) :</strong> clics / impressions</li>
+              <li><strong>CPA (Coût Par Acquisition) :</strong> dépense / conversions</li>
+              <li><strong>ROAS (Return On Ad Spend) :</strong> revenus générés / budget dépensé (objectif &gt;4)</li>
+              <li><strong>Quality Score :</strong> pertinence moyenne des annonces</li>
+              <li><strong>Taux de conversion :</strong> conversions / clics</li>
+              <li><strong>Impression Share :</strong> % d'impressions obtenues vs disponibles</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Cas pratique : FreshBox (CPC +30%)</div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Répartition du budget SEA</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <div class="kpi-grid">
+        <div class="kpi-box"><div class="kpi-val">50%</div><div class="kpi-label">Search<br>Mots-clés transactionnels</div></div>
+        <div class="kpi-box"><div class="kpi-val">25%</div><div class="kpi-label">Remarketing<br>Visiteurs + paniers abandonnés</div></div>
+        <div class="kpi-box"><div class="kpi-val">15%</div><div class="kpi-label">Shopping<br>Produits phares</div></div>
+        <div class="kpi-box"><div class="kpi-val">10%</div><div class="kpi-label">Display<br>Notoriété (audiences similaires)</div></div>
+      </div>
+      <p><strong>Priorité :</strong> Mots-clés à forte intention d'achat &gt; Mots-clés génériques</p>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Optimiser le ROI SEA</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <ul>
+        <li>↑ Quality Score : aligner annonce + landing page + mot-clé</li>
+        <li>Utiliser des extensions d'annonces (site links, accroches, prix)</li>
+        <li>Mettre en pause les mots-clés avec CPA &gt; objectif</li>
+        <li>Optimiser les landing pages (CTA unique, preuve sociale)</li>
+        <li>Enchères automatiques CPA/ROAS cible après 50 conversions</li>
+        <li>Listes remarketing : +30% d'enchères pour visiteurs page panier</li>
+      </ul>
+    </div>
+  </div>
+
+  <label class="done-check" id="done2"><input type="checkbox" onchange="updateProgress(this,'done2')"> Matière 3 : SEA maîtrisée ✅</label>
+</div>
+
+<!-- ==================== TAB 3: SEO & SMO ==================== -->
+<div class="tab-panel" id="tab3">
+  <div class="matiere-header">
+    <div class="num">4</div>
+    <div><h2>SEO &amp; SMO</h2><p>Prof. Garletti Eric</p></div>
+  </div>
+
+  <div class="section-title">Questions de connaissances</div>
+  <div class="cards-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q1</div>
+          <div class="q-text">Quels sont les 3 piliers du SEO ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">3 Piliers SEO</div>
+          <div class="a-text">
+            <strong>1. SEO Technique :</strong>
+            <ul>
+              <li>Vitesse de chargement (Core Web Vitals)</li>
+              <li>Indexabilité (sitemap, robots.txt, balises noindex)</li>
+              <li>Compatibilité mobile (mobile-first indexing Google)</li>
+              <li>HTTPS, structure URL propre, gestion des erreurs 404/301</li>
+            </ul>
+            <strong>2. SEO On-Page :</strong>
+            <ul>
+              <li>Contenu de qualité, original, répondant à l'intention de recherche</li>
+              <li>Balises optimisées (title, meta description, H1, H2, alt images)</li>
+              <li>Maillage interne cohérent, cocons sémantiques</li>
+            </ul>
+            <strong>3. SEO Off-Page :</strong>
+            <ul>
+              <li>Backlinks de qualité (domaines autoritaires et pertinents)</li>
+              <li>Domain Authority / Domain Rating</li>
+              <li>Mentions et signaux sociaux</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q2</div>
+          <div class="q-text">Différence entre SEO et SMO</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">SEO vs SMO</div>
+          <div class="a-text">
+            <strong>SEO (Search Engine Optimization) :</strong> optimisation pour les moteurs de recherche (Google, Bing). Objectif : améliorer le positionnement organique dans les SERP<br><br>
+            <strong>SMO (Social Media Optimization) :</strong> optimisation de la présence et de la visibilité sur les réseaux sociaux. Objectif : augmenter l'engagement, le partage et le trafic social<br><br>
+            <strong>Complémentarité :</strong> le SMO peut générer des signaux sociaux qui renforcent indirectement l'autorité SEO.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q3</div>
+          <div class="q-text">Qu'est-ce qu'un backlink de qualité ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Critères backlink</div>
+          <div class="a-text">
+            Un backlink de qualité est un lien entrant provenant d'un site externe reconnu et pertinent.<br><br>
+            <strong>Critères d'un bon backlink :</strong>
+            <ul>
+              <li>Domaine autoritaire (Domain Authority &gt; 40)</li>
+              <li>Thématique proche ou complémentaire au site cible</li>
+              <li>Lien en <strong>dofollow</strong> (non masqué pour les robots)</li>
+              <li>Ancre de lien variée et naturelle</li>
+              <li>Placement éditorial (dans le corps du contenu, pas dans un footer)</li>
+            </ul>
+            Un backlink toxique (spam, fermes de liens) peut être pénalisant → outil Disavow Google Search Console.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q4</div>
+          <div class="q-text">Pourquoi la recherche de mots-clés est-elle essentielle ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Réponse</div>
+          <div class="a-text">
+            <ul>
+              <li>Identifier les requêtes réellement tapées par la cible (volume de recherche)</li>
+              <li>Comprendre l'intention de recherche (informationnelle, navigationnelle, transactionnelle)</li>
+              <li>Prioriser les contenus à créer selon le potentiel de trafic et la concurrence</li>
+              <li>Aligner le contenu sur ce que l'audience cherche vraiment</li>
+              <li><strong>Outils :</strong> Google Keyword Planner, SEMrush, Ahrefs, Answer The Public</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q5</div>
+          <div class="q-text">Quels indicateurs de performance SEO suivre ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">KPI SEO</div>
+          <div class="a-text">
+            <ul>
+              <li><strong>Position moyenne :</strong> classement moyen dans les SERP (Google Search Console)</li>
+              <li><strong>Trafic organique :</strong> sessions provenant de la recherche naturelle</li>
+              <li><strong>Taux de clics (CTR) :</strong> clics / impressions dans les SERP</li>
+              <li><strong>Nombre de pages indexées :</strong> pages référencées par Google</li>
+              <li><strong>Domain Authority / Rating :</strong> score d'autorité du domaine</li>
+              <li><strong>Nombre et qualité des backlinks :</strong> profil de liens entrants</li>
+              <li><strong>Core Web Vitals :</strong> LCP, FID/INP, CLS (expérience page)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Cas pratique : FreshBox (chute trafic organique)</div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Audits à réaliser après mise à jour Google</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <ul>
+        <li><strong>Audit technique :</strong> vitesse, indexation, erreurs 404, HTTPS, Core Web Vitals</li>
+        <li><strong>Audit sémantique :</strong> contenu, mots-clés, cannibalisation, thin content</li>
+        <li><strong>Audit backlinks :</strong> liens toxiques, liens perdus, follow/nofollow</li>
+        <li><strong>Search Console :</strong> pages désindexées, pénalités manuelles</li>
+      </ul>
+      <div class="formula-box">
+        <strong>Outils :</strong> Google Search Console · GA4 · Screaming Frog · SEMrush/Ahrefs · PageSpeed Insights
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <span>→ Actions correctives recommandées</span><span class="acc-icon">▼</span>
+    </div>
+    <div class="acc-body">
+      <ul>
+        <li>Corriger les erreurs techniques (5xx/4xx, chargement)</li>
+        <li>Optimiser ou supprimer le thin content</li>
+        <li>Mettre à jour les contenus obsolètes</li>
+        <li>Renforcer le maillage interne vers les pages stratégiques</li>
+        <li>Campagne de netlinking (guest blogging, partenariats éditoriaux)</li>
+        <li>Analyser les pages concurrentes mieux positionnées</li>
+        <li>Soumettre un nouveau sitemap à Google Search Console</li>
+      </ul>
+    </div>
+  </div>
+
+  <label class="done-check" id="done3"><input type="checkbox" onchange="updateProgress(this,'done3')"> Matière 4 : SEO &amp; SMO maîtrisée ✅</label>
+</div>
+
+<!-- ==================== TAB 4: ACQUISITION ==================== -->
+<div class="tab-panel" id="tab4">
+  <div class="matiere-header">
+    <div class="num">5</div>
+    <div><h2>Stratégie d'Acquisition</h2><p>Prof. Garletti Eric</p></div>
+  </div>
+
+  <div class="section-title">Questions de connaissances</div>
+  <div class="cards-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q1</div>
+          <div class="q-text">Définissez la stratégie d'acquisition digitale et ses leviers</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Définition</div>
+          <div class="a-text">
+            La stratégie d'acquisition digitale désigne l'ensemble des actions marketing visant à attirer de nouveaux visiteurs/prospects/clients via les canaux digitaux.<br><br>
+            <strong>Les leviers d'acquisition :</strong>
+            <ul>
+              <li>SEO : trafic organique (long terme, gratuit)</li>
+              <li>SEA : trafic payant (immédiat, budget nécessaire)</li>
+              <li>Social Media (organique et payant)</li>
+              <li>Email marketing (base existante)</li>
+              <li>Affiliation et partenariats</li>
+              <li>Content marketing et inbound</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q2</div>
+          <div class="q-text">Comment définir un mix d'acquisition optimal ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">Méthode</div>
+          <div class="a-text">
+            <ul>
+              <li>Analyser les sources de trafic existantes via GA4 (quel canal génère le plus de conversions ?)</li>
+              <li>Calculer le CAC par canal : identifier les canaux les plus rentables</li>
+              <li>Définir des objectifs SMART par canal avec budget alloué</li>
+              <li>Tester et optimiser en continu : A/B tests, ajustements budgétaires</li>
+              <li>Assurer la complémentarité des canaux : SEO pour le long terme, SEA pour l'accélération rapide</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="q-num">Q3</div>
+          <div class="q-text">Qu'est-ce que le Coût d'Acquisition Client (CAC) ?</div>
+          <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
+        </div>
+        <div class="flip-back">
+          <div class="a-label">CAC : Formule et usage</div>
+          <div class="a-text">
+            <strong>Formule : CAC = Total des dépenses marketing &amp; ventes / Nombre de nouveaux clients acquis</strong><br><br>
+            <ul>
+              <li>Indicateur clé de la rentabilité d'une stratégie d'acquisition</li>
+              <li>Doit être comparé à la CLV : ratio CLV/CAC idéal ≥ <strong>3</strong></li>
+              <li>Calculer le CAC par canal pour identifier les plus efficaces</li>
+              <li>Un CAC élevé associé à une CLV faible = modèle non viable</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Cas pratique : FreshBox (plan d'acquisition)</div>
+  <div class="case-card">
+    <h3>Recommandations stratégiques (CAC +30% sur SEA)</h3>
+    <ul>
+      <li><strong>Court terme (0-3 mois) :</strong> Optimiser les campagnes SEA (Quality Score, landing pages) · Lancer des campagnes de remarketing</li>
+      <li><strong>Moyen terme (3-6 mois) :</strong> Développer le SEO sur les requêtes transactionnelles · Tester le marketing d'influence (micro-influenceurs food/bio)</li>
+      <li><strong>Long terme (6-12 mois) :</strong> Construire un programme d'affiliation · Développer le content marketing pour réduire la dépendance au paid</li>
+    </ul>
+  </div>
+
+  <div class="formula-box">
+    <strong>Ratio CLV/CAC :</strong> Si CLV = 150€ et CAC = 60€ → Ratio = 2,5 ❌ (objectif ≥ 3)<br>
+    <strong>Objectif :</strong> Réduire le CAC ET augmenter la CLV simultanément
+  </div>
+
+  <label class="done-check" id="done4"><input type="checkbox" onchange="updateProgress(this,'done4')"> Matière 5 : Stratégie d'Acquisition maîtrisée ✅</label>
+</div>
+
+<script>
+function switchTab(idx) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+}
+function toggleAcc(header) {
+  header.classList.toggle('open');
+  header.nextElementSibling.classList.toggle('open');
+}
+function toggleCase() {
+  document.getElementById('caseBody').classList.toggle('open');
+}
+function updateProgress(cb, id) {
+  const label = document.getElementById(id);
+  label.classList.toggle('checked', cb.checked);
+  const total = document.querySelectorAll('.done-check input').length;
+  const done = document.querySelectorAll('.done-check input:checked').length;
+  const pct = Math.round(done/total*100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+</script>
+</body>
+</html>

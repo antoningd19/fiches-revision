@@ -10,14 +10,14 @@ Une fiche par bloc, plus un exercice "feuille blanche" associé pour tester la r
 
 | Jour | Bloc | Thème |
 |---|---|---|
-| Lundi | Bloc 2 | Marketing Digital — Pilotage des campagnes |
+| Lundi | Bloc 2 | Marketing Digital - Pilotage des campagnes |
 | Mardi | Bloc 3 | Communication Digitale |
-| Mercredi | Bloc 4 | Gestion des Projets Digitaux — UX/UI Design, méthodes agiles |
-| Jeudi | Bloc 5 | Stratégie E-Commerce — Conception, analytics, CMS |
+| Mercredi | Bloc 4 | Gestion des Projets Digitaux - UX/UI Design, méthodes agiles |
+| Jeudi | Bloc 5 | Stratégie E-Commerce - Conception, analytics, CMS |
 
-- `index.html` — page d'accueil / sommaire
-- `lundi.html`, `mardi.html`, `mercredi.html`, `jeudi.html` — fiches de révision par bloc
-- `feuille-blanche-*.html` — exercice de restitution libre (méthode "feuille blanche") pour chaque bloc, à faire après relecture de la fiche
+- `index.html` - page d'accueil / sommaire
+- `lundi.html`, `mardi.html`, `mercredi.html`, `jeudi.html` - fiches de révision par bloc
+- `feuille-blanche-*.html` - exercice de restitution libre (méthode "feuille blanche") pour chaque bloc, à faire après relecture de la fiche
 
 ## Utilisation
 

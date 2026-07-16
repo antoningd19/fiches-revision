@@ -1,5 +1,7 @@
 # Fiches de révision - Partiels MSc Marketing Digital & E-Commerce
 
+**🔗 Accéder au site : [antoningd19.github.io/fiches-revision](https://antoningd19.github.io/fiches-revision/)**
+
 Support de révision créé pour préparer les partiels du **Master 2 (année 2025-2026)**, MSc Marketing Digital & E-Business (INSEEC).
 
 Pages HTML autonomes, sans dépendance ni build, organisées par bloc de cours et par jour de révision.

@@ -1,4 +1,4 @@
-# Fiches de révision — Partiels MSc Marketing Digital & E-Commerce
+# Fiches de révision - Partiels MSc Marketing Digital & E-Commerce
 
 Support de révision créé pour préparer les partiels du **Master 2 (année 2025-2026)**, MSc Marketing Digital & E-Business (INSEEC).
 
